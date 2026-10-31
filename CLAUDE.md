@@ -94,21 +94,31 @@ en-tête de tableau, onglets, étiquettes) en **Montserrat 500, 10,5 px, majuscu
 0,06 em**. Titres en Inter **500**. Le gabarit n'a pas de surface sombre : la nôtre est dérivée de sa
 barre latérale.
 
-**Ce que les variables ne peuvent pas atteindre** et qui reste à faire **dans le kit** pour que la
-ressemblance soit complète : une seconde police pour les petits titres, la casse et l'espacement de
-ces petits titres, les graisses (le kit écrit 600/700 en dur, le gabarit est à 500), les tailles
-écrites en `rem` en dur dans les composants, et des variables propres à la barre latérale pour
-qu'elle puisse être sombre sur une page claire.
+Depuis le kit **v0.181.0**, ce qui était écrit en dur dans ses composants passe par des variables
+**optionnelles** (jamais déclarées dans son `tokens.css`, lues avec pour repli l'ancienne valeur) :
+`--lq-font-weight-*`, `--lq-label-*` (petits titres en capitales), `--lq-caption-*` (titre de
+Card, onglet, libellé de StatCard), `--lq-control-border-width`, `--lq-button-*`,
+`--lq-color-panel-border`, et l'attribut `data-lq-region="sidebar"` sous lequel `minimal.css`
+redéfinit la palette de la barre latérale. La liste fait foi en fin de
+`../Dashboard liseuse/src/theme/tokens.css`. Le même correctif a fait suivre le thème dans les
+portails (Modal, Popover, Tooltip…), qui retombaient avant sur les valeurs du kit.
+
+Écarts qui restent avec le gabarit : sa barre latérale est un rail d'icônes de 70 px qui s'ouvre au
+survol (une **anatomie**, pas une couleur : un mode « condensé » de `SidebarLayout` dans le kit) ;
+les tailles de police des composants sont encore en `rem` en dur (corps à 14,4 px au lieu de 14) ;
+les badges du kit sont en pilule là où le gabarit met des étiquettes à 3 px.
 
 ## Où on en est
 
-Première pose faite (commit `1230e6f`) : système de variables clair + sombre, coquille, registre,
-et trois écrans de référence — Vue d'ensemble, Tableaux, Formulaires. Ces trois-là sont choisis pour
-tomber pile sur les trous du kit et les **montrer** au lieu de les masquer.
+- Coquille, registre et trois écrans de référence — Vue d'ensemble, Tableaux, Formulaires — choisis
+  pour tomber pile sur les trous du kit et les **montrer** au lieu de les masquer.
+- Treize planches (`src/showcase/screens/components/`) : **chaque export public du kit** y est montré
+  vivant, famille par famille, avec le gabarit `src/showcase/Specimen.tsx`. Données déterministes.
+- Thème calé sur les valeurs mesurées de `pages.revox.io` (voir plus haut), kit en v0.181.0.
 
-Vérifié dans un navigateur sur la vitrine construite : `--lq-color-accent` rend `#4f5bd5` en clair
-et `#8b93ea` en sombre, `--lq-radius-md` 6px, `--lq-space-6` 30px. Les variables du thème gagnent
-bien sur celles du kit.
+Vérifié : les 16 écrans rendus dans Chrome headless, en clair et en sombre, sans erreur
+d'exécution — la seule exception connue est un avertissement React de `WorldExposureMap` (trois
+pays de `world-atlas` sans `id`, clés en double), à corriger dans le kit.
 
 ### Manques connus, à combler **dans le kit**
 
@@ -120,12 +130,24 @@ Par ordre d'utilité, repris du comparatif complet qui vit dans le dépôt voisi
 2. `DataTable` : pagination, puis sélection de lignes, filtre, en-tête figé, export.
 3. `ButtonGroup` et barre d'outils, cercle de progression, onglets verticaux.
 
+Défauts relevés en montant les planches, à corriger dans le kit aussi :
+- `DatePicker` / `DateRangePicker` / `DateTimePicker` : le déclencheur ne fixe pas `color`, la
+  valeur s'affiche en noir sur la surface sombre.
+- `IconButton` : le padding natif du bouton n'est pas remis à zéro, l'icône est rétrécie.
+- `Notification` : un « 0 » parasite avec `autoDismissMs: 0` (`{autoDismissMs && …}`).
+- Pages (`LoginPage`, `SignUpPage`, `NotFoundPage`, layouts) en `100vh` : elles ne tiennent pas dans
+  un cadre.
+- Nombres formatés à l'anglaise sans prop pour changer (`ComparisonCard`, `HoldingCard`,
+  `PortfolioSummaryWidget`, `MarketMoversWidget`, `LevelMeter`, dates de `CandlestickChart`).
+- Libellés rognés ou superposés : `MatrixChart`, `DeltaChart`, axe des prix de `ChartWorkspace`,
+  bouton plein écran de `SankeyChart` ; `ChartWorkspace` ignore `layout="desktop"` sous 1500 px.
+- `Carousel` sans image : la flèche recouvre le titre, le point actif est invisible.
+
 ### À faire dans ce dépôt
 
 - Le dépôt distant n'existe pas encore. `gh` n'est pas installé sur ce poste, donc c'est à Michael
   de le créer, puis `git remote add origin …` et `git push -u origin master`.
-- Le cockpit ne connaît pas ce dossier (`cockpit projet` → « aucun projet »). À enregistrer si
-  Michael le veut.
+- Le cockpit connaît ce dossier (projet `minimal-dashboard-kit`, enregistré le 2026-10-31).
 - Rien ne décide encore si ce paquet sera publié. Il est `private: true` pour l'instant.
 
 ## Conventions de travail
