@@ -71,7 +71,67 @@ body {
   align-items: start;
 }
 
+/* ---- les planches de composants (`Specimen.tsx`) ---- */
+
+.mdk-specimens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: var(--lq-space-4);
+  align-items: start;
+}
+
+/* Un spécimen est un cadre de la vitrine, pas une `Card` du kit : il entoure le composant montré
+   sans prétendre en être un, et une `Card` montrée dans une `Card` se lirait double. */
+.mdk-specimen {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--lq-color-panel);
+  border: 1px solid var(--lq-color-border);
+  border-radius: var(--lq-radius-lg);
+}
+
+.mdk-specimen--wide {
+  grid-column: 1 / -1;
+}
+
+.mdk-specimen__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-1);
+  padding: var(--lq-space-3) var(--lq-space-4);
+  border-bottom: 1px solid var(--lq-color-border-subtle);
+}
+
+.mdk-specimen__name {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: var(--lq-text-sm);
+  font-weight: 600;
+  color: var(--lq-color-accent);
+}
+
+.mdk-specimen__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-4);
+  padding: var(--lq-space-4);
+  min-width: 0;
+  color: var(--lq-color-text);
+}
+
+/* Une rangée qui se replie : plusieurs variantes d'un même composant côte à côte. */
+.mdk-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lq-space-3);
+}
+
 @media (max-width: 640px) {
+  .mdk-specimens {
+    grid-template-columns: 1fr;
+  }
+
   .mdk-screen {
     padding: var(--lq-space-4);
   }
@@ -79,4 +139,300 @@ body {
   .mdk-screen__head {
     flex-direction: column;
   }
+}
+
+/* ---- écran « Pages et mises en page » ---- */
+
+/* Le cadre d'une page plein écran. Hauteur fixe et défilement propre : la page vit dedans au lieu
+   de pousser la coquille de la vitrine. `transform` en fait le bloc conteneur de ses éléments en
+   `position: fixed`, qui resteraient sinon accrochés à la fenêtre. */
+.mdk-page-frame {
+  position: relative;
+  height: 640px;
+  overflow: auto;
+  transform: translateZ(0);
+  border: 1px solid var(--lq-color-border);
+  border-radius: var(--lq-radius-md);
+}
+
+/* ---- écrans « Champs », « Dates et curseurs », « Retours » ---- */
+
+/* Une rangée de champs : chacun prend sa part de la largeur, alignés par le haut pour que l'aide
+   ou l'erreur sous l'un ne décale pas le libellé de l'autre. */
+.mdk-row--fill {
+  align-items: flex-start;
+}
+
+.mdk-row--fill > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Le point d'ancrage d'un `Popover` : il épouse le bouton qu'il entoure. */
+.mdk-anchor {
+  display: inline-flex;
+}
+
+.mdk-popover-pad {
+  gap: var(--lq-space-3);
+  padding: var(--lq-space-3);
+  min-width: 260px;
+}
+
+/* Les cases filles d'une case parente, en retrait sous elle. */
+.mdk-indent {
+  gap: var(--lq-space-2);
+  padding-left: var(--lq-space-5);
+}
+
+.mdk-stack--tight {
+  gap: var(--lq-space-1);
+}
+
+.mdk-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mdk-grid--sliders {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--lq-space-5);
+}
+
+.mdk-grid--alerts {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: start;
+}
+
+/* ---- écrans « Primitives », « Conteneurs », « Icônes » ---- */
+
+/* Une rangée alignée par le haut : des onglets verticaux à côté de ce qu'ils commandent. */
+.mdk-row--top {
+  align-items: flex-start;
+  gap: var(--lq-space-4);
+}
+
+/* La zone qui reçoit le clic droit du spécimen `ContextMenu`. */
+.mdk-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lq-space-3);
+  padding: var(--lq-space-3);
+  border: 1px dashed var(--lq-color-border);
+  border-radius: var(--lq-radius-md);
+}
+
+.mdk-grid--highlights {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--lq-space-5);
+}
+
+.mdk-wrap--baseline {
+  align-items: flex-end;
+}
+
+/* La grille des icônes : des cases étroites, le nom d'export dessous, coupé où il faut plutôt que
+   de déborder — certains noms dépassent vingt-cinq caractères. */
+.mdk-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: var(--lq-space-2);
+}
+
+.mdk-icon-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+}
+
+.mdk-icon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--lq-space-2);
+  padding: var(--lq-space-3) var(--lq-space-2);
+  min-width: 0;
+  text-align: center;
+  color: var(--lq-color-text);
+  border-radius: var(--lq-radius-md);
+}
+
+.mdk-icon-cell:hover {
+  background: var(--lq-color-hover);
+}
+
+.mdk-icon-cell__name {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: var(--lq-text-xs);
+  color: var(--lq-color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* Quatre tons pour montrer qu'une icône n'a pas de couleur à elle : elle prend celle du texte. */
+.mdk-tone {
+  display: inline-flex;
+}
+
+.mdk-tone--accent {
+  color: var(--lq-color-accent);
+}
+
+.mdk-tone--up {
+  color: var(--lq-color-up);
+}
+
+.mdk-tone--down {
+  color: var(--lq-color-down);
+}
+
+.mdk-tone--muted {
+  color: var(--lq-color-text-muted);
+}
+
+/* ---- Graphiques et Graphiques de marché (`screens/components/Charts.tsx`, `MarketCharts.tsx`) ---- */
+
+/* L'ancêtre positionné qu'exigent les bulles des graphiques composés à la main (`ChartTooltip`) et
+   l'infobulle d'évènement montrée seule (`ChartEventTooltip`). */
+.mdk-chart-host {
+  position: relative;
+  min-width: 0;
+}
+
+.mdk-chart-host--events {
+  min-height: 300px;
+}
+
+/* Une liste d'indicateurs : libellé, valeur, tendance — la cellule où vit une `Sparkline`. */
+.mdk-kpi-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mdk-kpi-list__row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: var(--lq-space-4);
+  padding: var(--lq-space-2) 0;
+  border-bottom: 1px solid var(--lq-color-border-subtle);
+}
+
+.mdk-kpi-list__row:last-child {
+  border-bottom: 0;
+}
+
+/* ---- Widgets maison, Widgets outils, Cartes-audio-planning (`HomeWidgets`, `ToolWidgets`, `MapsAudio`) ----
+   Des fonds de scène et des cadres à hauteur fixe : plusieurs widgets se posent en surimpression
+   (épingles, dock, compteur d'images) ou remplissent leur parent (globe, carte), et ni l'un ni
+   l'autre ne se montre dans une boîte qui n'a que la hauteur de son contenu. */
+
+.mdk-align-start {
+  align-items: flex-start;
+}
+
+.mdk-align-end {
+  align-items: flex-end;
+}
+
+/* Une scène positionnée, pour les widgets qui se posent par-dessus une vue. */
+.mdk-stage {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+  border: 1px solid var(--lq-color-border-subtle);
+  border-radius: var(--lq-radius-md);
+  background: color-mix(in srgb, var(--lq-color-text) 4%, var(--lq-color-bg));
+}
+
+.mdk-stage--short {
+  height: 260px;
+}
+
+/* Un plan quadrillé, pour planter des épingles sur quelque chose. */
+.mdk-stage--plan {
+  background:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--lq-color-text) 6%, transparent) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--lq-color-text) 6%, transparent) 0 1px, transparent 1px 28px),
+    color-mix(in srgb, var(--lq-color-text) 3%, var(--lq-color-bg));
+}
+
+.mdk-stage__block {
+  position: absolute;
+  border-radius: var(--lq-radius-sm);
+  background: color-mix(in srgb, var(--lq-color-text) 12%, var(--lq-color-bg));
+}
+
+.mdk-stage__pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+}
+
+.mdk-stage__corner {
+  position: absolute;
+}
+
+.mdk-stage__corner--tl {
+  left: var(--lq-space-3);
+  top: var(--lq-space-3);
+  align-items: flex-start;
+  gap: var(--lq-space-2);
+}
+
+.mdk-stage__corner--tr {
+  right: var(--lq-space-3);
+  top: var(--lq-space-3);
+}
+
+.mdk-stage__corner--bl {
+  left: var(--lq-space-3);
+  bottom: var(--lq-space-3);
+}
+
+.mdk-stage__caption {
+  position: absolute;
+  left: var(--lq-space-3);
+  bottom: var(--lq-space-2);
+  margin: 0;
+}
+
+/* Un cadre à hauteur fixe pour ce qui remplit son parent. */
+.mdk-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--lq-radius-md);
+}
+
+.mdk-frame--map {
+  height: 440px;
+  border: 1px solid var(--lq-color-border-subtle);
+  background: var(--lq-color-bg);
+}
+
+.mdk-frame--kb {
+  height: 520px;
+}
+
+.mdk-frame__overlay {
+  position: absolute;
+  top: var(--lq-space-4);
+  right: var(--lq-space-4);
+  width: 240px;
+}
+
+/* La carte et sa liste d'itinéraires, côte à côte. */
+.mdk-map {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  height: 420px;
+  border: 1px solid var(--lq-color-border-subtle);
+  border-radius: var(--lq-radius-md);
+  overflow: hidden;
+}
+
+.mdk-map__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-2);
+  padding: var(--lq-space-3);
+  border-right: 1px solid var(--lq-color-border-subtle);
+  background: var(--lq-color-panel);
 }

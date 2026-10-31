@@ -98,7 +98,9 @@
   --lq-color-accent: #4f5bd5;
   --lq-color-accent-contrast: #ffffff;
   --lq-color-fill: #4f5bd5;
-  --lq-color-fill-track: #e8eaef;
+  /* Assez foncé pour qu'un interrupteur éteint reste lisible sur une carte blanche, même désactivé
+     (le kit le passe alors à 40 % d'opacité) : à #e8eaef, il disparaissait. */
+  --lq-color-fill-track: #d6dae2;
 
   --lq-color-focus-ring: rgba(79, 91, 213, 0.38);
   --lq-color-hover: rgba(79, 91, 213, 0.07);

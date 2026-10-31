@@ -2,6 +2,19 @@ import type { ReactElement } from "react";
 import { Overview } from "./Overview";
 import { Tables } from "./Tables";
 import { Forms } from "./Forms";
+import { Primitives } from "./components/Primitives";
+import { Containers } from "./components/Containers";
+import { Icons } from "./components/Icons";
+import { Feedback } from "./components/Feedback";
+import { Fields } from "./components/Fields";
+import { DatesSliders } from "./components/DatesSliders";
+import { Finance } from "./components/Finance";
+import { Charts } from "./components/Charts";
+import { MarketCharts } from "./components/MarketCharts";
+import { HomeWidgets } from "./components/HomeWidgets";
+import { ToolWidgets } from "./components/ToolWidgets";
+import { MapsAudio } from "./components/MapsAudio";
+import { Pages } from "./components/Pages";
 
 /**
  * Le registre des écrans — **la convention centrale de ce dépôt**.
@@ -29,6 +42,21 @@ export const SCREENS: Screen[] = [
   { id: "overview", label: "Vue d'ensemble", path: "", group: "Tableau de bord", render: () => <Overview /> },
   { id: "tables", label: "Tableaux", path: "tableaux", group: "Données", render: () => <Tables /> },
   { id: "forms", label: "Formulaires", path: "formulaires", group: "Données", render: () => <Forms /> },
+
+  // Les planches : chaque export du kit, famille par famille, dans le thème.
+  { id: "c-primitives", label: "Primitives", path: "composants/primitives", group: "Composants · base", render: () => <Primitives /> },
+  { id: "c-containers", label: "Conteneurs", path: "composants/conteneurs", group: "Composants · base", render: () => <Containers /> },
+  { id: "c-icons", label: "Icônes", path: "composants/icones", group: "Composants · base", render: () => <Icons /> },
+  { id: "c-feedback", label: "Retours", path: "composants/retours", group: "Composants · base", render: () => <Feedback /> },
+  { id: "c-fields", label: "Champs", path: "composants/champs", group: "Composants · saisie", render: () => <Fields /> },
+  { id: "c-dates", label: "Dates et curseurs", path: "composants/dates", group: "Composants · saisie", render: () => <DatesSliders /> },
+  { id: "c-finance", label: "Finance", path: "composants/finance", group: "Composants · données", render: () => <Finance /> },
+  { id: "c-charts", label: "Graphiques", path: "composants/graphiques", group: "Composants · données", render: () => <Charts /> },
+  { id: "c-market", label: "Graphiques de marché", path: "composants/marche", group: "Composants · données", render: () => <MarketCharts /> },
+  { id: "c-home", label: "Widgets maison", path: "composants/widgets-maison", group: "Composants · widgets", render: () => <HomeWidgets /> },
+  { id: "c-tools", label: "Widgets outils", path: "composants/widgets-outils", group: "Composants · widgets", render: () => <ToolWidgets /> },
+  { id: "c-maps", label: "Cartes, audio, planning", path: "composants/cartes-audio", group: "Composants · widgets", render: () => <MapsAudio /> },
+  { id: "c-pages", label: "Pages et mises en page", path: "composants/pages", group: "Composants · pages", render: () => <Pages /> },
 ];
 
 /** Les groupes, dans l'ordre de première apparition. */
