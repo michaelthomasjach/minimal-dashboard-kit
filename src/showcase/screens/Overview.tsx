@@ -1,4 +1,5 @@
-import { Card, Heading, Text, Button } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { Card, Button } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { ScreenHead } from "../Specimen";
 import { StatCard, DataTable, Badge, type DataTableColumn } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { ORDERS, REVENUE_TREND, SIGNUPS_TREND, CHURN_TREND, statutTone, type Order } from "../demoData";
 
@@ -28,15 +29,11 @@ const RECENT: DataTableColumn<Order>[] = [
 export function Overview() {
   return (
     <div className="mdk-screen">
-      <header className="mdk-screen__head">
-        <div>
-          <Heading level={1}>Vue d'ensemble</Heading>
-          <Text muted size="sm">
-            Activité commerciale des douze derniers mois.
-          </Text>
-        </div>
-        <Button>Exporter</Button>
-      </header>
+      <ScreenHead
+        title="Vue d'ensemble"
+        intro="Activité commerciale des douze derniers mois."
+        actions={<Button>Exporter</Button>}
+      />
 
       <div className="mdk-grid mdk-grid--stats">
         <StatCard label="Revenu mensuel" value={euro(80000)} delta={12.4} caption="vs. mois précédent" sparklineData={REVENUE_TREND} />

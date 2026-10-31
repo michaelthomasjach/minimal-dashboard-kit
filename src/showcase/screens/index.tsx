@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { BarChartIcon, FileIcon, GridIcon, HomeIcon, LayersIcon, PencilIcon, TableIcon } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { Overview } from "./Overview";
 import { Tables } from "./Tables";
 import { Forms } from "./Forms";
@@ -35,28 +36,48 @@ export interface Screen {
   /** Sans barre oblique de tête : elle est ajoutée par le routeur. */
   path: string;
   group: string;
+  /** La seconde ligne, plus pâle, sous le libellé dans la barre latérale. */
+  details?: string;
+  /** Le nom du fichier de l'écran (et de son composant) : la recherche y lit les spécimens qu'il
+   *  montre, pour qu'un nom de composant mène à son écran. */
+  source: string;
   render: () => ReactElement;
 }
 
+/**
+ * L'icône de chaque groupe : c'est elle qui reste visible dans le rail quand la barre latérale est
+ * réduite. Les écrans d'un groupe, eux, s'y affichent par leur initiale. Un groupe sans icône ici
+ * prendrait l'initiale de son nom — lisible, mais seul de son espèce dans la colonne.
+ */
+export const GROUP_ICONS: Record<string, ReactElement> = {
+  "Tableau de bord": <HomeIcon />,
+  "Données": <TableIcon />,
+  "Composants · base": <LayersIcon />,
+  "Composants · saisie": <PencilIcon />,
+  "Composants · données": <BarChartIcon />,
+  "Composants · widgets": <GridIcon />,
+  "Composants · pages": <FileIcon />,
+};
+
 export const SCREENS: Screen[] = [
-  { id: "overview", label: "Vue d'ensemble", path: "", group: "Tableau de bord", render: () => <Overview /> },
-  { id: "tables", label: "Tableaux", path: "tableaux", group: "Données", render: () => <Tables /> },
-  { id: "forms", label: "Formulaires", path: "formulaires", group: "Données", render: () => <Forms /> },
+  { id: "overview", label: "Vue d'ensemble", path: "", group: "Tableau de bord", details: "Douze derniers mois", source: "Overview", render: () => <Overview /> },
+  { id: "tables", label: "Tableaux", path: "tableaux", group: "Données", source: "Tables", render: () => <Tables /> },
+  { id: "forms", label: "Formulaires", path: "formulaires", group: "Données", source: "Forms", render: () => <Forms /> },
 
   // Les planches : chaque export du kit, famille par famille, dans le thème.
-  { id: "c-primitives", label: "Primitives", path: "composants/primitives", group: "Composants · base", render: () => <Primitives /> },
-  { id: "c-containers", label: "Conteneurs", path: "composants/conteneurs", group: "Composants · base", render: () => <Containers /> },
-  { id: "c-icons", label: "Icônes", path: "composants/icones", group: "Composants · base", render: () => <Icons /> },
-  { id: "c-feedback", label: "Retours", path: "composants/retours", group: "Composants · base", render: () => <Feedback /> },
-  { id: "c-fields", label: "Champs", path: "composants/champs", group: "Composants · saisie", render: () => <Fields /> },
-  { id: "c-dates", label: "Dates et curseurs", path: "composants/dates", group: "Composants · saisie", render: () => <DatesSliders /> },
-  { id: "c-finance", label: "Finance", path: "composants/finance", group: "Composants · données", render: () => <Finance /> },
-  { id: "c-charts", label: "Graphiques", path: "composants/graphiques", group: "Composants · données", render: () => <Charts /> },
-  { id: "c-market", label: "Graphiques de marché", path: "composants/marche", group: "Composants · données", render: () => <MarketCharts /> },
-  { id: "c-home", label: "Widgets maison", path: "composants/widgets-maison", group: "Composants · widgets", render: () => <HomeWidgets /> },
-  { id: "c-tools", label: "Widgets outils", path: "composants/widgets-outils", group: "Composants · widgets", render: () => <ToolWidgets /> },
-  { id: "c-maps", label: "Cartes, audio, planning", path: "composants/cartes-audio", group: "Composants · widgets", render: () => <MapsAudio /> },
-  { id: "c-pages", label: "Pages et mises en page", path: "composants/pages", group: "Composants · pages", render: () => <Pages /> },
+  { id: "c-primitives", label: "Primitives", path: "composants/primitives", group: "Composants · base", source: "Primitives", render: () => <Primitives /> },
+  { id: "c-containers", label: "Conteneurs", path: "composants/conteneurs", group: "Composants · base", source: "Containers", render: () => <Containers /> },
+  { id: "c-icons", label: "Icônes", path: "composants/icones", group: "Composants · base", source: "Icons", render: () => <Icons /> },
+  { id: "c-feedback", label: "Retours", path: "composants/retours", group: "Composants · base", source: "Feedback", render: () => <Feedback /> },
+  { id: "c-fields", label: "Champs", path: "composants/champs", group: "Composants · saisie", source: "Fields", render: () => <Fields /> },
+  { id: "c-dates", label: "Dates et curseurs", path: "composants/dates", group: "Composants · saisie", source: "DatesSliders", render: () => <DatesSliders /> },
+  { id: "c-finance", label: "Finance", path: "composants/finance", group: "Composants · données", source: "Finance", render: () => <Finance /> },
+  { id: "c-charts", label: "Graphiques", path: "composants/graphiques", group: "Composants · données", source: "Charts", render: () => <Charts /> },
+  { id: "c-market", label: "Graphiques de marché", path: "composants/marche", group: "Composants · données", source: "MarketCharts", render: () => <MarketCharts /> },
+  { id: "c-home", label: "Widgets maison", path: "composants/widgets-maison", group: "Composants · widgets", source: "HomeWidgets", render: () => <HomeWidgets /> },
+  { id: "c-tools", label: "Widgets outils", path: "composants/widgets-outils", group: "Composants · widgets", source: "ToolWidgets", render: () => <ToolWidgets /> },
+  { id: "c-maps", label: "Cartes, audio, planning", path: "composants/cartes-audio", group: "Composants · widgets", source: "MapsAudio", render: () => <MapsAudio /> },
+  { id: "c-pages", label: "Pages et mises en page", path: "composants/pages", group: "Composants · pages", source: "Pages", render: () => <Pages /> },
 ];
 
 /** Les groupes, dans l'ordre de première apparition. */

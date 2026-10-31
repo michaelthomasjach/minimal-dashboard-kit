@@ -111,6 +111,21 @@
   --lq-button-padding-x: 17px;
   --lq-button-font-size: 0.875rem;
 
+  /* Les champs « traditionnels » du gabarit : 32 px de haut, 8 px de marge intérieure, valeur en
+     14 px ; libellé en 14 px de graisse normale, posé directement sur le champ. */
+  --lq-control-height: 32px;
+  --lq-control-padding-x: 8px;
+  --lq-control-font-size: 0.875rem;
+  --lq-field-gap: 0px;
+  --lq-field-helper-offset: 6px;
+  --lq-field-label-size: 0.875rem;
+  --lq-field-label-weight: 400;
+
+  /* Les lignes de données sous un en-tête — lignes de panneau, cellules de tableau, légendes — un
+     cran sous le corps de texte, comme les tableaux du gabarit : à 15 px, elles écrasaient le petit
+     titre en capitales qui les coiffe. */
+  --lq-row-font-size: 0.8125rem;
+
   --lq-transition-fast: 120ms ease;
   --lq-transition-base: 200ms ease;
 
@@ -128,6 +143,11 @@
 
   --lq-color-text: #4b4b4b;
   --lq-color-text-muted: rgba(33, 33, 33, 0.62);
+  /* La seconde couleur de texte du gabarit, plus sombre, celle du contenu des cartes (titres,
+     paragraphes). Le kit n'en a qu'une : celle-ci est une variable de cette couche, lue par la
+     vitrine, pas par les composants. */
+  --mdk-color-text-strong: #212529;
+  --lq-control-color: #212121;
 
   /* Deux filets : celui des champs et des boutons, un gris translucide qui fonce sur les fonds
      teintés ; et celui des lignes de tableau et de la barre haute, presque blanc. */
@@ -171,12 +191,17 @@
 .mdk.lq-root[data-lq-palette][data-lq-surface="dark"] {
   /* Le gabarit n'a pas de surface sombre : celle-ci est dérivée de sa barre latérale (#2b303b et
      son texte #929aac), avec les mêmes teintes de couleur éclaircies d'un cran pour garder le
-     contraste. C'est la seule partie du thème qui n'a pas de modèle à mesurer. */
-  --lq-color-bg: #21252d;
+     contraste. C'est la seule partie du thème qui n'a pas de modèle à mesurer.
+
+     Le fond de page descend sous les trois tons de la barre (#2b303b, son en-tête #272b35, ses
+     sous-menus #21252d) : à #21252d, un sous-menu déplié se confondait avec la page. */
+  --lq-color-bg: #16191e;
   --lq-color-panel: #2b303b;
 
   --lq-color-text: #e2e4e9;
   --lq-color-text-muted: #929aac;
+  --mdk-color-text-strong: #f1f2f5;
+  --lq-control-color: var(--lq-color-text);
 
   --lq-color-border: rgba(255, 255, 255, 0.14);
   --lq-color-border-subtle: rgba(255, 255, 255, 0.07);
@@ -209,7 +234,8 @@
 /* ---- la barre latérale ---- */
 
 /* Sombre sur les deux surfaces, comme dans le gabarit : ardoise #2b303b, libellés #929aac qui
-   passent au blanc au survol et sur l'entrée active. Le kit marque la barre d'un
+   passent au blanc au survol et sur l'entrée active. La vitrine la pose en `variant="rail"` : un rail
+   d'icônes fixe qui s'ouvre au survol et s'épingle. Le kit marque la barre d'un
    `data-lq-region="sidebar"` ; y redéfinir les couleurs suffit, parce que le logo, la navigation et
    le pied lisent tous les mêmes variables. */
 .mdk.lq-root [data-lq-region="sidebar"] {
@@ -220,4 +246,10 @@
   --lq-color-border-subtle: transparent;
   --lq-color-hover: #21252d;
   --lq-color-accent: #ffffff;
+
+  /* L'en-tête de la barre, d'un cran plus sombre, et le fond des sous-menus dépliés, d'un cran
+     encore. */
+  --lq-sidebar-head-bg: #272b35;
+  --lq-sidebar-head-border: #232730;
+  --lq-sidebar-sub-bg: #21252d;
 }

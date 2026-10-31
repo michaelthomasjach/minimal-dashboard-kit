@@ -139,6 +139,22 @@ export function Fields() {
           <Input label="Recherche rapide" size="small" placeholder="Taille réduite, pour une barre d'outils…" leadingIcon={<SearchIcon size={14} />} />
         </Specimen>
 
+        <Specimen
+          name="Input"
+          description="Le libellé dans la boîte (labelPosition « inside ») : il rétrécit dès que le champ prend le focus ou une valeur, et un champ requis porte un astérisque dans son coin."
+        >
+          <div className="mdk-stack mdk-stack--inset">
+            <Input labelPosition="inside" label="Projet" required />
+            <div className="mdk-row mdk-row--fill mdk-row--inset">
+              <Input labelPosition="inside" label="Prénom" required />
+              <Input labelPosition="inside" label="Nom" />
+            </div>
+            <Input labelPosition="inside" label="Mot de passe" type="password" required />
+            <Input labelPosition="inside" label="Courriel" placeholder="ex. : nom@exemple.fr" required />
+            <Input labelPosition="inside" label="Désactivé" placeholder="Rien à saisir ici" disabled />
+          </div>
+        </Specimen>
+
         <Specimen name="MaskedInput · PhoneInput · CreditCardInput" description="Des champs à motif : l'application ne garde que les chiffres.">
           <MaskedInput label="IBAN" mask="FR## #### #### #### #### #### ###" value={iban} onChange={setIban} />
           <div className="mdk-row mdk-row--fill">

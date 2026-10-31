@@ -1,4 +1,5 @@
-import { Card, Heading, Text } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { Card, Text } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { ScreenHead } from "../Specimen";
 import { DataTable, Badge, type DataTableColumn } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { ORDERS, statutTone, type Order } from "../demoData";
 
@@ -32,14 +33,10 @@ const COLUMNS: DataTableColumn<Order>[] = [
 export function Tables() {
   return (
     <div className="mdk-screen">
-      <header className="mdk-screen__head">
-        <div>
-          <Heading level={1}>Tableaux</Heading>
-          <Text muted size="sm">
-            `DataTable` du kit, trié par colonne. Cliquer un en-tête inverse l'ordre.
-          </Text>
-        </div>
-      </header>
+      <ScreenHead
+        title="Tableaux"
+        intro="`DataTable` du kit, trié par colonne. Cliquer un en-tête inverse l'ordre."
+      />
 
       <Card title="Commandes" meta={`${ORDERS.length} lignes`}>
         <DataTable columns={COLUMNS} rows={ORDERS} rowKey={(o) => o.id} />

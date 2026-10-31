@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Card, Heading, Text, Button, Toggle } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { Card, Text, Button, Toggle } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { ScreenHead } from "../Specimen";
 import { Input, Select, Checkbox, TagInput } from "@michaelthomasjach/liseuse-dashboard-kit";
 
 const PLANS = [
@@ -29,14 +30,10 @@ export function Forms() {
 
   return (
     <div className="mdk-screen">
-      <header className="mdk-screen__head">
-        <div>
-          <Heading level={1}>Formulaires</Heading>
-          <Text muted size="sm">
-            Les contrôles du kit, habillés par la couche de thème — aucune règle locale.
-          </Text>
-        </div>
-      </header>
+      <ScreenHead
+        title="Formulaires"
+        intro="Les contrôles du kit, habillés par la couche de thème — aucune règle locale."
+      />
 
       <div className="mdk-grid mdk-grid--forms">
         <Card title="Compte client">

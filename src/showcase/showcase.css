@@ -12,19 +12,108 @@ body {
   margin: 0;
 }
 
+/* La marque. Dans la barre latérale elle prend le blanc de sa palette, dans la barre haute le texte
+   de la page : une seule règle, parce qu'elle lit la variable de l'endroit où elle est posée. */
 .mdk-logo {
+  font-size: 1.375rem;
   font-weight: 700;
-  font-size: var(--lq-text-lg);
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.04em;
   color: var(--lq-color-text);
 }
 
+/* La barre haute, aux mesures du gabarit : marque dans une colonne de 182 px, icônes d'action de
+   24 px séparées de 12, filets verticaux de part et d'autre, invite de recherche en 15 px. */
 .mdk-topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--lq-space-4);
   width: 100%;
+  min-height: 59px;
+}
+
+.mdk-topbar__brand {
+  flex-shrink: 0;
+  width: 182px;
+  margin-left: 11px;
+}
+
+.mdk-topbar__icons {
+  display: flex;
+  align-items: center;
+  gap: var(--lq-space-3);
+  padding: 0 var(--lq-space-3) 0 var(--lq-space-5);
+  border-left: 1px solid var(--lq-color-border-subtle);
+  border-right: 1px solid var(--lq-color-border-subtle);
+}
+
+.mdk-topbar__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--lq-color-text);
+  background: none;
+  border: none;
+  border-radius: var(--lq-radius-md);
+  cursor: pointer;
+}
+
+.mdk-topbar__icon:hover {
+  color: var(--lq-color-accent);
+}
+
+/* La pastille : un point de danger cerclé du fond de la barre, accroché au coin de l'icône. */
+.mdk-topbar__bubble {
+  position: absolute;
+  top: -3px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--lq-color-danger);
+  border: 2px solid var(--lq-color-panel);
+  border-radius: 50%;
+}
+
+.mdk-topbar__search {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lq-space-2);
+  margin-left: 15px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--lq-color-text);
+  opacity: 0.77;
+  background: none;
+  border: none;
+  cursor: text;
+}
+
+.mdk-topbar__end {
+  display: flex;
+  align-items: center;
+  gap: var(--lq-space-4);
+  margin-left: auto;
+}
+
+.mdk-topbar__avatar {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Le point de présence, en bas à droite de l'avatar. */
+.mdk-topbar__status {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--lq-color-up);
+  border: 2px solid var(--lq-color-panel);
+  border-radius: 50%;
 }
 
 /* Une pile et une rangée, les deux seules dispositions dont les écrans ont besoin jusqu'ici. */
@@ -40,11 +129,13 @@ body {
   gap: var(--lq-space-2);
 }
 
+/* Les mesures du gabarit : 10 px entre un titre de section et son introduction, 30 px entre
+   l'introduction et ce qui suit. Les 30 px de marge autour du contenu sont ceux de la zone de contenu
+   du kit — l'écran n'en ajoute pas. */
 .mdk-screen {
   display: flex;
   flex-direction: column;
   gap: var(--lq-space-5);
-  padding: var(--lq-space-5);
   max-width: 1280px;
 }
 
@@ -53,6 +144,13 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--lq-space-4);
+  margin-bottom: calc(var(--lq-space-6) - var(--lq-space-5));
+}
+
+.mdk-screen__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* `auto-fit` plutôt qu'un nombre de colonnes : la rangée de valeurs se replie d'elle-même, et une
@@ -76,13 +174,14 @@ body {
 .mdk-specimens {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-  gap: var(--lq-space-4);
+  gap: var(--lq-space-5);
   align-items: start;
 }
 
 /* Un spécimen est un cadre de la vitrine, pas une `Card` du kit : il entoure le composant montré
-   sans prétendre en être un, et une `Card` montrée dans une `Card` se lirait double. Il en prend
-   pourtant l'allure — ombre et non bordure — pour que la page entière parle le langage du thème. */
+   sans prétendre en être un, et une `Card` montrée dans une `Card` se lirait double. Il reprend
+   pourtant, mesure pour mesure, l'anatomie d'une carte du gabarit Pages : ombre et non bordure,
+   petit titre en capitales sans filet dessous, corps à 20 px des bords. */
 .mdk-specimen {
   display: flex;
   flex-direction: column;
@@ -97,27 +196,35 @@ body {
 }
 
 .mdk-specimen__head {
-  display: flex;
-  flex-direction: column;
-  gap: var(--lq-space-1);
-  padding: var(--lq-space-3) var(--lq-space-4);
-  border-bottom: 1px solid var(--lq-color-border-subtle);
+  padding: var(--lq-space-4) var(--lq-space-4) 7px var(--lq-space-5);
 }
 
+/* Le petit titre lit les variables `--lq-label-*` du thème : c'est la même voix que les en-têtes de
+   tableau et les titres de carte du kit, et elle change avec eux. */
 .mdk-specimen__name {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: var(--lq-text-sm);
-  font-weight: 600;
-  color: var(--lq-color-accent);
+  margin: 0;
+  font-family: var(--lq-label-font);
+  font-size: var(--lq-label-size);
+  font-weight: var(--lq-label-weight);
+  letter-spacing: var(--lq-label-tracking);
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: var(--mdk-color-text-strong);
 }
 
 .mdk-specimen__body {
   display: flex;
   flex-direction: column;
-  gap: var(--lq-space-4);
-  padding: var(--lq-space-4);
+  gap: var(--lq-space-5);
+  padding: 10px var(--lq-space-5) var(--lq-space-5);
   min-width: 0;
-  color: var(--lq-color-text);
+  color: var(--mdk-color-text-strong);
+}
+
+.mdk-specimen__description {
+  margin: 0;
+  font-size: var(--lq-text-md);
+  line-height: var(--lq-line-height-body);
 }
 
 /* Une rangée qui se replie : plusieurs variantes d'un même composant côte à côte. */
@@ -131,10 +238,6 @@ body {
 @media (max-width: 640px) {
   .mdk-specimens {
     grid-template-columns: 1fr;
-  }
-
-  .mdk-screen {
-    padding: var(--lq-space-4);
   }
 
   .mdk-screen__head {
@@ -436,4 +539,11 @@ body {
   padding: var(--lq-space-3);
   border-right: 1px solid var(--lq-color-border-subtle);
   background: var(--lq-color-panel);
+}
+
+/* ---- écran « Champs » : les champs à libellé intégré ----
+   Le gabarit les empile à 10 px, plus serrés que les champs à libellé au-dessus. */
+.mdk-stack--inset,
+.mdk-row--inset {
+  gap: 10px;
 }
