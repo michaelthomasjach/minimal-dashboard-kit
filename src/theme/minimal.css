@@ -112,12 +112,13 @@
   --lq-button-font-size: 0.875rem;
 
   /* Les champs « traditionnels » du gabarit : 32 px de haut, 8 px de marge intérieure, valeur en
-     14 px ; libellé en 14 px de graisse normale, posé directement sur le champ. */
+     14 px ; libellé en 14 px de graisse normale, à 4 px du champ (le gabarit l'y colle, Michael le
+     veut aéré d'un cran) ; l'aide à 6 px dessous (4 + 2). */
   --lq-control-height: 32px;
   --lq-control-padding-x: 8px;
   --lq-control-font-size: 0.875rem;
-  --lq-field-gap: 0px;
-  --lq-field-helper-offset: 6px;
+  --lq-field-gap: 4px;
+  --lq-field-helper-offset: 2px;
   --lq-field-label-size: 0.875rem;
   --lq-field-label-weight: 400;
 

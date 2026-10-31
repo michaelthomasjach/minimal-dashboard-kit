@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
@@ -7,6 +7,7 @@ import {
   LinkIcon,
   LayersIcon,
   MoonIcon,
+  ProgressBar,
   SearchIcon,
   SearchOverlay,
   SidebarLayout,
@@ -19,6 +20,34 @@ import { searchComponents, searchScreens } from "./searchIndex";
 import "./showcase.css";
 
 type Surface = "light" | "dark";
+
+/**
+ * La barre de chargement du gabarit : un trait de 2 px de l'accent, collé au filet inférieur de la
+ * barre haute, qui court de gauche à droite à chaque changement d'écran puis s'efface. La vitrine
+ * n'attend rien du réseau — la barre dit seulement « l'écran a changé », comme chez Pages.
+ */
+function RouteProgress() {
+  const { pathname } = useLocation();
+  const [value, setValue] = useState<number | null>(null);
+  const first = useRef(true);
+
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    const steps: [number | null, number][] = [[12, 0], [64, 60], [88, 280], [100, 520], [null, 900]];
+    const timers = steps.map(([v, delay]) => window.setTimeout(() => setValue(v), delay));
+    return () => timers.forEach(window.clearTimeout);
+  }, [pathname]);
+
+  if (value === null) return null;
+  return (
+    <div className="mdk-route-progress" aria-hidden="true">
+      <ProgressBar value={value} thickness={2} />
+    </div>
+  );
+}
 
 /**
  * La barre haute, dans l'anatomie de celle du gabarit Pages : la marque, trois icônes d'action (la
@@ -41,6 +70,7 @@ function TopBar({
 }) {
   return (
     <div className="mdk-topbar">
+      <RouteProgress />
       {showBrand && <span className="mdk-logo mdk-topbar__brand">minimal</span>}
       <div className="mdk-topbar__icons">
         <button type="button" className="mdk-topbar__icon" aria-label="Notifications, 3 non lues">

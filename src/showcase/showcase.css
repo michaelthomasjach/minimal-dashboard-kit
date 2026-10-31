@@ -547,3 +547,18 @@ body {
 .mdk-row--inset {
   gap: 10px;
 }
+
+/* La barre de chargement, posée sur le filet inférieur de la barre haute et de bord à bord : la
+   barre haute a 20 px de marge intérieure de chaque côté. La piste est rendue transparente par sa
+   variable, sur ce seul conteneur — seul le trait de l'accent doit se voir. */
+.mdk-topbar {
+  position: relative;
+}
+
+.mdk-route-progress {
+  position: absolute;
+  right: calc(-1 * var(--lq-space-5));
+  bottom: -1px;
+  left: calc(-1 * var(--lq-space-5));
+  --lq-color-fill-track: transparent;
+}
