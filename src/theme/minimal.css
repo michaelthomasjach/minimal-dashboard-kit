@@ -26,142 +26,154 @@
  *
  * ## L'intention esthétique
  *
- * Une interface d'administration dense et plate. Les surfaces sont des aplats séparés par des
- * filets presque invisibles plutôt que par des ombres ; les rayons sont faibles mais non nuls (le
- * kit est à zéro partout, ce qui lui donne son allure de papier — ici on veut un écran) ; l'échelle
- * d'espacement est resserrée dans le haut, parce qu'un tableau de bord montre beaucoup de choses à
- * la fois et que 32 px entre deux blocs, à cette densité, est un trou ; et il n'y a **qu'une seule
- * couleur d'accent**, le reste du gris. Une interface qui compte six couleurs de marque n'a plus
- * de moyen de dire ce qui est important.
+ * Le langage visuel de `pages.revox.io` (gabarit « Pages », condensed), que Michael veut retrouver
+ * à l'identique. Les valeurs ci-dessous ne sont **pas** copiées de sa feuille de style : elles ont
+ * été **mesurées** dans un navigateur, `getComputedStyle` sur ses éléments rendus (cartes, boutons,
+ * champs, tableaux, alertes), puis reportées dans nos propres variables. Ni son CSS, ni ses
+ * gabarits HTML, ni ses images, ni sa fonte d'icônes `pages-icon` ne sont repris.
+ *
+ * Ce qui en ressort : un fond gris clair `#f4f4f4` sous des cartes blanches sans bordure, détachées
+ * par une ombre double très légère ; un texte gris `#4b4b4b` en Inter 14 px légèrement espacé ; des
+ * angles de 2 à 3 px ; un primaire violet `#7252d3` et une famille de couleurs franches (bleu
+ * « complete », vert, rouge, jaune) qui servent de pleins, pas seulement d'accents.
+ *
+ * Ce que les variables **ne peuvent pas** rendre — et qui manque donc encore pour que la
+ * ressemblance soit complète : les petits titres en Montserrat majuscule espacée (titres de carte,
+ * en-têtes de tableau, onglets, étiquettes), les graisses 500 là où le kit écrit 600 ou 700, et la
+ * barre latérale sombre. Les composants du kit écrivent ces valeurs en dur ; elles relèvent de
+ * nouvelles variables à ajouter **dans le kit**.
  */
 
 /* ---- l'échelle, commune aux deux surfaces ---- */
 
 .mdk.lq-root {
-  --lq-font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Le kit pose `--lq-font-family: var(--lq-font-inter)` en style en ligne (prop `font`) : c'est
+     donc la pile d'Inter qu'il faut redéfinir pour que la nôtre gagne. */
+  --lq-font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --lq-font-family: var(--lq-font-inter);
 
-  /* Des angles légèrement adoucis. Le kit est à 0 partout et l'assume — c'est son identité
-     « papier ». Ce thème-ci vise l'écran rétroéclairé, où un angle vif sur un aplat clair lit
-     comme un défaut de rendu plutôt que comme une intention. */
-  --lq-radius-sm: 4px;
-  --lq-radius-md: 6px;
-  --lq-radius-lg: 10px;
-  --lq-radius-pill: 999px;
+  /* Mesurés : 2 px sur les cartes, les champs et les modales ; 3 px sur les boutons, les
+     étiquettes et les menus ; 100 px sur les boutons arrondis. */
+  --lq-radius-sm: 2px;
+  --lq-radius-md: 3px;
+  --lq-radius-lg: 2px;
+  --lq-radius-pill: 100px;
 
-  /* Resserré par le haut : 4-8-12-16 sont inchangés, mais 24 et 32 tombent à 22 et 30. À cette
-     densité, les deux derniers crans servent à séparer des blocs entiers, et c'est là que la page
-     gagne une ligne de tableau de plus par écran. */
+  /* 20 px est la marge intérieure de toutes les cartes, 12 px celle des tableaux condensés. */
   --lq-space-1: 4px;
   --lq-space-2: 8px;
   --lq-space-3: 12px;
   --lq-space-4: 16px;
-  --lq-space-5: 22px;
+  --lq-space-5: 20px;
   --lq-space-6: 30px;
 
-  /* Une grille typographique plus courte que celle du kit. Un `h1` de 2,5 rem est une taille de
-     page d'accueil ; sur un tableau de bord, le plus gros texte de l'écran doit être une *valeur*,
-     pas un titre de section. */
-  --lq-text-h1: 1.875rem;
-  --lq-text-h2: 1.5rem;
-  --lq-text-h3: 1.25rem;
-  --lq-text-h4: 1.0625rem;
-  --lq-text-h5: 0.9375rem;
-  --lq-text-h6: 0.8125rem;
+  /* Corps à 14 px, petit texte à 12, étiquettes à 10,5 ; titres en graisse 500, de 44 à 16 px. */
+  --lq-text-h1: 2.75rem;
+  --lq-text-h2: 1.875rem;
+  --lq-text-h3: 1.6875rem;
+  --lq-text-h4: 1.375rem;
+  --lq-text-h5: 1rem;
+  --lq-text-h6: 0.875rem;
 
-  --lq-text-xs: 0.72rem;
-  --lq-text-sm: 0.8125rem;
+  --lq-text-xs: 0.65625rem;
+  --lq-text-sm: 0.75rem;
   --lq-text-md: 0.875rem;
   --lq-text-lg: 1rem;
   --lq-text-xl: 1.125rem;
 
-  --lq-line-height-body: 1.55;
+  --lq-line-height-body: 1.5;
   --lq-line-height-heading: 1.25;
 
-  --lq-transition-fast: 110ms ease;
-  --lq-transition-base: 180ms ease;
+  --lq-transition-fast: 120ms ease;
+  --lq-transition-base: 200ms ease;
+
+  /* La seule propriété qui n'est pas une variable : l'espacement de 0,01 em que le gabarit donne à
+     tout son texte courant. Posé sur la racine du thème et hérité, il ne vise aucun composant ; ceux
+     du kit qui fixent leur propre espacement le gardent. */
+  letter-spacing: 0.01em;
 }
 
 /* ---- surface claire ---- */
 
 .mdk.lq-root[data-lq-palette][data-lq-surface="light"] {
-  /* Le fond n'est pas blanc et les cartes le sont : c'est ce décalage, et lui seul, qui détache
-     les blocs. Deux pour cent de gris suffisent — au-delà, la page se met à peser. */
-  --lq-color-bg: #f6f7f9;
+  --lq-color-bg: #f4f4f4;
   --lq-color-panel: #ffffff;
 
-  --lq-color-text: #10131a;
-  --lq-color-text-muted: #697586;
+  --lq-color-text: #4b4b4b;
+  --lq-color-text-muted: rgba(33, 33, 33, 0.62);
 
-  --lq-color-border: #e3e6ea;
-  --lq-color-border-subtle: #eef0f3;
+  /* Deux filets : celui des champs et des boutons, un gris translucide qui fonce sur les fonds
+     teintés ; et celui des lignes de tableau et de la barre haute, presque blanc. */
+  --lq-color-border: rgba(33, 33, 33, 0.14);
+  --lq-color-border-subtle: rgba(224, 224, 224, 0.7);
 
-  --lq-color-accent: #4f5bd5;
+  --lq-color-accent: #7252d3;
   --lq-color-accent-contrast: #ffffff;
-  --lq-color-fill: #4f5bd5;
-  /* Assez foncé pour qu'un interrupteur éteint reste lisible sur une carte blanche, même désactivé
-     (le kit le passe alors à 40 % d'opacité) : à #e8eaef, il disparaissait. */
-  --lq-color-fill-track: #d6dae2;
+  --lq-color-fill: #7252d3;
+  --lq-color-fill-track: rgba(75, 75, 75, 0.2);
 
-  --lq-color-focus-ring: rgba(79, 91, 213, 0.38);
-  --lq-color-hover: rgba(79, 91, 213, 0.07);
-  --lq-color-overlay: rgba(12, 15, 22, 0.5);
+  --lq-color-focus-ring: rgba(114, 82, 211, 0.35);
+  --lq-color-hover: rgba(33, 33, 33, 0.05);
+  --lq-color-overlay: rgba(33, 33, 33, 0.5);
 
-  --lq-color-danger: #d14343;
-  --lq-color-warning: #c77d15;
-  --lq-color-info: #3a7bd5;
-  --lq-color-up: #2e9e6b;
-  --lq-color-down: #d14343;
+  --lq-color-danger: #d83c31;
+  /* Le jaune des boutons du gabarit (#ffd945) est illisible en texte, et le kit lit cette variable
+     aussi comme couleur de texte : on prend la moutarde de ses alertes. */
+  --lq-color-warning: #aa7918;
+  --lq-color-info: #0072ec;
+  --lq-color-up: #19ad79;
+  --lq-color-down: #d83c31;
 
-  --lq-color-amber: #d99a2b;
-  --lq-color-sky: #3a9fc4;
-  --lq-color-green: #2e9e6b;
-  --lq-color-rose: #c9568a;
-  --lq-color-violet: #7c5cd6;
+  --lq-color-amber: #ffd945;
+  --lq-color-sky: #0072ec;
+  --lq-color-green: #19ad79;
+  --lq-color-rose: #d83c31;
+  --lq-color-violet: #7252d3;
 
-  /* Presque rien. Les blocs sont séparés par leur filet, pas par leur relief ; l'ombre ne sert
-     qu'à poser ce qui flotte vraiment au-dessus de la page. */
-  --lq-shadow-panel: 0 1px 2px rgba(16, 24, 40, 0.05);
-  --lq-shadow-modal: 0 16px 48px rgba(16, 24, 40, 0.18);
+  /* L'ombre des cartes : un liseré d'un pixel et un léger poids dessous. C'est elle, et non une
+     bordure, qui détache une carte du fond. */
+  --lq-shadow-panel: 0 1px 2px rgba(33, 33, 33, 0.14), 0 0 1px rgba(0, 0, 0, 0.14);
+  /* Celle des menus déroulants, reprise pour tout ce qui flotte. */
+  --lq-shadow-modal: 0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1),
+    0 9px 24px rgba(15, 15, 15, 0.2);
 }
 
 /* ---- surface sombre ---- */
 
 .mdk.lq-root[data-lq-palette][data-lq-surface="dark"] {
-  /* Le même décalage qu'en clair, inversé : le fond est le plus sombre, les cartes remontent d'un
-     cran. Jamais de noir pur — sur un écran, le noir absolu contre un texte clair fait vibrer les
-     bords de glyphes. */
-  --lq-color-bg: #0f1218;
-  --lq-color-panel: #171b23;
+  /* Le gabarit n'a pas de surface sombre : celle-ci est dérivée de sa barre latérale (#2b303b et
+     son texte #929aac), avec les mêmes teintes de couleur éclaircies d'un cran pour garder le
+     contraste. C'est la seule partie du thème qui n'a pas de modèle à mesurer. */
+  --lq-color-bg: #21252d;
+  --lq-color-panel: #2b303b;
 
-  --lq-color-text: #e7eaf0;
-  --lq-color-text-muted: #98a1b2;
+  --lq-color-text: #e2e4e9;
+  --lq-color-text-muted: #929aac;
 
-  --lq-color-border: #272d38;
-  --lq-color-border-subtle: #1e232c;
+  --lq-color-border: rgba(255, 255, 255, 0.14);
+  --lq-color-border-subtle: rgba(255, 255, 255, 0.07);
 
-  /* L'accent s'éclaircit : l'indigo de la surface claire, posé sur du sombre, n'a plus assez de
-     contraste pour porter un texte. */
-  --lq-color-accent: #8b93ea;
-  --lq-color-accent-contrast: #0f1218;
-  --lq-color-fill: #8b93ea;
-  --lq-color-fill-track: #272d38;
+  --lq-color-accent: #9a83e6;
+  --lq-color-accent-contrast: #ffffff;
+  --lq-color-fill: #9a83e6;
+  --lq-color-fill-track: rgba(255, 255, 255, 0.14);
 
-  --lq-color-focus-ring: rgba(139, 147, 234, 0.45);
-  --lq-color-hover: rgba(139, 147, 234, 0.1);
-  --lq-color-overlay: rgba(5, 7, 11, 0.62);
+  --lq-color-focus-ring: rgba(154, 131, 230, 0.45);
+  --lq-color-hover: rgba(255, 255, 255, 0.06);
+  --lq-color-overlay: rgba(10, 12, 16, 0.62);
 
-  --lq-color-danger: #e4766f;
-  --lq-color-warning: #d9a14a;
-  --lq-color-info: #6aa6e8;
-  --lq-color-up: #52c08a;
-  --lq-color-down: #e4766f;
+  --lq-color-danger: #ec6a60;
+  --lq-color-warning: #f2c94c;
+  --lq-color-info: #4c9cf2;
+  --lq-color-up: #3cc795;
+  --lq-color-down: #ec6a60;
 
-  --lq-color-amber: #d9a14a;
-  --lq-color-sky: #63b4d1;
-  --lq-color-green: #52c08a;
-  --lq-color-rose: #d87fa8;
-  --lq-color-violet: #a28ae6;
+  --lq-color-amber: #ffd945;
+  --lq-color-sky: #4c9cf2;
+  --lq-color-green: #3cc795;
+  --lq-color-rose: #ec6a60;
+  --lq-color-violet: #9a83e6;
 
-  --lq-shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --lq-shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --lq-shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 1px rgba(0, 0, 0, 0.5);
+  --lq-shadow-modal: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 6px rgba(0, 0, 0, 0.3), 0 9px 24px rgba(0, 0, 0, 0.5);
 }

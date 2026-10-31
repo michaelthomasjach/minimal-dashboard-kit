@@ -74,13 +74,31 @@ changer le jour où c'est servi par autre chose.
 
 ## Le langage visuel
 
-Écrit de zéro, pas emprunté. Michael est parti d'un template commercial (`pages.revox.io`) comme
-référence d'ambition, mais sa feuille de style, ses gabarits et ses visuels ne sont **pas** à
-recopier — c'est un produit payant. Ce qui a été fait, et qu'il faut continuer : un système de
-design original de la même famille — admin dense et plat, neutres ardoise, **un seul** accent
-indigo, rayons faibles mais non nuls (le kit est à zéro partout, ce qui lui donne son allure de
-papier ; ici on vise l'écran), espacement resserré par le haut, grille typographique courte parce
-que sur un tableau de bord le plus gros texte de l'écran doit être une valeur, pas un titre.
+**Décision du 2026-10-31 (remplace la première pose) :** Michael veut le rendu de
+`pages.revox.io` (gabarit « Pages », variante condensed) **à l'identique**, polices, ombres et
+couleurs comprises. Le premier jet, un système original « de la même famille » (neutres ardoise,
+accent indigo), est abandonné.
+
+La méthode, qui tient aussi la ligne juridique (Pages est un produit payant) : on **mesure** les
+valeurs calculées de ses éléments rendus (`getComputedStyle` en Chrome headless sur ses pages de
+démonstration), puis on les reporte dans nos variables. On ne recopie **ni** sa feuille de style,
+**ni** ses gabarits HTML, **ni** ses images, **ni** sa fonte d'icônes `pages-icon`. Montserrat et
+Inter sont des polices libres (OFL), elles peuvent être chargées.
+
+Relevés de référence : fond `#f4f4f4`, texte `#4b4b4b` en Inter 14 px (espacement 0,01 em), texte
+atténué `rgba(33,33,33,.62)`, cartes blanches sans bordure avec ombre
+`0 1px 2px rgba(33,33,33,.14), 0 0 1px rgba(0,0,0,.14)`, rayon 2 px (cartes, champs) et 3 px
+(boutons, étiquettes), primaire `#7252d3`, complete `#0072ec`, succès `#19ad79`, danger `#d83c31`,
+avertissement `#ffd945`, barre latérale `#2b303b` / texte `#929aac`. Petits titres (titre de carte,
+en-tête de tableau, onglets, étiquettes) en **Montserrat 500, 10,5 px, majuscules, espacement
+0,06 em**. Titres en Inter **500**. Le gabarit n'a pas de surface sombre : la nôtre est dérivée de sa
+barre latérale.
+
+**Ce que les variables ne peuvent pas atteindre** et qui reste à faire **dans le kit** pour que la
+ressemblance soit complète : une seconde police pour les petits titres, la casse et l'espacement de
+ces petits titres, les graisses (le kit écrit 600/700 en dur, le gabarit est à 500), les tailles
+écrites en `rem` en dur dans les composants, et des variables propres à la barre latérale pour
+qu'elle puisse être sombre sur une page claire.
 
 ## Où on en est
 

@@ -81,14 +81,15 @@ body {
 }
 
 /* Un spécimen est un cadre de la vitrine, pas une `Card` du kit : il entoure le composant montré
-   sans prétendre en être un, et une `Card` montrée dans une `Card` se lirait double. */
+   sans prétendre en être un, et une `Card` montrée dans une `Card` se lirait double. Il en prend
+   pourtant l'allure — ombre et non bordure — pour que la page entière parle le langage du thème. */
 .mdk-specimen {
   display: flex;
   flex-direction: column;
   min-width: 0;
   background: var(--lq-color-panel);
-  border: 1px solid var(--lq-color-border);
   border-radius: var(--lq-radius-lg);
+  box-shadow: var(--lq-shadow-panel);
 }
 
 .mdk-specimen--wide {
