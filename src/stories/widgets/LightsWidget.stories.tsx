@@ -23,7 +23,7 @@ const onCount = (list: LightEntry[]) => {
  * fiche de la lampe (`LightDetailModal`).
  */
 const meta = {
-  title: "Composants/Widgets/LightsWidget",
+  title: "Widgets/LightsWidget",
   component: LightsWidget,
   parameters: {
     docs: {

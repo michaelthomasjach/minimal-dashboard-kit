@@ -8,7 +8,7 @@ import { PanelRow, Panel, Toggle, Badge, LevelGauge, Text } from "@michaelthomas
  * dessous.
  */
 const meta = {
-  title: "Composants/Conteneurs/PanelRow",
+  title: "Primitives/PanelRow",
   component: PanelRow,
   parameters: {
     docs: {

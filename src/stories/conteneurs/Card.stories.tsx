@@ -11,7 +11,7 @@ const RENEWALS = ORDERS.filter((o) => o.produit === "Abonnement annuel");
  * marqué que celui de `Panel`, et des marges plus généreuses.
  */
 const meta = {
-  title: "Composants/Conteneurs/Card",
+  title: "Primitives/Card",
   component: Card,
   parameters: {
     docs: {

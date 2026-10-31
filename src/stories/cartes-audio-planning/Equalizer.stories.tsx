@@ -19,7 +19,7 @@ const FIVE: EqualizerBand[] = [
  * réponse tracée à travers les poignées.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/Equalizer",
+  title: "Audio/Equalizer",
   component: Equalizer,
   parameters: {
     docs: {

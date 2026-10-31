@@ -33,7 +33,7 @@ const millionsDEuros = (v: number) => `${v} M€`;
  * La carte du monde par région : une exposition, un chiffre d'affaires, une répartition.
  */
 const meta = {
-  title: "Composants/Graphiques de marché/WorldExposureMap",
+  title: "Map/World Exposure Map",
   component: WorldExposureMap,
   parameters: {
     ...CODE_LISIBLE,

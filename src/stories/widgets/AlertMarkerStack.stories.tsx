@@ -20,7 +20,7 @@ const ALERTS: Omit<StackedAlert, "onClick">[] = [
  * replient en « +N ».
  */
 const meta = {
-  title: "Composants/Widgets/AlertMarkerStack",
+  title: "Widgets/AlertMarkerStack",
   component: AlertMarkerStack,
   parameters: {
     docs: {

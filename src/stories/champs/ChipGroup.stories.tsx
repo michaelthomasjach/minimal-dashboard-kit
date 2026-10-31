@@ -32,7 +32,7 @@ const PERIODES: ChipGroupOption[] = [
  * Une rangée de puces qui gère elle-même le choix : unique ou multiple.
  */
 const meta = {
-  title: "Composants/Champs/ChipGroup",
+  title: "Forms/ChipGroup",
   component: ChipGroup,
   parameters: {
     docs: {

@@ -17,7 +17,7 @@ const REPARTITION = PRODUITS.map((p, i) => ({
  * La barre de progression : déterminée, indéterminée, ou découpée en parts.
  */
 const meta = {
-  title: "Composants/Retours/ProgressBar",
+  title: "Feedback/ProgressBar",
   component: ProgressBar,
   parameters: {
     docs: {

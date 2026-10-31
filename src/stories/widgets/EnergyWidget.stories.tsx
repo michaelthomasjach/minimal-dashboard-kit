@@ -13,7 +13,7 @@ const ROWS: EnergyMetricRow[] = [
  * différentes — une valeur, des détails, ou une jauge.
  */
 const meta = {
-  title: "Composants/Widgets/EnergyWidget",
+  title: "Widgets/EnergyWidget",
   component: EnergyWidget,
   parameters: {
     docs: {

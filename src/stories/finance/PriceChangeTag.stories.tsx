@@ -9,7 +9,7 @@ const pct = (n: number) => `${n.toLocaleString("fr-FR", { minimumFractionDigits:
  * dans `StatCard`, `HoldingCard`, `ComparisonCard` et les widgets de portefeuille.
  */
 const meta = {
-  title: "Composants/Finance/PriceChangeTag",
+  title: "Finance/PriceChangeTag",
   component: PriceChangeTag,
   parameters: {
     docs: {

@@ -18,7 +18,7 @@ function parseJJMMAAAA(raw: string): Date | null {
  * La date tapée au clavier, sans calendrier : un `MaskedInput` au motif jj/mm/aaaa.
  */
 const meta = {
-  title: "Composants/Dates et curseurs/DateInput",
+  title: "Forms/DateInput",
   component: DateInput,
   parameters: {
     docs: {

@@ -23,7 +23,7 @@ const VILLES: TagInputSuggestion[] = [
  * La saisie d'étiquettes : plusieurs valeurs courtes dans un seul champ.
  */
 const meta = {
-  title: "Composants/Champs/TagInput",
+  title: "Forms/Input/TagInput",
   component: TagInput,
   parameters: {
     docs: {

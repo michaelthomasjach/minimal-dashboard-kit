@@ -32,7 +32,7 @@ const Overlay = ({ children }: { children: ReactNode }) => (
  * des particules qui y circulent. Ses couleurs viennent des variables du thème.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/InteractiveGlobe",
+  title: "Map/Interactive Globe",
   component: InteractiveGlobe,
   parameters: {
     docs: {

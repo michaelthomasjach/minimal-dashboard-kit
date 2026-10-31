@@ -131,7 +131,7 @@ const volumeCompact = (v: number) => v.toLocaleString("fr-FR", { notation: "comp
  * saisonnalité, replay.
  */
 const meta = {
-  title: "Composants/Graphiques de marché/CandlestickChart",
+  title: "Charts/CandlestickChart",
   component: CandlestickChart,
   parameters: {
     ...CODE_LISIBLE,

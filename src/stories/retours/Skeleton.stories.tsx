@@ -9,7 +9,7 @@ const euro = (n: number) => n.toLocaleString("fr-FR", { style: "currency", curre
  * Le bloc fantôme : la forme du contenu à venir, le temps qu'il arrive.
  */
 const meta = {
-  title: "Composants/Retours/Skeleton",
+  title: "Feedback/Skeleton",
   component: Skeleton,
   parameters: {
     docs: {

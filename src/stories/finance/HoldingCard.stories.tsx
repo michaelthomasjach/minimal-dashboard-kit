@@ -13,7 +13,7 @@ const [LVMH, AIRBUS] = HOLDINGS;
  * surveillance (`WatchlistWidget` n'est qu'une pile de `HoldingCard`).
  */
 const meta = {
-  title: "Composants/Finance/HoldingCard",
+  title: "Finance/HoldingCard",
   component: HoldingCard,
   parameters: {
     docs: {

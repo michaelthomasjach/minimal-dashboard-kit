@@ -32,7 +32,7 @@ const prixDeLAxe = (v: AxisDomain) => euros(Number(v));
  * L'axe d3 du kit, exposé pour composer ses propres graphiques.
  */
 const meta = {
-  title: "Composants/Graphiques/ChartAxis",
+  title: "Charts/ChartAxis",
   component: ChartAxis,
   parameters: {
     ...CODE_LISIBLE,

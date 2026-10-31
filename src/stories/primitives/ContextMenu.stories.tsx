@@ -55,7 +55,7 @@ function tracked(items: ContextMenuItem[], onPick: (label: string) => void): Con
  * remplace celui du navigateur.
  */
 const meta = {
-  title: "Composants/Primitives/ContextMenu",
+  title: "Primitives/ContextMenu",
   component: ContextMenu,
   parameters: {
     docs: {

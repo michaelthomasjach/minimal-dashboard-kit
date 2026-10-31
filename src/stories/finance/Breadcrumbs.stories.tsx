@@ -15,7 +15,7 @@ const PATH = [
  * Le fil d'Ariane : où l'on est, et le chemin pour remonter.
  */
 const meta = {
-  title: "Composants/Finance/Breadcrumbs",
+  title: "Layouts/Breadcrumbs",
   component: Breadcrumbs,
   parameters: {
     docs: {

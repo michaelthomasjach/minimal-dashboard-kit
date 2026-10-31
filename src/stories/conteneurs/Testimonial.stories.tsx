@@ -6,7 +6,7 @@ import { Testimonial, QuoteMark } from "@michaelthomasjach/liseuse-dashboard-kit
  * latéral teinté.
  */
 const meta = {
-  title: "Composants/Conteneurs/Testimonial",
+  title: "Primitives/Testimonial",
   component: Testimonial,
   parameters: {
     docs: {

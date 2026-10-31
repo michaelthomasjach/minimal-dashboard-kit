@@ -6,7 +6,7 @@ import { Heading, PanelRow } from "@michaelthomasjach/liseuse-dashboard-kit";
  * tableau de bord, le plus gros texte de l'écran doit être une valeur, pas un titre.
  */
 const meta = {
-  title: "Composants/Primitives/Heading",
+  title: "Primitives/Heading",
   component: Heading,
   parameters: {
     docs: {

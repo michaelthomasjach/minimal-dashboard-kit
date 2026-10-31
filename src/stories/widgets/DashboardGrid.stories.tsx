@@ -19,7 +19,7 @@ const Filler = ({ title, note }: { title: string; note: string }) => (
  * donne ses colonnes, elle donne l'écart du thème.
  */
 const meta = {
-  title: "Composants/Widgets/DashboardGrid",
+  title: "Widgets/DashboardGrid",
   component: DashboardGrid,
   parameters: {
     docs: {

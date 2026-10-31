@@ -21,7 +21,7 @@ const METERS: DemandMeter[] = DEMAND.map((d) => ({ ...d, icon: ICONS[d.id], tone
  * chevrons : c'est le moment d'agir.
  */
 const meta = {
-  title: "Composants/Widgets/DemandMeters",
+  title: "Widgets/DemandMeters",
   component: DemandMeters,
   parameters: {
     docs: {

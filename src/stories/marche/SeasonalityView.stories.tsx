@@ -9,7 +9,7 @@ import { CODE_LISIBLE, SOURCE_ABREGEE, pourcent } from "../graphiques/communs";
  * La saisonnalité d'un titre : le parcours de l'année en cours contre celui des années passées.
  */
 const meta = {
-  title: "Composants/Graphiques de marché/SeasonalityView",
+  title: "Charts/SeasonalityView",
   component: SeasonalityView,
   parameters: {
     ...CODE_LISIBLE,

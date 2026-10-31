@@ -28,7 +28,7 @@ const base100 = (y: number) => nombre(y, 1);
  * Courbes et aires sur un axe continu — le graphique de tendance générique du kit.
  */
 const meta = {
-  title: "Composants/Graphiques/LineAreaChart",
+  title: "Charts/LineAreaChart",
   component: LineAreaChart,
   parameters: {
     ...CODE_LISIBLE,

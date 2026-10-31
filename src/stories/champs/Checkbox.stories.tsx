@@ -7,7 +7,7 @@ import { Checkbox } from "@michaelthomasjach/liseuse-dashboard-kit";
  * La case à cocher, avec son état intermédiaire.
  */
 const meta = {
-  title: "Composants/Champs/Checkbox",
+  title: "Forms/Checkbox",
   component: Checkbox,
   parameters: {
     docs: {

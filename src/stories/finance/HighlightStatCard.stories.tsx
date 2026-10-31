@@ -13,7 +13,7 @@ const LOW_TREND = [...REVENUE_TREND].reverse();
  * valeur, une ligne d'explication.
  */
 const meta = {
-  title: "Composants/Finance/HighlightStatCard",
+  title: "Finance/HighlightStatCard",
   component: HighlightStatCard,
   parameters: {
     docs: {

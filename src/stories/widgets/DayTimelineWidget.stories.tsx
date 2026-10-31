@@ -24,7 +24,7 @@ const MILESTONES: Omit<DayTimelineItem, "onClick">[] = [
  * devient un bouton : c'est la rangée de scénarios d'un écran domotique.
  */
 const meta = {
-  title: "Composants/Widgets/DayTimelineWidget",
+  title: "Widgets/DayTimelineWidget",
   component: DayTimelineWidget,
   parameters: {
     docs: {

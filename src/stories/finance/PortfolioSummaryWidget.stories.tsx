@@ -19,7 +19,7 @@ const MONTHLY = Array.from({ length: 12 }, (_, i) => ({ x: i + 1, y: 96_000 + i 
  * courbe zoomable.
  */
 const meta = {
-  title: "Composants/Finance/PortfolioSummaryWidget",
+  title: "Finance Widgets/PortfolioSummaryWidget",
   component: PortfolioSummaryWidget,
   parameters: {
     docs: {

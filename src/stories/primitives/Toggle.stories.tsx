@@ -7,7 +7,7 @@ import { Toggle, Text, Panel, PanelRow } from "@michaelthomasjach/liseuse-dashbo
  * L'interrupteur marche / arrêt. Allumé, il prend le plein de l'accent du thème.
  */
 const meta = {
-  title: "Composants/Primitives/Toggle",
+  title: "Primitives/Toggle",
   component: Toggle,
   parameters: {
     docs: {

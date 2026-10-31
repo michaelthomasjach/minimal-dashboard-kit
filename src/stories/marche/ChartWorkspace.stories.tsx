@@ -40,7 +40,7 @@ const KAPA = (
  * alertes, éditeur de scripts et assistant.
  */
 const meta = {
-  title: "Composants/Graphiques de marché/ChartWorkspace",
+  title: "Charts/ChartWorkspace",
   component: ChartWorkspace,
   parameters: {
     ...CODE_LISIBLE,

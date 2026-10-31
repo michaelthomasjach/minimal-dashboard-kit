@@ -12,7 +12,7 @@ const instant = (d: Date | null) =>
  * Un jour et une heure : le calendrier de `DatePicker`, plus une colonne d'heures.
  */
 const meta = {
-  title: "Composants/Dates et curseurs/DateTimePicker",
+  title: "Forms/DateTimePicker",
   component: DateTimePicker,
   parameters: {
     docs: {

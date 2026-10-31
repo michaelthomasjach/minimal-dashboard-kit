@@ -9,7 +9,7 @@ import { ALLOCATION_TEAMS } from "../../showcase/widgetData";
  * reste libre.
  */
 const meta = {
-  title: "Composants/Widgets/AllocationSlider",
+  title: "Widgets/AllocationSlider",
   component: AllocationSlider,
   parameters: {
     docs: {

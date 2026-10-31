@@ -41,7 +41,7 @@ const AVEC_BULLES: HeatmapGroup[] = PORTEFEUILLE_SECTEURS.map((g) => ({
  * pour la variation.
  */
 const meta = {
-  title: "Composants/Graphiques/Heatmap",
+  title: "Charts/Heatmap",
   component: Heatmap,
   parameters: {
     ...CODE_LISIBLE,

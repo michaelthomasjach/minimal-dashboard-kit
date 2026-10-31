@@ -24,7 +24,7 @@ function useSlowScene() {
  * peut lui brancher sa propre horloge.
  */
 const meta = {
-  title: "Composants/Widgets/FpsMeter",
+  title: "Widgets/FpsMeter",
   component: FpsMeter,
   parameters: {
     docs: {

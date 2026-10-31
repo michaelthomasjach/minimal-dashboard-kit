@@ -9,7 +9,7 @@ const FILTRES = ["Lyon", "Q4 2026", "Prioritaire", "Payée"];
  * L'étiquette : un petit libellé encadré, retirable ou non.
  */
 const meta = {
-  title: "Composants/Champs/Tag",
+  title: "Forms/Tag",
   component: Tag,
   parameters: {
     docs: {

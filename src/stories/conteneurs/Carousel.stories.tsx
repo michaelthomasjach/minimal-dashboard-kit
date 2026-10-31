@@ -33,7 +33,7 @@ const KPIS = [
  * à l'autre.
  */
 const meta = {
-  title: "Composants/Conteneurs/Carousel",
+  title: "Primitives/Carousel",
   component: Carousel,
   parameters: {
     docs: {

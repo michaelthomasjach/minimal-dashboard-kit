@@ -5,7 +5,7 @@ import { LevelGauge, Panel, PanelRow, Text } from "@michaelthomasjach/liseuse-da
  * La jauge à segments : une rangée de petites barres qui se remplissent, et une étiquette.
  */
 const meta = {
-  title: "Composants/Primitives/LevelGauge",
+  title: "Primitives/LevelGauge",
   component: LevelGauge,
   parameters: {
     docs: {

@@ -21,7 +21,7 @@ const DENSITIES = [
  * sur le fond de la carte, le tout dans un seul filet.
  */
 const meta = {
-  title: "Composants/Primitives/SegmentedControl",
+  title: "Primitives/SegmentedControl",
   component: SegmentedControl,
   parameters: {
     docs: {

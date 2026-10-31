@@ -26,7 +26,7 @@ const ReportIllustration = () => (
  * l'accent, ou sur une image.
  */
 const meta = {
-  title: "Composants/Conteneurs/Jumbotron",
+  title: "Primitives/Jumbotron",
   component: Jumbotron,
   parameters: {
     docs: {

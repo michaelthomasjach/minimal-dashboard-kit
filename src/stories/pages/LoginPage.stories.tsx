@@ -81,7 +81,7 @@ function signIn(initialEmail: string, initialError: string | undefined) {
  * La page de connexion plein écran : une grande image, et le formulaire dans le dernier quart.
  */
 const meta = {
-  title: "Composants/Pages/LoginPage",
+  title: "Pages/LoginPage",
   component: LoginPage,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

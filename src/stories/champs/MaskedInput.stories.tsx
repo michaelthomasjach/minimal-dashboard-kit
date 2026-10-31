@@ -8,7 +8,7 @@ import { MaskedInput, Text } from "@michaelthomasjach/liseuse-dashboard-kit";
  * préréglages : pour tout autre format de chiffres (IBAN, SIRET, code postal…), c'est lui.
  */
 const meta = {
-  title: "Composants/Champs/MaskedInput",
+  title: "Forms/Input/MaskedInput",
   component: MaskedInput,
   parameters: {
     docs: {

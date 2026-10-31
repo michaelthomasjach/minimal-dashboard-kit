@@ -17,7 +17,7 @@ const NOTE = <span aria-hidden="true">♪</span>;
  * jauge de volume. Le lecteur lui-même est ailleurs — le widget ne joue rien.
  */
 const meta = {
-  title: "Composants/Widgets/MusicPlayerWidget",
+  title: "Widgets/MusicPlayerWidget",
   component: MusicPlayerWidget,
   parameters: {
     docs: {

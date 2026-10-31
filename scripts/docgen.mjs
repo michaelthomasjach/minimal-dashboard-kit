@@ -8,12 +8,17 @@
 // (le `label` et le `size` d'AlertMarker se retrouvaient sur Input). Une table de props fausse est
 // pire que pas de table : ici, chaque prop est lue sur le type réel du premier paramètre du composant.
 import ts from "typescript";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import path from "node:path";
 
+// Le Storybook rend le source du kit voisin (voir .storybook/main.ts) : la table des props le lit
+// donc lui aussi, pour décrire exactement ce qui est affiché. Sans le dépôt voisin, on retombe sur
+// le fichier de déclarations du paquet installé.
+const kitDir = path.resolve("..", "Dashboard liseuse");
+const kitSource = path.join(kitDir, "src", "index.ts");
 // Le paquet n'exporte pas son package.json : on le lit par son chemin dans node_modules.
-const pkgDir = path.join("node_modules", "@michaelthomasjach", "liseuse-dashboard-kit");
-const dts = path.resolve(pkgDir, "dist", "index.d.ts");
+const pkgDir = existsSync(kitSource) ? kitDir : path.join("node_modules", "@michaelthomasjach", "liseuse-dashboard-kit");
+const dts = existsSync(kitSource) ? kitSource : path.resolve(pkgDir, "dist", "index.d.ts");
 const { version } = JSON.parse(readFileSync(path.join(pkgDir, "package.json"), "utf8"));
 
 // Résolution « node » : sans elle, `import { ReactNode } from "react"` ne se résout pas depuis le
@@ -98,4 +103,4 @@ for (const exported of checker.getExportsOfModule(module)) {
 
 mkdirSync("src/stories", { recursive: true });
 writeFileSync("src/stories/docgen.json", JSON.stringify({ version, components: out }, null, 1));
-console.log(`kit ${version} : ${Object.keys(out).length} composants documentés`);
+console.log(`kit ${version} (${path.relative(".", dts)}) : ${Object.keys(out).length} composants documentés`);

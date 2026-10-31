@@ -35,7 +35,7 @@ function Etape({ titre, date }: { titre: string; date: string }) {
  * Les étapes d'un parcours, enfilées sur une ligne.
  */
 const meta = {
-  title: "Composants/Retours/Stepper",
+  title: "Feedback/Stepper",
   component: Stepper,
   parameters: {
     docs: {

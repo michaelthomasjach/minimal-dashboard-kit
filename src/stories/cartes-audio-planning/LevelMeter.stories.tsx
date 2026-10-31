@@ -37,7 +37,7 @@ function useSignal(running: boolean) {
  * besoin, l'échelle en dB.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/LevelMeter",
+  title: "Audio/LevelMeter",
   component: LevelMeter,
   parameters: {
     docs: {

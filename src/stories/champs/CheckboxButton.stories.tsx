@@ -7,7 +7,7 @@ import { CheckboxButton, Text } from "@michaelthomasjach/liseuse-dashboard-kit";
  * Une case à cocher qui a l'allure d'un bouton.
  */
 const meta = {
-  title: "Composants/Champs/CheckboxButton",
+  title: "Forms/CheckboxButton",
   component: CheckboxButton,
   parameters: {
     docs: {

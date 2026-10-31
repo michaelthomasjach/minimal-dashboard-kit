@@ -12,7 +12,7 @@ const NOTE =
  * L'éditeur de texte riche : une barre d'outils au-dessus d'un document modifiable, qui produit du HTML.
  */
 const meta = {
-  title: "Composants/Champs/WysiwygEditor",
+  title: "Forms/WysiwygEditor",
   component: WysiwygEditor,
   parameters: {
     docs: {

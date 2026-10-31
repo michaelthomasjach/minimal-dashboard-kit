@@ -26,7 +26,7 @@ const cadre = {
  * La carte de détail d'un repère d'évènement, montrée hors de son graphique.
  */
 const meta = {
-  title: "Composants/Graphiques de marché/ChartEventTooltip",
+  title: "Charts/ChartEventTooltip",
   component: ChartEventTooltip,
   parameters: {
     ...CODE_LISIBLE,

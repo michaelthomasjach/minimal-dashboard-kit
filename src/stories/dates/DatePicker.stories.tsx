@@ -12,7 +12,7 @@ const jour = (d: Date | null) => (d ? d.toLocaleDateString("fr-FR", { weekday: "
  * Un jour choisi au calendrier.
  */
 const meta = {
-  title: "Composants/Dates et curseurs/DatePicker",
+  title: "Forms/DatePicker",
   component: DatePicker,
   parameters: {
     docs: {

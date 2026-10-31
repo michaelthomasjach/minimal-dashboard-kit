@@ -10,7 +10,7 @@ const pct = (n: number) => `${n.toLocaleString("fr-FR", { minimumFractionDigits:
  * par une ombre, au libellé en petites capitales Montserrat.
  */
 const meta = {
-  title: "Composants/Finance/StatCard",
+  title: "Finance/StatCard",
   component: StatCard,
   parameters: {
     docs: {

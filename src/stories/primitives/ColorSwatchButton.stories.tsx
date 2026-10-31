@@ -17,7 +17,7 @@ const SWATCHES = [
  * qui se coche.
  */
 const meta = {
-  title: "Composants/Primitives/ColorSwatchButton",
+  title: "Primitives/ColorSwatchButton",
   component: ColorSwatchButton,
   parameters: {
     docs: {

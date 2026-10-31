@@ -13,7 +13,7 @@ const ACTIONS = ["Dupliquer la facture", "Envoyer un rappel", "Exporter en PDF",
  * Le panneau flottant ancré sur lequel reposent `Select`, `InputDropdown` et les calendriers.
  */
 const meta = {
-  title: "Composants/Champs/Popover",
+  title: "Forms/Popover",
   component: Popover,
   parameters: {
     ...IN_FRAME,

@@ -7,7 +7,7 @@ import { InputNumber, Text } from "@michaelthomasjach/liseuse-dashboard-kit";
  * La saisie d'un nombre : bornes, pas, préfixe ou suffixe, et les deux séparateurs décimaux.
  */
 const meta = {
-  title: "Composants/Champs/InputNumber",
+  title: "Forms/Input/InputNumber",
   component: InputNumber,
   parameters: {
     docs: {

@@ -61,7 +61,7 @@ const openMenu: Story["play"] = async ({ canvasElement }) => {
  * Le sélecteur de compte : avatar, nom, et un menu qui s'ouvre au clic.
  */
 const meta = {
-  title: "Composants/Finance/UserMenu",
+  title: "Layouts/UserMenu",
   component: UserMenu,
   parameters: {
     docs: {

@@ -18,7 +18,7 @@ const CHANNELS = [
  * La ligne de légende : une pastille, un intitulé, une valeur, un filet dessous.
  */
 const meta = {
-  title: "Composants/Primitives/LegendRow",
+  title: "Primitives/LegendRow",
   component: LegendRow,
   parameters: {
     docs: {

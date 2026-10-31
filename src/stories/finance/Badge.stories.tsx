@@ -7,7 +7,7 @@ import { ORDERS, statutTone } from "../../showcase/demoData";
  * (`--lq-radius-pill`) et les couleurs franches du gabarit Pages.
  */
 const meta = {
-  title: "Composants/Finance/Badge",
+  title: "Primitives/Badge",
   component: Badge,
   parameters: {
     docs: {

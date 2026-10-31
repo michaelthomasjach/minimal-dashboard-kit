@@ -6,7 +6,7 @@ import { Tooltip, Button, IconButton, RefreshIcon, SettingsIcon, TrashIcon } fro
  * l'élément survolé ou focalisé.
  */
 const meta = {
-  title: "Composants/Primitives/Tooltip",
+  title: "Primitives/Tooltip",
   component: Tooltip,
   parameters: {
     docs: {

@@ -17,7 +17,7 @@ const entier = (v: number) => nombre(v);
  * L'anneau de répartition : les parts d'un tout, et le total au centre.
  */
 const meta = {
-  title: "Composants/Graphiques/DonutChart",
+  title: "Charts/DonutChart",
   component: DonutChart,
   parameters: {
     ...CODE_LISIBLE,

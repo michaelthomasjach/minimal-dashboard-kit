@@ -131,7 +131,7 @@ function IconGrid({ size, animated }: GalleryArgs) {
  * héritée et leurs animations.
  */
 const meta = {
-  title: "Composants/Icônes/Galerie",
+  title: "Foundations/Icons",
   parameters: {
     docs: {
       description: {

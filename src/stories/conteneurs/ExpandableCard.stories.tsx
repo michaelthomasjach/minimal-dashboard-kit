@@ -7,7 +7,7 @@ import { ExpandableCard, PanelRow, Button, Text } from "@michaelthomasjach/liseu
  * La carte repliable : l'en-tête reste, le corps se replie derrière un chevron.
  */
 const meta = {
-  title: "Composants/Conteneurs/ExpandableCard",
+  title: "Primitives/ExpandableCard",
   component: ExpandableCard,
   parameters: {
     docs: {

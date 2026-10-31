@@ -7,7 +7,7 @@ import { InputPassword, CodeIcon } from "@michaelthomasjach/liseuse-dashboard-ki
  * Le mot de passe : masqué par défaut, avec l'œil qui l'affiche.
  */
 const meta = {
-  title: "Composants/Champs/InputPassword",
+  title: "Forms/Input/InputPassword",
   component: InputPassword,
   parameters: {
     docs: {

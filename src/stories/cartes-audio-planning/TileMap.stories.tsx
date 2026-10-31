@@ -22,7 +22,7 @@ const FRAME = { border: "1px solid var(--lq-color-border-subtle)", borderRadius:
  * Le fond vient d'OpenStreetMap ; tracés et repères sont dessinés par-dessus, aux couleurs du thème.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/TileMap",
+  title: "Map/Tile Map",
   component: TileMap,
   parameters: {
     docs: {

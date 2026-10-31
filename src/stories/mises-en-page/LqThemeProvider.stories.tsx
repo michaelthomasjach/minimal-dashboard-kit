@@ -87,7 +87,7 @@ function ThemeSettings() {
  * Le fournisseur de thème du kit — celui que `MinimalTheme` enveloppe.
  */
 const meta = {
-  title: "Composants/Mises en page/LqThemeProvider",
+  title: "Foundations/LqThemeProvider",
   component: LqThemeProvider,
   parameters: {
     docs: {

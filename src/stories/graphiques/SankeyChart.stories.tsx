@@ -21,7 +21,7 @@ const COMPTE_LINKS_COLORES: SankeyLinkDatum[] = COMPTE_LINKS.map((l) =>
  * Le diagramme de flux : d'où vient une quantité, et où elle va.
  */
 const meta = {
-  title: "Composants/Graphiques/SankeyChart",
+  title: "Charts/SankeyChart",
   component: SankeyChart,
   parameters: {
     ...CODE_LISIBLE,

@@ -80,7 +80,7 @@ function shell(long: boolean) {
  * La coquille d'application à barre haute : la marque, le menu horizontal, les actions.
  */
 const meta = {
-  title: "Composants/Mises en page/HeaderLayout",
+  title: "Layouts/HeaderLayout",
   component: HeaderLayout,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

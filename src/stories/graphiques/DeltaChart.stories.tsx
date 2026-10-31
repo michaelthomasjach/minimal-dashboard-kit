@@ -23,7 +23,7 @@ const PONT_TRESORERIE_COLORE: DeltaChartItem[] = PONT_TRESORERIE.map((i) =>
  * La cascade : comment une suite d'ajouts et de retraits mène d'un total à un autre.
  */
 const meta = {
-  title: "Composants/Graphiques/DeltaChart",
+  title: "Charts/DeltaChart",
   component: DeltaChart,
   parameters: {
     ...CODE_LISIBLE,

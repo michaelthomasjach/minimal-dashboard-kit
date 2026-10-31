@@ -41,7 +41,7 @@ const discountFooter = (close: () => void): ReactNode => (
  * La fenêtre modale : un dialogue centré sur un voile, déplaçable par son en-tête.
  */
 const meta = {
-  title: "Composants/Conteneurs/Modal",
+  title: "Primitives/Modal",
   component: Modal,
   parameters: {
     docs: {

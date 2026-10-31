@@ -18,7 +18,7 @@ const Neighbour = ({ n }: { n: number }) => (
  * qu'on y met avec l'écart du thème.
  */
 const meta = {
-  title: "Composants/Widgets/DashboardGridItem",
+  title: "Widgets/DashboardGridItem",
   component: DashboardGridItem,
   parameters: {
     docs: {

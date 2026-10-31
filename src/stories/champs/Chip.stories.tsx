@@ -7,7 +7,7 @@ import { Chip, StarIcon, UserIcon } from "@michaelthomasjach/liseuse-dashboard-k
  * La puce de filtre : une pastille arrondie qu'on allume et qu'on éteint.
  */
 const meta = {
-  title: "Composants/Champs/Chip",
+  title: "Forms/Chip",
   component: Chip,
   parameters: {
     docs: {

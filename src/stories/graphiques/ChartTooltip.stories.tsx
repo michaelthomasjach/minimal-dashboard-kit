@@ -12,7 +12,7 @@ const HAUTEUR = 220;
  * La bulle de survol des graphiques, exposée pour composer les siens.
  */
 const meta = {
-  title: "Composants/Graphiques/ChartTooltip",
+  title: "Charts/ChartTooltip",
   component: ChartTooltip,
   parameters: {
     ...CODE_LISIBLE,

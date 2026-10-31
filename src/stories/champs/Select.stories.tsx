@@ -21,7 +21,7 @@ const PAYS: SelectOption[] = [
  * La liste déroulante fermée : un déclencheur qui montre le choix, une liste qui s'ouvre dessous.
  */
 const meta = {
-  title: "Composants/Champs/Select",
+  title: "Forms/Input/Select",
   component: Select,
   parameters: {
     docs: {

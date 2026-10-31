@@ -91,7 +91,7 @@ function signUp(initial: Fields, initialTerms: boolean, validateOnMount: boolean
  * générales.
  */
 const meta = {
-  title: "Composants/Pages/SignUpPage",
+  title: "Pages/SignUpPage",
   component: SignUpPage,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

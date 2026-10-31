@@ -16,7 +16,7 @@ function demoFiles(): File[] {
  * La zone de dépôt de fichiers, avec la liste de ceux qui sont retenus.
  */
 const meta = {
-  title: "Composants/Champs/Dropzone",
+  title: "Forms/Dropzone",
   component: Dropzone,
   parameters: {
     docs: {

@@ -7,7 +7,7 @@ import { PanelCollapse, Panel, PanelRow, Button } from "@michaelthomasjach/liseu
  * L'enveloppe qui rend repliable un panneau tout fait, sans toucher au composant qui le rend.
  */
 const meta = {
-  title: "Composants/Conteneurs/PanelCollapse",
+  title: "Primitives/PanelCollapse",
   component: PanelCollapse,
   parameters: {
     docs: {

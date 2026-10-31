@@ -5,7 +5,7 @@ import { Button, Spinner, Text } from "@michaelthomasjach/liseuse-dashboard-kit"
  * L'anneau de chargement indéterminé.
  */
 const meta = {
-  title: "Composants/Retours/Spinner",
+  title: "Feedback/Spinner",
   component: Spinner,
   parameters: {
     docs: {

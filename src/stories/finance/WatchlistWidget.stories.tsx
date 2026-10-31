@@ -13,7 +13,7 @@ const ITEMS: WatchlistItem[] = HOLDINGS.map((h) => ({ ...h, formatPrice: price }
  * La liste de surveillance prête à poser : une carte titrée qui empile des `HoldingCard`.
  */
 const meta = {
-  title: "Composants/Finance/WatchlistWidget",
+  title: "Finance Widgets/WatchlistWidget",
   component: WatchlistWidget,
   parameters: {
     docs: {

@@ -17,7 +17,7 @@ import {
  * angles de 3 px des autres contrôles.
  */
 const meta = {
-  title: "Composants/Primitives/IconButton",
+  title: "Primitives/IconButton",
   component: IconButton,
   parameters: {
     docs: {

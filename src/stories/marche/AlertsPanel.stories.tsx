@@ -9,7 +9,7 @@ import { CODE_LISIBLE, SOURCE_ABREGEE } from "../graphiques/communs";
  * La liste des alertes posées sur un graphique de cours.
  */
 const meta = {
-  title: "Composants/Graphiques de marché/AlertsPanel",
+  title: "Charts/AlertsPanel",
   component: AlertsPanel,
   parameters: {
     ...CODE_LISIBLE,

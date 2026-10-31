@@ -6,7 +6,7 @@ import { ClockWidget, HomeIcon, MoonIcon, SunIcon } from "@michaelthomasjach/lis
  * thème « minimal », c'est l'un des rares endroits où le plus gros texte de l'écran est légitime.
  */
 const meta = {
-  title: "Composants/Widgets/ClockWidget",
+  title: "Widgets/ClockWidget",
   component: ClockWidget,
   parameters: {
     docs: {

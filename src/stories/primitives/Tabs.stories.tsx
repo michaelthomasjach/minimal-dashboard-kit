@@ -24,7 +24,7 @@ const euros = (n: number) => `${n.toLocaleString("fr-FR")} €`;
  * l'autre ; les intitulés suivent le style des petites capitales du thème.
  */
 const meta = {
-  title: "Composants/Primitives/Tabs",
+  title: "Primitives/Tabs",
   component: Tabs,
   parameters: {
     docs: {

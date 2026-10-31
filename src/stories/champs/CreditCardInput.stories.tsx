@@ -22,7 +22,7 @@ function luhnOk(digits: string): boolean {
  * Le numéro de carte de paiement : un `MaskedInput` à seize chiffres groupés par quatre.
  */
 const meta = {
-  title: "Composants/Champs/CreditCardInput",
+  title: "Forms/Input/CreditCardInput",
   component: CreditCardInput,
   parameters: {
     docs: {

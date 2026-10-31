@@ -45,7 +45,7 @@ const sectionItems = (active: string | null, setActive: (fn: (a: string | null) 
  * une infobulle.
  */
 const meta = {
-  title: "Composants/Widgets/IconDock",
+  title: "Widgets/IconDock",
   component: IconDock,
   parameters: {
     docs: {

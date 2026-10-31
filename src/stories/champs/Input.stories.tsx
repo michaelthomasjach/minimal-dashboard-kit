@@ -7,7 +7,7 @@ import { Input, SearchIcon, UserIcon } from "@michaelthomasjach/liseuse-dashboar
  * l'apparence : filet, hauteur, état d'erreur.
  */
 const meta = {
-  title: "Composants/Champs/Input",
+  title: "Forms/Input/Input",
   component: Input,
   parameters: {
     docs: {

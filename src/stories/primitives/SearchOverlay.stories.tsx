@@ -52,7 +52,7 @@ function searchSections(query: string, withIcons: boolean): SearchOverlaySection
  * résultats groupés par section.
  */
 const meta = {
-  title: "Composants/Primitives/SearchOverlay",
+  title: "Primitives/SearchOverlay",
   component: SearchOverlay,
   parameters: {
     docs: {

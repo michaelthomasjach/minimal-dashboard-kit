@@ -14,7 +14,7 @@ const STATUS: Record<SchedulerTaskStatus, string> = { planned: "prévue", runnin
  * et les étapes qui la composent. Celle que `Scheduler` ouvre au clic, utilisable seule.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/SchedulerTaskModal",
+  title: "Scheduler/SchedulerTaskModal",
   component: SchedulerTaskModal,
   parameters: {
     docs: {

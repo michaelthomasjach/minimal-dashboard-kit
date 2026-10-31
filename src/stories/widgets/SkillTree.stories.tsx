@@ -88,7 +88,7 @@ function useSkillGame(base: Base[], initialOwned: string[], initialPoints: numbe
  * programme de montée en compétence d'une équipe support.
  */
 const meta = {
-  title: "Composants/Widgets/SkillTree",
+  title: "Widgets/SkillTree",
   component: SkillTree,
   parameters: {
     docs: {

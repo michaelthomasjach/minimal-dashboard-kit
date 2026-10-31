@@ -24,7 +24,7 @@ const signe = (v: number) => `${v > 0 ? "+" : ""}${v}`;
  * Le demi-cadran à aiguille : une valeur lue contre une échelle bornée.
  */
 const meta = {
-  title: "Composants/Graphiques/GaugeChart",
+  title: "Charts/GaugeChart",
   component: GaugeChart,
   parameters: {
     ...CODE_LISIBLE,

@@ -9,7 +9,7 @@ import { LIGHT_COLORS, WHITE_BALANCES } from "../../showcase/widgetData";
  * `LightsWidget` ouvre quand on touche une rangée.
  */
 const meta = {
-  title: "Composants/Widgets/LightDetailModal",
+  title: "Widgets/LightDetailModal",
   component: LightDetailModal,
   parameters: {
     docs: {

@@ -88,7 +88,7 @@ const entier = (v: number) => String(Math.round(v));
  * La matrice de cases notées — une matrice de corrélation, d'abord.
  */
 const meta = {
-  title: "Composants/Graphiques/MatrixChart",
+  title: "Charts/MatrixChart",
   component: MatrixChart,
   parameters: {
     ...CODE_LISIBLE,

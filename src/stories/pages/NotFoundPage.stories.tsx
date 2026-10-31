@@ -6,7 +6,7 @@ import { NotFoundPage, FileIcon, SearchIcon } from "@michaelthomasjach/liseuse-d
  * La page introuvable : un grand code, un message, et le chemin du retour.
  */
 const meta = {
-  title: "Composants/Pages/NotFoundPage",
+  title: "Pages/NotFoundPage",
   component: NotFoundPage,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

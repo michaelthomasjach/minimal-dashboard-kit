@@ -8,7 +8,7 @@ import { Panel, PanelRow, Button, Toggle, Badge } from "@michaelthomasjach/liseu
  * intitulé en petites capitales.
  */
 const meta = {
-  title: "Composants/Conteneurs/Panel",
+  title: "Primitives/Panel",
   component: Panel,
   parameters: {
     docs: {

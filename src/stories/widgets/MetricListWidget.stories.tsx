@@ -7,7 +7,7 @@ import { INDOOR_TEMPERATURES, SERVICES } from "../../showcase/widgetData";
  * de valeurs.
  */
 const meta = {
-  title: "Composants/Widgets/MetricListWidget",
+  title: "Widgets/MetricListWidget",
   component: MetricListWidget,
   parameters: {
     docs: {

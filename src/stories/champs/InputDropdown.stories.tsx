@@ -21,7 +21,7 @@ const COMMANDES = ORDERS.map((o) => ({ value: o.id, label: `${o.id} · ${o.clien
  * Le champ à liste filtrée (combobox) : on tape, la liste se resserre, on choisit.
  */
 const meta = {
-  title: "Composants/Champs/InputDropdown",
+  title: "Forms/Input/InputDropdown",
   component: InputDropdown,
   parameters: {
     docs: {

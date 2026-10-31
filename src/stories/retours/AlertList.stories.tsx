@@ -21,7 +21,7 @@ const ALERTES: AlertListItem[] = [
  * La liste des alertes en cours, triée par gravité.
  */
 const meta = {
-  title: "Composants/Retours/AlertList",
+  title: "Feedback/AlertList",
   component: AlertList,
   parameters: {
     docs: {

@@ -10,7 +10,7 @@ const M = 60;
  * partie plutôt que l'heure murale — pour celle-ci, `ClockWidget`.
  */
 const meta = {
-  title: "Composants/Widgets/AnalogClock",
+  title: "Widgets/AnalogClock",
   component: AnalogClock,
   parameters: {
     docs: {

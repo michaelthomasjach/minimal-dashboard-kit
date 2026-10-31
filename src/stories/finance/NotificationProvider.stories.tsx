@@ -71,7 +71,7 @@ function Playground({ options }: { options: NotificationOptions }) {
  * La file de notifications du kit : un provider posé une fois, et `notify()` partout dessous.
  */
 const meta = {
-  title: "Composants/Finance/NotificationProvider",
+  title: "Feedback/NotificationProvider",
   component: NotificationProvider,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

@@ -14,7 +14,7 @@ const duree = (r: DateRange) => (r.start && r.end ? Math.round((r.end.getTime() 
  * Une période choisie en deux clics sur le même calendrier.
  */
 const meta = {
-  title: "Composants/Dates et curseurs/DateRangePicker",
+  title: "Forms/DateRangePicker",
   component: DateRangePicker,
   parameters: {
     docs: {

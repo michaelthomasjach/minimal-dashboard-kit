@@ -8,7 +8,7 @@ import { Button, CheckIcon, PlusIcon, ArrowRightIcon } from "@michaelthomasjach/
  * il passe au plein de l'accent.
  */
 const meta = {
-  title: "Composants/Primitives/Button",
+  title: "Primitives/Button",
   component: Button,
   parameters: {
     docs: {

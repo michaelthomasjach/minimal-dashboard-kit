@@ -20,7 +20,7 @@ const DELAY_BANDS = [
  * dérive.
  */
 const meta = {
-  title: "Composants/Finance/GaugeCard",
+  title: "Finance/GaugeCard",
   component: GaugeCard,
   parameters: {
     docs: {

@@ -112,7 +112,7 @@ function EcranFactice({ onRelaunch, journal, vue, onVue }: { onRelaunch: () => v
  * La visite guidée : une carte qui se déplace d'un élément de l'écran à l'autre pour le présenter.
  */
 const meta = {
-  title: "Composants/Retours/GuidedTour",
+  title: "Feedback/GuidedTour",
   component: GuidedTour,
   parameters: {
     ...IN_FRAME,

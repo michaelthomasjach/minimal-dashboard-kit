@@ -9,7 +9,7 @@ const [MRR, CONVERSION] = KPI_TENDANCES;
  * La ligne de tendance sans axe, pour une cellule, une tuile, une liste.
  */
 const meta = {
-  title: "Composants/Graphiques/Sparkline",
+  title: "Charts/Sparkline",
   component: Sparkline,
   parameters: {
     ...CODE_LISIBLE,

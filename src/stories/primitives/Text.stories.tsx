@@ -5,7 +5,7 @@ import { Text } from "@michaelthomasjach/liseuse-dashboard-kit";
  * Le texte courant, sur l'échelle typographique du thème : paragraphes, légendes, aides.
  */
 const meta = {
-  title: "Composants/Primitives/Text",
+  title: "Primitives/Text",
   component: Text,
   parameters: {
     docs: {

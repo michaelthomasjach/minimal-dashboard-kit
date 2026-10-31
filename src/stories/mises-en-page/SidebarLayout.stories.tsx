@@ -133,7 +133,7 @@ function shell(initial: string) {
  * La coquille d'application à barre latérale — celle de la vitrine, en variante `rail`.
  */
 const meta = {
-  title: "Composants/Mises en page/SidebarLayout",
+  title: "Layouts/SidebarLayout",
   component: SidebarLayout,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

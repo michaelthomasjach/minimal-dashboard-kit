@@ -55,7 +55,7 @@ const SETTINGS_TABS: TabbedCardTab[] = [
  * dessous.
  */
 const meta = {
-  title: "Composants/Conteneurs/TabbedCard",
+  title: "Primitives/TabbedCard",
   component: TabbedCard,
   parameters: {
     docs: {

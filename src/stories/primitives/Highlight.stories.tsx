@@ -7,7 +7,7 @@ import { REVENUE_TREND, SIGNUPS_TREND, CHURN_TREND } from "../../showcase/demoDa
  * premier plan, et pas de boîte.
  */
 const meta = {
-  title: "Composants/Primitives/Highlight",
+  title: "Primitives/Highlight",
   component: Highlight,
   parameters: {
     docs: {

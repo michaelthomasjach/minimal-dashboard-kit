@@ -8,7 +8,7 @@ const euro = (n: number) => n.toLocaleString("fr-FR", { style: "currency", curre
  * ce mois-ci et le précédent.
  */
 const meta = {
-  title: "Composants/Finance/ComparisonCard",
+  title: "Finance/ComparisonCard",
   component: ComparisonCard,
   parameters: {
     docs: {

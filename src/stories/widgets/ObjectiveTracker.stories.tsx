@@ -19,7 +19,7 @@ function stepsAt(done: number, onValidate?: () => void): Objective[] {
  * fait, ce qu'on fait maintenant, ce qui vient après.
  */
 const meta = {
-  title: "Composants/Widgets/ObjectiveTracker",
+  title: "Widgets/ObjectiveTracker",
   component: ObjectiveTracker,
   parameters: {
     docs: {

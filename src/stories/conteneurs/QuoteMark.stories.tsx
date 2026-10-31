@@ -5,7 +5,7 @@ import { QuoteMark, Testimonial, Text } from "@michaelthomasjach/liseuse-dashboa
  * Le mot mis en avant dans une citation : un `<mark>` sur un fond teinté de l'accent.
  */
 const meta = {
-  title: "Composants/Conteneurs/QuoteMark",
+  title: "Primitives/QuoteMark",
   component: QuoteMark,
   parameters: {
     docs: {

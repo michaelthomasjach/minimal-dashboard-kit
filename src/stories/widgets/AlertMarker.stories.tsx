@@ -9,7 +9,7 @@ import { Caption, Pin, Stage } from "./_Stage";
  * on est emmené au problème.
  */
 const meta = {
-  title: "Composants/Widgets/AlertMarker",
+  title: "Widgets/AlertMarker",
   component: AlertMarker,
   parameters: {
     docs: {

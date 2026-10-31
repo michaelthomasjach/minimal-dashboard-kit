@@ -26,7 +26,7 @@ const DAYS: WeatherForecastDay[] = FORECAST.map((f) => ({ id: f.id, label: f.lab
  * aucune donnée : il met en page des chaînes déjà formatées.
  */
 const meta = {
-  title: "Composants/Widgets/WeatherWidget",
+  title: "Widgets/WeatherWidget",
   component: WeatherWidget,
   parameters: {
     docs: {

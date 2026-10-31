@@ -7,7 +7,7 @@ import { GAINERS, LOSERS } from "../../showcase/demoData";
  * Les plus fortes variations de la séance, en deux onglets : hausses et baisses.
  */
 const meta = {
-  title: "Composants/Finance/MarketMoversWidget",
+  title: "Finance Widgets/MarketMoversWidget",
   component: MarketMoversWidget,
   parameters: {
     docs: {

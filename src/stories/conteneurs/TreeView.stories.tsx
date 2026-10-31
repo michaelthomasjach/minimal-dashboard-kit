@@ -64,7 +64,7 @@ function find(nodes: TreeNode[], id: string | null): TreeNode | undefined {
  * L'arborescence : des nœuds qui se déplient, une sélection, et en option le glisser-déposer.
  */
 const meta = {
-  title: "Composants/Conteneurs/TreeView",
+  title: "Primitives/TreeView",
   component: TreeView,
   parameters: {
     docs: {

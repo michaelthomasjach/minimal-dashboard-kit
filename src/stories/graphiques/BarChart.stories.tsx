@@ -24,7 +24,7 @@ const PREVISION_TRIMESTRES: BarDatum[] = [
  * Barres par catégorie — une série, ou plusieurs groupées côte à côte.
  */
 const meta = {
-  title: "Composants/Graphiques/BarChart",
+  title: "Charts/BarChart",
   component: BarChart,
   parameters: {
     ...CODE_LISIBLE,

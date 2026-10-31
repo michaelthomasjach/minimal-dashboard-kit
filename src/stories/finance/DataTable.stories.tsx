@@ -24,7 +24,7 @@ const ORDER_COLUMNS: DataTableColumn<Order>[] = [
  * Le tableau de données du kit : triable, défilant à l'horizontale quand il manque de place.
  */
 const meta = {
-  title: "Composants/Finance/DataTable",
+  title: "Finance/DataTable",
   component: DataTable<Order>,
   parameters: {
     docs: {

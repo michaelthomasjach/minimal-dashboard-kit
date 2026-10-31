@@ -12,7 +12,7 @@ const PERIODS = [
  * La rangée de contrôles sous un intitulé commun.
  */
 const meta = {
-  title: "Composants/Primitives/FieldGroup",
+  title: "Primitives/FieldGroup",
   component: FieldGroup,
   parameters: {
     docs: {

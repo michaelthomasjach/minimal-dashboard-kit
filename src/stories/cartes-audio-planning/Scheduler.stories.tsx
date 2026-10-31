@@ -22,7 +22,7 @@ const WEEK: SchedulerTask[] = SCHEDULE_TASKS.map((task, i) => ({ ...task, start:
  * tâches en blocs qu'on glisse, qu'on dépose sur une autre ligne et qu'on tire par un bord.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/Scheduler",
+  title: "Scheduler/Planning de ressources",
   component: Scheduler,
   parameters: {
     docs: {

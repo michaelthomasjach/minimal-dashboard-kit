@@ -54,7 +54,7 @@ const TONES: NotificationOptions[] = [
  * `NotificationProvider`.
  */
 const meta = {
-  title: "Composants/Finance/Notification",
+  title: "Feedback/Notification",
   component: Notification,
   parameters: {
     layout: "fullscreen", mdkPadding: 0,

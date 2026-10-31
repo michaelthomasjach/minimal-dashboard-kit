@@ -14,7 +14,7 @@ const MONTANT_MAX = Math.ceil(Math.max(...ORDERS.map((o) => o.montant)) / 1000) 
  * Un intervalle de valeurs à deux poignées.
  */
 const meta = {
-  title: "Composants/Dates et curseurs/RangeSlider",
+  title: "Forms/RangeSlider",
   component: RangeSlider,
   parameters: {
     docs: {

@@ -26,7 +26,7 @@ const columnTitle = (id: string) => KANBAN_COLUMNS.find((c) => c.id === id)?.tit
  * dessine et signale ; l'application range.
  */
 const meta = {
-  title: "Composants/Widgets/KanbanBoard",
+  title: "Widgets/KanbanBoard",
   component: KanbanBoard,
   parameters: {
     docs: {

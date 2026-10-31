@@ -7,7 +7,7 @@ import { PhoneInput, Text } from "@michaelthomasjach/liseuse-dashboard-kit";
  * Le numéro de téléphone : un `MaskedInput` réglé sur le mobile français, avec son icône.
  */
 const meta = {
-  title: "Composants/Champs/PhoneInput",
+  title: "Forms/Input/PhoneInput",
   component: PhoneInput,
   parameters: {
     docs: {

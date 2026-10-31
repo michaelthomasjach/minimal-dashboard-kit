@@ -9,7 +9,7 @@ import { KNOWLEDGE } from "../../showcase/widgetData";
  * renvoient les unes aux autres.
  */
 const meta = {
-  title: "Composants/Widgets/KnowledgeBase",
+  title: "Widgets/KnowledgeBase",
   component: KnowledgeBase,
   parameters: {
     docs: {

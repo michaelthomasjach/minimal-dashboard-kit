@@ -8,7 +8,7 @@ import { BalanceControl } from "@michaelthomasjach/liseuse-dashboard-kit";
  * du milieu.
  */
 const meta = {
-  title: "Composants/Cartes, audio, planning/BalanceControl",
+  title: "Audio/BalanceControl",
   component: BalanceControl,
   parameters: {
     docs: {

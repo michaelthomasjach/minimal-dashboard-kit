@@ -20,7 +20,7 @@ const openCount = (list: ShutterEntry[]) => {
  * mot d'état. Les interrupteurs de la story répondent.
  */
 const meta = {
-  title: "Composants/Widgets/ShuttersWidget",
+  title: "Widgets/ShuttersWidget",
   component: ShuttersWidget,
   parameters: {
     docs: {

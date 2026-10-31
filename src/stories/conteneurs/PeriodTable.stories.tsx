@@ -120,7 +120,7 @@ const KPI_ROWS: PeriodTableRow[] = [
  * s'imbriquent et se replient, et une variation sous chaque montant.
  */
 const meta = {
-  title: "Composants/Conteneurs/PeriodTable",
+  title: "Primitives/PeriodTable",
   component: PeriodTable,
   parameters: {
     docs: {

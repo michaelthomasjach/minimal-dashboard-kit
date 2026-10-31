@@ -24,7 +24,7 @@ const CURL = `curl -X POST https://api.exemple.fr/v1/relances \\
  * bouton pour copier.
  */
 const meta = {
-  title: "Composants/Primitives/CodeBlock",
+  title: "Primitives/CodeBlock",
   component: CodeBlock,
   parameters: {
     docs: {

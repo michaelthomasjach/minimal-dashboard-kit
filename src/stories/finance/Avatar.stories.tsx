@@ -16,7 +16,7 @@ const PORTRAIT =
  * L'avatar rond du kit : une photo si on en a une, sinon les initiales du nom.
  */
 const meta = {
-  title: "Composants/Finance/Avatar",
+  title: "Primitives/Avatar",
   component: Avatar,
   parameters: {
     docs: {
