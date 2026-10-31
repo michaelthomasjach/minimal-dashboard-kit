@@ -1,0 +1,82 @@
+/* La mise en page de la vitrine — et **rien d'autre**.
+ *
+ * La frontière vaut d'être tenue : tout ce qui touche à l'apparence d'un composant appartient aux
+ * variables (`src/theme/minimal.css`), et tout ce qui touche à la disposition d'un écran appartient
+ * ici. Le jour où une règle de ce fichier se met à viser un `.lq-…`, c'est le signe qu'elle visait
+ * en fait une variable manquante, ou une refonte d'anatomie à faire dans le kit.
+ *
+ * Tout est écrit avec les variables du thème, pas avec des valeurs en dur : la vitrine suit donc
+ * la surface claire comme la sombre sans une seule règle en double. */
+
+body {
+  margin: 0;
+}
+
+.mdk-logo {
+  font-weight: 700;
+  font-size: var(--lq-text-lg);
+  letter-spacing: -0.02em;
+  color: var(--lq-color-text);
+}
+
+.mdk-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lq-space-4);
+  width: 100%;
+}
+
+/* Une pile et une rangée, les deux seules dispositions dont les écrans ont besoin jusqu'ici. */
+.mdk-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-4);
+}
+
+.mdk-row {
+  display: flex;
+  align-items: center;
+  gap: var(--lq-space-2);
+}
+
+.mdk-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-5);
+  padding: var(--lq-space-5);
+  max-width: 1280px;
+}
+
+.mdk-screen__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--lq-space-4);
+}
+
+/* `auto-fit` plutôt qu'un nombre de colonnes : la rangée de valeurs se replie d'elle-même, et une
+   tuile de plus dans l'écran ne demande pas de toucher à la feuille. */
+.mdk-grid {
+  display: grid;
+  gap: var(--lq-space-4);
+}
+
+.mdk-grid--stats {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.mdk-grid--forms {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .mdk-screen {
+    padding: var(--lq-space-4);
+  }
+
+  .mdk-screen__head {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "minimal-dashboard-kit",
+  "version": "0.1.0",
+  "description": "Couche de thème « minimal » par-dessus @michaelthomasjach/liseuse-dashboard-kit, et la vitrine qui la montre.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@michaelthomasjach/liseuse-dashboard-kit": "^0.180.0",
+    "d3": "^7.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.1"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.7"
+  }
+}
