@@ -1,0 +1,21 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { TOKEN_GROUPS, TokenTable } from "./_docs/TokenTable";
+
+<Meta title="Thème/Variables" />
+
+# Les variables du thème
+
+Chaque valeur ci-dessous est **lue dans le navigateur** sur une racine du thème (`getComputedStyle`), pas recopiée : la table montre ce que `src/theme/minimal.css` pose réellement.
+
+Les valeurs ont été **mesurées** sur le gabarit *Pages* de Revox (fond `#f4f4f4`, texte `#4b4b4b` en Inter 14 px, primaire `#7252d3`, cartes sans bordure détachées par une ombre double, petits titres en Montserrat 10,5 px capitales). Le gabarit n'a pas de surface sombre : la nôtre est dérivée de sa barre latérale.
+
+{TOKEN_GROUPS.map((g) => (
+  <section key={g.title} style={{ marginBottom: 40 }}>
+    <h2>{g.title}</h2>
+    <p>{g.note}</p>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <TokenTable tokens={g.tokens} surface="light" />
+      <TokenTable tokens={g.tokens} surface="dark" />
+    </div>
+  </section>
+))}

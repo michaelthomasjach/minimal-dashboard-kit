@@ -1,0 +1,50 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# minimal-dashboard-kit
+
+La couche de thème **« minimal »** posée sur [`@michaelthomasjach/liseuse-dashboard-kit`](https://github.com/michaelthomasjach/liseuse-dashboard-kit), et la documentation de **tous ses composants** rendus dans ce thème.
+
+Ce Storybook n'est pas celui du kit : chaque story y passe par `MinimalTheme`, et c'est donc le rendu que vous obtiendrez dans une application qui l'utilise — le langage visuel du gabarit d'administration *Pages*, mesuré valeur par valeur.
+
+## Ce que vous trouverez ici
+
+- **Thème** — chaque variable posée par la couche, avec sa valeur calculée en clair et en sombre.
+- **Composants** — un fichier par composant du kit, rangé par famille. Pour chacun :
+  - l'onglet **Docs** : la description, une story par variante avec son **code**, et la **table complète des props** (type, valeurs possibles, valeur par défaut, description) ;
+  - l'onglet **Canvas** : le composant seul, avec ses **contrôles** pour changer ses props en direct.
+- La bascule **Surface** de la barre d'outils fait passer toutes les stories en clair ou en sombre.
+
+## Utiliser la couche
+
+```tsx
+import { MinimalTheme } from "minimal-dashboard-kit/theme";
+import { Button, Card } from "@michaelthomasjach/liseuse-dashboard-kit";
+
+export function App() {
+  return (
+    <MinimalTheme surface="light">
+      <Card title="Commandes">
+        <Button>Exporter</Button>
+      </Card>
+    </MinimalTheme>
+  );
+}
+```
+
+`MinimalTheme` charge la feuille du kit et celle du thème, et pose la classe `mdk` sur la racine du thème. L'application charge les polices elle-même :
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600&display=swap" rel="stylesheet" />
+```
+
+## Comment la couche tient
+
+Aucun composant du kit n'écrit de couleur, de rayon ni d'espacement en dur : ils lisent tous des variables `--lq-*` posées sur leur ancêtre `.lq-root`. La couche les redéfinit sous un sélecteur **strictement plus spécifique** (`.mdk.lq-root…`), si bien qu'elle gagne quel que soit l'ordre de chargement des feuilles. Pour la typographie, les champs, la barre latérale et les lignes de données, le kit lit en plus des variables **optionnelles** (`--lq-label-*`, `--lq-caption-*`, `--lq-font-weight-*`, `--lq-control-*`, `--lq-sidebar-*`…) dont la valeur par défaut est son propre rendu.
+
+Une logique de composant, un correctif ou un composant manquant se font **dans le kit** ; la couleur, la taille et l'espace se font **ici**.
+
+## Les props
+
+Les tables de props sont extraites du fichier de déclarations du kit publié (`npm run docgen`) : elles décrivent exactement la version installée. Les descriptions viennent de la documentation du code du kit, souvent en anglais pour les plus anciens composants.
