@@ -1,5 +1,5 @@
 {
- "version": "0.182.0",
+ "version": "0.184.0",
  "components": {
   "AlertList": {
    "displayName": "AlertList",
@@ -2826,6 +2826,94 @@
       "raw": "((open: boolean) => void) | undefined"
      },
      "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "tone": {
+     "name": "tone",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "SurfaceTone | undefined",
+      "value": [
+       {
+        "value": "\"warning\""
+       },
+       {
+        "value": "\"info\""
+       },
+       {
+        "value": "\"default\""
+       },
+       {
+        "value": "\"accent\""
+       },
+       {
+        "value": "\"success\""
+       },
+       {
+        "value": "\"danger\""
+       },
+       {
+        "value": "\"dark\""
+       }
+      ]
+     },
+     "description": "Remplit la carte d'une couleur du thème et passe tout son contenu en contraste — les tuiles\r\npleines d'un tableau de bord (ventes de la semaine en vert, météo en gris). Le contenu suit sans\r\nrien savoir du ton : la carte redéfinit pour ses enfants les variables de texte, de bordure et\r\nd'accent (voir `tone.css`), si bien qu'une sparkline ou une ligne de panneau posées dedans\r\npassent elles aussi en contraste. Absent ou `\"default\"` : rien ne change.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "controls": {
+     "name": "controls",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Contrôles posés à droite de l'en-tête (un menu « … », un bouton). L'en-tête s'affiche dès\r\nqu'il y en a, même sans `title`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "onRefresh": {
+     "name": "onRefresh",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "(() => void | Promise<unknown>) | undefined"
+     },
+     "description": "Ajoute à droite de l'en-tête le petit cercle « rafraîchir ». Si la fonction rend une promesse,\r\nla carte se voile et le cercle tourne jusqu'à ce qu'elle soit tenue ou rompue ; sinon, c'est\r\n`refreshing` qui pilote cet état.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "refreshing": {
+     "name": "refreshing",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "État « en cours de rafraîchissement », contrôlé : voile sur la carte et cercle qui tourne.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "refreshLabel": {
+     "name": "refreshLabel",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Libellé du bouton de rafraîchissement. Défaut : « Rafraîchir ».",
      "defaultValue": null,
      "parent": {
       "name": "CardProps"
@@ -6777,6 +6865,332 @@
     }
    }
   },
+  "DotMap": {
+   "displayName": "DotMap",
+   "description": "Carte du monde en pointillés : la terre dessinée par une grille régulière de points, des repères\r\ndessus, et une infobulle au clic sur un repère — le bloc « géolocalisation » d'un tableau de bord.\r\n\r\nLes terres viennent du même `world-atlas` que `WorldExposureMap`. Projection, cadrage (`bounds`,\r\nou `center` et `zoom`), pas et taille des points se règlent ; les couleurs suivent le thème, ou le\r\n`tone` qui remplit la carte. Les points sont un seul tracé SVG — des segments de longueur nulle à\r\nbouts ronds ou carrés —, si bien que leur couleur reste une variable CSS et que des milliers de\r\npoints ne pèsent qu'un élément.\r\n\r\nLes repères sont des boutons : ils se prennent au clavier, Entrée ouvre l'infobulle, Échap la\r\nferme. L'infobulle est hors de la surface colorée, pour garder les couleurs ordinaires du panneau.",
+   "props": {
+    "markers": {
+     "name": "markers",
+     "required": false,
+     "type": {
+      "name": "DotMapMarker[] | undefined",
+      "raw": "DotMapMarker[] | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "height": {
+     "name": "height",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Hauteur en px. Défaut : 320.",
+     "defaultValue": {
+      "value": "320"
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "width": {
+     "name": "width",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Largeur en px. Par défaut, toute la largeur du conteneur, suivie quand il change de taille.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "projection": {
+     "name": "projection",
+     "required": false,
+     "type": {
+      "name": "DotMapProjection | (() => GeoProjection) | undefined",
+      "raw": "DotMapProjection | (() => GeoProjection) | undefined"
+     },
+     "description": "Projection : un nom, ou une fabrique de projection d3 (`() => d3.geoAlbers()`) — définie hors du\r\nrendu, sans quoi la grille est recalculée à chaque rendu. Défaut : `\"naturalEarth\"`.",
+     "defaultValue": {
+      "value": "\"naturalEarth\""
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "bounds": {
+     "name": "bounds",
+     "required": false,
+     "type": {
+      "name": "[DotMapLonLat, DotMapLonLat] | undefined",
+      "raw": "[DotMapLonLat, DotMapLonLat] | undefined"
+     },
+     "description": "Région à cadrer : `[[ouest, sud], [est, nord]]`, en degrés. Elle tient entière dans la carte, la\r\nterre alentour remplit le reste. Par défaut, le monde entier.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "center": {
+     "name": "center",
+     "required": false,
+     "type": {
+      "name": "DotMapLonLat | undefined",
+      "raw": "DotMapLonLat | undefined"
+     },
+     "description": "Point placé au centre de la carte, après le cadrage.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "zoom": {
+     "name": "zoom",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Grossissement appliqué après le cadrage, autour de `center`. Défaut : 1.",
+     "defaultValue": {
+      "value": "1"
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "dotSpacing": {
+     "name": "dotSpacing",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Pas de la grille de points, en px. Défaut : 6.",
+     "defaultValue": {
+      "value": "6"
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "dotSize": {
+     "name": "dotSize",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Diamètre (ou côté) d'un point, en px. Défaut : 3.",
+     "defaultValue": {
+      "value": "3"
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "dotShape": {
+     "name": "dotShape",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "'circle' | 'square' | undefined",
+      "value": [
+       {
+        "value": "\"circle\""
+       },
+       {
+        "value": "\"square\""
+       }
+      ]
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "background": {
+     "name": "background",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Couleur de fond (toute couleur CSS, `var(--lq-…)` compris). Par défaut, celle du panneau, ou le\r\nremplissage du `tone`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "dotColor": {
+     "name": "dotColor",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Couleur des points. Par défaut, le texte à 30 % ; à 70 % sur un `tone`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "tone": {
+     "name": "tone",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "SurfaceTone | undefined",
+      "value": [
+       {
+        "value": "\"warning\""
+       },
+       {
+        "value": "\"info\""
+       },
+       {
+        "value": "\"default\""
+       },
+       {
+        "value": "\"accent\""
+       },
+       {
+        "value": "\"success\""
+       },
+       {
+        "value": "\"danger\""
+       },
+       {
+        "value": "\"dark\""
+       }
+      ]
+     },
+     "description": "Remplit la carte d'une couleur du thème et passe les points en contraste — voir `SurfaceTone`.\r\nDéfaut : `\"default\"`.",
+     "defaultValue": {
+      "value": "\"default\""
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "antarctica": {
+     "name": "antarctica",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Garde l'Antarctique dans la grille. Défaut : false.",
+     "defaultValue": {
+      "value": "false"
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "pulse": {
+     "name": "pulse",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Halo animé autour des repères (coupé par `prefers-reduced-motion`). Défaut : true.",
+     "defaultValue": {
+      "value": "true"
+     },
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "selectedId": {
+     "name": "selectedId",
+     "required": false,
+     "type": {
+      "name": "string | null | undefined",
+      "raw": "string | null | undefined"
+     },
+     "description": "Repère dont l'infobulle est ouverte (contrôlé) ; `null` pour aucun.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "defaultSelectedId": {
+     "name": "defaultSelectedId",
+     "required": false,
+     "type": {
+      "name": "string | null | undefined",
+      "raw": "string | null | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "onSelect": {
+     "name": "onSelect",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((id: string | null) => void) | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "label": {
+     "name": "label",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Nom de la carte pour les lecteurs d'écran. Défaut : « Carte ».",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "closeLabel": {
+     "name": "closeLabel",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    },
+    "className": {
+     "name": "className",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DotMapProps"
+     }
+    }
+   }
+  },
   "Dropzone": {
    "displayName": "Dropzone",
    "description": "Drag-and-drop file upload zone with click-to-browse fallback and an optional selected-files list.",
@@ -7287,6 +7701,94 @@
       "raw": "((open: boolean) => void) | undefined"
      },
      "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "tone": {
+     "name": "tone",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "SurfaceTone | undefined",
+      "value": [
+       {
+        "value": "\"warning\""
+       },
+       {
+        "value": "\"info\""
+       },
+       {
+        "value": "\"default\""
+       },
+       {
+        "value": "\"accent\""
+       },
+       {
+        "value": "\"success\""
+       },
+       {
+        "value": "\"danger\""
+       },
+       {
+        "value": "\"dark\""
+       }
+      ]
+     },
+     "description": "Remplit la carte d'une couleur du thème et passe tout son contenu en contraste — les tuiles\r\npleines d'un tableau de bord (ventes de la semaine en vert, météo en gris). Le contenu suit sans\r\nrien savoir du ton : la carte redéfinit pour ses enfants les variables de texte, de bordure et\r\nd'accent (voir `tone.css`), si bien qu'une sparkline ou une ligne de panneau posées dedans\r\npassent elles aussi en contraste. Absent ou `\"default\"` : rien ne change.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "controls": {
+     "name": "controls",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Contrôles posés à droite de l'en-tête (un menu « … », un bouton). L'en-tête s'affiche dès\r\nqu'il y en a, même sans `title`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "onRefresh": {
+     "name": "onRefresh",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "(() => void | Promise<unknown>) | undefined"
+     },
+     "description": "Ajoute à droite de l'en-tête le petit cercle « rafraîchir ». Si la fonction rend une promesse,\r\nla carte se voile et le cercle tourne jusqu'à ce qu'elle soit tenue ou rompue ; sinon, c'est\r\n`refreshing` qui pilote cet état.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "refreshing": {
+     "name": "refreshing",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "État « en cours de rafraîchissement », contrôlé : voile sur la carte et cercle qui tourne.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "refreshLabel": {
+     "name": "refreshLabel",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Libellé du bouton de rafraîchissement. Défaut : « Rafraîchir ».",
      "defaultValue": null,
      "parent": {
       "name": "CardProps"
@@ -9827,6 +10329,218 @@
     }
    }
   },
+  "LiveTile": {
+   "displayName": "LiveTile",
+   "description": "Tuile « vivante » : plusieurs faces de même taille qui se relaient à intervalle régulier, la\r\nnouvelle montant par le bas pendant que l'ancienne sort par le haut — les tuiles qui bougent d'un\r\ntableau de bord d'administration (actualité, cours, date du jour).\r\n\r\nLes valeurs par défaut sont celles mesurées sur ce genre de tableau de bord : une face reste 3 s,\r\nglisse en 500 ms sur la courbe `ease`. Le glissement passe par l'API Web Animations plutôt que par\r\nune transition CSS : avec deux faces, celle qui vient de sortir par le haut est aussi la prochaine à\r\nentrer par le bas, et une transition la ferait redescendre à travers la tuile ; une animation part\r\ntoujours de la position qu'on lui donne.\r\n\r\nAccessibilité : le défilement est suspendu au survol et tant que le focus clavier est dans la\r\ntuile, `paused` permet de l'arrêter tout à fait, les faces cachées sont retirées de l'arbre\r\nd'accessibilité et la zone n'est pas annoncée (`aria-live=\"off\"`) — un lecteur d'écran n'a pas à\r\nêtre interrompu toutes les trois secondes. Avec `prefers-reduced-motion`, les faces se relaient\r\nsans glisser.",
+   "props": {
+    "faces": {
+     "name": "faces",
+     "required": true,
+     "type": {
+      "name": "(ReactNode | LiveTileFace)[]",
+      "raw": "(ReactNode | LiveTileFace)[]"
+     },
+     "description": "Les faces, dans l'ordre de passage : des `LiveTileFace` composées, ou des nœuds React libres —\r\nles deux se mélangent.",
+     "defaultValue": null,
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "interval": {
+     "name": "interval",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Temps pendant lequel une face reste immobile, glissement non compris, en ms. Défaut : 3000.",
+     "defaultValue": {
+      "value": "3000"
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "duration": {
+     "name": "duration",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Durée du glissement, en ms. Défaut : 500.",
+     "defaultValue": {
+      "value": "500"
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "easing": {
+     "name": "easing",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Courbe du glissement (toute valeur CSS `<easing-function>`). Défaut : `\"ease\"`.",
+     "defaultValue": {
+      "value": "\"ease\""
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "height": {
+     "name": "height",
+     "required": false,
+     "type": {
+      "name": "string | number | undefined",
+      "raw": "string | number | undefined"
+     },
+     "description": "Hauteur de la tuile : un nombre de pixels, ou toute longueur CSS (`\"100%\"` pour remplir une\r\ncellule de grille). Défaut : 320.",
+     "defaultValue": {
+      "value": "320"
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "tone": {
+     "name": "tone",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "SurfaceTone | undefined",
+      "value": [
+       {
+        "value": "\"warning\""
+       },
+       {
+        "value": "\"info\""
+       },
+       {
+        "value": "\"default\""
+       },
+       {
+        "value": "\"accent\""
+       },
+       {
+        "value": "\"success\""
+       },
+       {
+        "value": "\"danger\""
+       },
+       {
+        "value": "\"dark\""
+       }
+      ]
+     },
+     "description": "Couleur de fond des faces qui n'en fixent pas — voir `SurfaceTone`. Défaut : `\"accent\"`.",
+     "defaultValue": {
+      "value": "\"accent\""
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "pauseOnHover": {
+     "name": "pauseOnHover",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Suspend le défilement tant que le pointeur survole la tuile ou que le focus clavier y est.\r\nDéfaut : true.",
+     "defaultValue": {
+      "value": "true"
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "paused": {
+     "name": "paused",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Arrête le défilement (contrôlé), par exemple derrière un bouton « pause ».",
+     "defaultValue": null,
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "defaultIndex": {
+     "name": "defaultIndex",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Face affichée au montage. Défaut : 0.",
+     "defaultValue": {
+      "value": "0"
+     },
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "onIndexChange": {
+     "name": "onIndexChange",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((index: number) => void) | undefined"
+     },
+     "description": "Appelé à chaque changement de face, avec le rang de la nouvelle.",
+     "defaultValue": null,
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "controls": {
+     "name": "controls",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Contrôles posés en haut à droite, au-dessus des faces : ils restent en place quand elles\r\nglissent.",
+     "defaultValue": null,
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "label": {
+     "name": "label",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Nom de la tuile pour les lecteurs d'écran.",
+     "defaultValue": null,
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    },
+    "className": {
+     "name": "className",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "LiveTileProps"
+     }
+    }
+   }
+  },
   "LoginPage": {
    "displayName": "LoginPage",
    "description": "Full-page login layout: a full-bleed image over 3/4 of the width, and a\r\nvertically centered credentials panel in the remaining quarter. Below the\r\ntablet breakpoint the image is dropped and the panel takes the full page.",
@@ -9972,10 +10686,10 @@
       "raw": "LqSurface | undefined",
       "value": [
        {
-        "value": "\"light\""
+        "value": "\"dark\""
        },
        {
-        "value": "\"dark\""
+        "value": "\"light\""
        }
       ]
      },
@@ -10918,7 +11632,7 @@
      },
      "description": "`\"default\"` is the small centered dialog; `\"wide\"` is a fixed, roomier size (not viewport-\r\nrelative like fullscreen) for content with its own internal layout that needs stable side-by-\r\nside space — a filter sidebar next to a list, say — rather than reflowing at every viewport\r\nsize; `\"fullscreen\"` takes up nearly the whole viewport (a thin margin all round) — for a\r\ndetail view or editor that needs real room instead of a small popup. Default \"default\".",
      "defaultValue": {
-      "value": "` is the small centered dialog; `"
+      "value": "default"
      },
      "parent": {
       "name": "ModalProps"
@@ -11168,6 +11882,298 @@
      "defaultValue": null,
      "parent": {
       "name": "NotFoundPageProps"
+     }
+    }
+   }
+  },
+  "NotificationMenu": {
+   "displayName": "NotificationMenu",
+   "description": "La cloche d'une barre d'application et sa liste déroulante : un bouton-icône avec une pastille de\r\nnon-lus, qui ouvre sous lui un panneau de notifications — icône ou avatar, titre, texte,\r\nhorodatage et point non-lu par ligne, avec en-tête, pied (« Tout marquer comme lu ») et état vide.\r\n\r\nLe panneau est un `Popover` : il passe par un portail, se replace pour rester dans la fenêtre et se\r\nferme au clic extérieur ou sur Échap. À l'ouverture il prend le focus, pour qu'on y entre au\r\nclavier sans traverser toute la page — le portail le pose en fin de document — et, refermé alors\r\nque le focus y était, il le rend au déclencheur.\r\n\r\nC'est l'application qui tient l'état lu / non lu : le composant ne fait qu'appeler\r\n`onToggleRead` et `onMarkAllRead`.",
+   "props": {
+    "items": {
+     "name": "items",
+     "required": true,
+     "type": {
+      "name": "NotificationMenuItem[]",
+      "raw": "NotificationMenuItem[]"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "icon": {
+     "name": "icon",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Icône du déclencheur. Défaut : une cloche.",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "label": {
+     "name": "label",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Nom du déclencheur pour les lecteurs d'écran, et titre par défaut du panneau. Défaut :\r\n« Notifications ».",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "badge": {
+     "name": "badge",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "'count' | 'dot' | undefined",
+      "value": [
+       {
+        "value": "\"count\""
+       },
+       {
+        "value": "\"dot\""
+       }
+      ]
+     },
+     "description": "Pastille du déclencheur : le nombre de non-lus, ou un simple point. Défaut : `\"count\"`.",
+     "defaultValue": {
+      "value": "\"count\""
+     },
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "unreadCount": {
+     "name": "unreadCount",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Nombre de non-lus annoncé par la pastille. Par défaut, celui des éléments `unread`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "title": {
+     "name": "title",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Titre de l'en-tête du panneau ; `null` retire l'en-tête. Défaut : `label`.",
+     "defaultValue": {
+      "value": "label"
+     },
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "onItemClick": {
+     "name": "onItemClick",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((item: NotificationMenuItem) => void) | undefined"
+     },
+     "description": "Appelé au clic sur un élément, après son propre `onClick`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "onToggleRead": {
+     "name": "onToggleRead",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((item: NotificationMenuItem) => void) | undefined"
+     },
+     "description": "Fait du point de chaque élément un bouton qui bascule lu / non lu.",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "onMarkAllRead": {
+     "name": "onMarkAllRead",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "(() => void) | undefined"
+     },
+     "description": "Affiche dans le pied le bouton « Tout marquer comme lu » (tant qu'il reste des non-lus).",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "markAllReadLabel": {
+     "name": "markAllReadLabel",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "footer": {
+     "name": "footer",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Contenu libre du pied, à côté de « Tout marquer comme lu » — un lien « Toutes les\r\nnotifications ».",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "emptyText": {
+     "name": "emptyText",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Affiché à la place de la liste quand `items` est vide.",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "closeOnItemClick": {
+     "name": "closeOnItemClick",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Ferme le panneau au clic sur un élément. Défaut : true.",
+     "defaultValue": {
+      "value": "true"
+     },
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "open": {
+     "name": "open",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Ouverture contrôlée.",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "defaultOpen": {
+     "name": "defaultOpen",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "onOpenChange": {
+     "name": "onOpenChange",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((open: boolean) => void) | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "placement": {
+     "name": "placement",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "'top' | 'bottom' | undefined",
+      "value": [
+       {
+        "value": "\"top\""
+       },
+       {
+        "value": "\"bottom\""
+       }
+      ]
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "width": {
+     "name": "width",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Largeur du panneau, en px. Défaut : 400.",
+     "defaultValue": {
+      "value": "400"
+     },
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "maxHeight": {
+     "name": "maxHeight",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Hauteur maximale de la liste avant qu'elle ne défile, en px. Défaut : 340.",
+     "defaultValue": {
+      "value": "340"
+     },
+     "parent": {
+      "name": "NotificationMenuProps"
+     }
+    },
+    "className": {
+     "name": "className",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "NotificationMenuProps"
      }
     }
    }
@@ -13954,9 +14960,7 @@
       ]
      },
      "description": "`\"default\"` : la barre latérale est dans le flux de la page, toujours dépliée.\r\n\r\n`\"rail\"` : la barre est fixée à la fenêtre — elle ne défile pas avec la page — et réduite à une\r\ncolonne d'icônes. Elle s'ouvre par-dessus le contenu au survol ou au focus clavier, et le\r\nbouton d'épingle de son en-tête la garde ouverte (le contenu se décale alors). Chaque entrée y\r\nmontre son libellé à gauche et sa vignette — `icon`, ou `abbr` pour une sous-entrée — dans la\r\ncolonne de droite, la seule visible quand la barre est réduite. Sous la largeur tablette, les\r\ndeux variantes deviennent le même tiroir.",
-     "defaultValue": {
-      "value": "` : la barre latérale est dans le flux de la page, toujours dépliée.\r\n\r\n`"
-     },
+     "defaultValue": null,
      "parent": {
       "name": "SidebarLayoutProps"
      }
@@ -16351,6 +17355,94 @@
      "parent": {
       "name": "CardProps"
      }
+    },
+    "tone": {
+     "name": "tone",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "SurfaceTone | undefined",
+      "value": [
+       {
+        "value": "\"warning\""
+       },
+       {
+        "value": "\"info\""
+       },
+       {
+        "value": "\"default\""
+       },
+       {
+        "value": "\"accent\""
+       },
+       {
+        "value": "\"success\""
+       },
+       {
+        "value": "\"danger\""
+       },
+       {
+        "value": "\"dark\""
+       }
+      ]
+     },
+     "description": "Remplit la carte d'une couleur du thème et passe tout son contenu en contraste — les tuiles\r\npleines d'un tableau de bord (ventes de la semaine en vert, météo en gris). Le contenu suit sans\r\nrien savoir du ton : la carte redéfinit pour ses enfants les variables de texte, de bordure et\r\nd'accent (voir `tone.css`), si bien qu'une sparkline ou une ligne de panneau posées dedans\r\npassent elles aussi en contraste. Absent ou `\"default\"` : rien ne change.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "controls": {
+     "name": "controls",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Contrôles posés à droite de l'en-tête (un menu « … », un bouton). L'en-tête s'affiche dès\r\nqu'il y en a, même sans `title`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "onRefresh": {
+     "name": "onRefresh",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "(() => void | Promise<unknown>) | undefined"
+     },
+     "description": "Ajoute à droite de l'en-tête le petit cercle « rafraîchir ». Si la fonction rend une promesse,\r\nla carte se voile et le cercle tourne jusqu'à ce qu'elle soit tenue ou rompue ; sinon, c'est\r\n`refreshing` qui pilote cet état.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "refreshing": {
+     "name": "refreshing",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "État « en cours de rafraîchissement », contrôlé : voile sur la carte et cercle qui tourne.",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
+    },
+    "refreshLabel": {
+     "name": "refreshLabel",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Libellé du bouton de rafraîchissement. Défaut : « Rafraîchir ».",
+     "defaultValue": null,
+     "parent": {
+      "name": "CardProps"
+     }
     }
    }
   },
@@ -18519,10 +19611,10 @@
         "value": "\"neutral\""
        },
        {
-        "value": "\"error\""
+        "value": "\"success\""
        },
        {
-        "value": "\"success\""
+        "value": "\"error\""
        }
       ]
      },

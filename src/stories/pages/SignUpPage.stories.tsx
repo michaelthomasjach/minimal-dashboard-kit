@@ -1,0 +1,158 @@
+import { useState, type FormEvent } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { SignUpPage, Input, InputPassword, Checkbox, Button, Badge, type SignUpPageProps } from "@michaelthomasjach/liseuse-dashboard-kit";
+
+/** L'image des pages d'accès, aux teintes du thème (une image ne lit pas les variables CSS). */
+const ACCESS_IMAGE =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1400">
+      <defs>
+        <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#2b303b"/>
+          <stop offset="1" stop-color="#7252d3"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="1400" fill="url(#g)"/>
+    </svg>
+  `);
+
+const LOGO = (
+  <span style={{ fontSize: "1.375rem", fontWeight: 700, lineHeight: 1, letterSpacing: "-0.04em", color: "var(--lq-color-text)" }}>minimal</span>
+);
+
+/** Un `<form>` est un seul enfant de la zone de formulaire du kit : il reprend lui-même l'espacement. */
+const FORM_STYLE = { display: "flex", flexDirection: "column", gap: "var(--lq-space-4)" } as const;
+
+type Fields = { name: string; email: string; password: string };
+
+/** Une inscription de démonstration. Le formulaire porte un identifiant : le bouton d'envoi, rendu
+ *  dans `terms` hors du `<form>`, s'y rattache par l'attribut `form`. */
+function signUp(initial: Fields, initialTerms: boolean, validateOnMount: boolean) {
+  return function Render(args: SignUpPageProps) {
+    const [fields, setFields] = useState(initial);
+    const [terms, setTerms] = useState(initialTerms);
+    const validate = (f: Fields) => ({
+      name: f.name.trim() ? undefined : "Indiquez votre nom.",
+      email: f.email.includes("@") ? undefined : "Saisissez une adresse e-mail valide.",
+      password: f.password.length >= 12 ? undefined : "12 caractères au moins.",
+    });
+    const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>(validateOnMount ? validate(initial) : {});
+    const [done, setDone] = useState(false);
+    const set = (key: keyof Fields) => (e: { target: { value: string } }) => setFields((prev) => ({ ...prev, [key]: e.target.value }));
+
+    const submit = (e: FormEvent) => {
+      e.preventDefault();
+      const next = validate(fields);
+      setErrors(next);
+      setDone(!next.name && !next.email && !next.password);
+    };
+
+    return (
+      <SignUpPage
+        {...args}
+        terms={
+          <div style={FORM_STYLE}>
+            <Checkbox checked={terms} onChange={setTerms} label="J'accepte les conditions générales et la politique de confidentialité" />
+            <Button type="submit" form="inscription" block selected disabled={!terms}>
+              Créer mon compte
+            </Button>
+            {done && <Badge tone="up">Compte créé (démonstration)</Badge>}
+          </div>
+        }
+      >
+        <form id="inscription" style={FORM_STYLE} onSubmit={submit} noValidate>
+          <Input label="Nom complet" autoComplete="name" placeholder="Claire Lemoine" value={fields.name} onChange={set("name")} error={errors.name} />
+          <Input
+            label="Adresse e-mail professionnelle"
+            type="email"
+            autoComplete="email"
+            placeholder="vous@entreprise.fr"
+            value={fields.email}
+            onChange={set("email")}
+            error={errors.email}
+          />
+          <InputPassword
+            label="Mot de passe"
+            autoComplete="new-password"
+            helperText="12 caractères au moins."
+            value={fields.password}
+            onChange={set("password")}
+            error={errors.password}
+          />
+        </form>
+      </SignUpPage>
+    );
+  };
+}
+
+/**
+ * La page d'inscription plein écran : le gabarit de `LoginPage`, avec une place pour les conditions
+ * générales.
+ */
+const meta = {
+  title: "Composants/Pages/SignUpPage",
+  component: SignUpPage,
+  parameters: {
+    layout: "fullscreen", mdkPadding: 0,
+    docs: {
+      story: { inline: false, iframeHeight: "680px" },
+      description: {
+        component: [
+          "**Page d'inscription** plein écran — le même gabarit que `LoginPage` : une image sur les trois quarts de la largeur, un panneau centré dans le dernier quart. Elle ajoute un emplacement `terms` entre le formulaire et le pied de page.",
+          "",
+          "**Quand l'utiliser** — la création de compte ou l'acceptation d'une invitation. Pour la connexion, `LoginPage`.",
+          "",
+          "**Anatomie** — `imageSrc` (obligatoire), `imageAlt`, `logo`, `title` (`<h1>`), `subtitle`, `children` (les champs), `terms` (la case de conditions générales, ou toute mention à accepter), `footer` (« Déjà un compte ? »).",
+          "",
+          "**Le formulaire vous appartient** — champs, validation et envoi sont à vous, dans un vrai `<form>` (Entrée envoie, `autoComplete=\"new-password\"` déclenche la suggestion de mot de passe). `terms` est rendu **hors** de `children` : si le bouton d'envoi se place sous la case — l'ordre attendu —, il est hors du `<form>` et s'y rattache par l'attribut `form=\"…\"`, comme ici. Un `<form>` étant un seul enfant de la zone de formulaire, donnez-lui l'espacement du kit (`gap: var(--lq-space-4)`).",
+          "",
+          "**Conditions générales** — le bouton reste désactivé tant que la case n'est pas cochée : c'est l'usage, pas un comportement du kit, qui ne relie pas `terms` à l'envoi.",
+          "",
+          "**Écran étroit** — sous **900 px**, l'image disparaît et le panneau prend toute la page.",
+          "",
+          "**Thème** — celui de `LoginPage` : `--lq-color-bg`, `--lq-color-text`, `--lq-color-text-muted`, `--lq-font-weight-bold`, `--lq-space-4` à `--lq-space-6`.",
+        ].join("\n"),
+      },
+    },
+  },
+  args: {
+    imageSrc: ACCESS_IMAGE,
+    imageAlt: "",
+    logo: LOGO,
+    title: "Créer un compte",
+    subtitle: "Quelques informations pour ouvrir votre espace.",
+    footer: <span>Déjà un compte ? Connectez-vous.</span>,
+    children: null,
+  },
+  argTypes: {
+    imageSrc: { control: "text" },
+    imageAlt: { table: { defaultValue: { summary: '""' } } },
+    logo: { control: false },
+    terms: { control: false },
+    footer: { control: false },
+    children: { control: false },
+  },
+  render: signUp({ name: "", email: "", password: "" }, false, false),
+} satisfies Meta<typeof SignUpPage>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  name: "Défaut",
+  parameters: { docs: { description: { story: "Le bouton s'active quand la case est cochée ; l'envoi vérifie chaque champ." } } },
+};
+
+export const WithErrors: Story = {
+  name: "Erreurs de validation",
+  render: signUp({ name: "Claire Lemoine", email: "claire.lemoine", password: "octobre" }, true, true),
+  parameters: { docs: { description: { story: "Après un envoi refusé : l'adresse est incomplète, le mot de passe trop court ; l'aide du mot de passe cède la place à l'erreur." } } },
+};
+
+export const Invitation: Story = {
+  name: "Invitation",
+  args: { title: "Rejoindre Lemoine SAS", subtitle: "Hugo Mercier vous invite dans l'espace de son équipe.", footer: undefined },
+  render: signUp({ name: "", email: "ines.roux@lemoine.fr", password: "" }, false, false),
+  parameters: { docs: { description: { story: "Le même gabarit pour accepter une invitation : l'adresse est déjà connue." } } },
+};

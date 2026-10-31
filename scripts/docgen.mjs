@@ -55,7 +55,10 @@ function typeInfo(type) {
 function defaultFrom(description) {
   // Seulement une valeur reconnaissable — entre guillemets ou accents graves, booléen, nombre — pour
   // ne pas prendre le mot qui suit « Default » dans une phrase pour une valeur.
-  const strict = description.match(/\b(?:Default|Défaut|par défaut)\b\s*(?:[:=]|value|is)?\s*(`[^`]+`|"[^"]+"|true\b|false\b|-?\d[\d.]*(?:px|ms|rem|%)?)/i);
+  // Le mot-clé ne doit pas être lui-même dans du code (`"default"` est une valeur, pas l'annonce
+  // d'un défaut), et la valeur tient sur une ligne : sans ces deux bornes, la capture courait d'un
+  // accent grave fermant au suivant et ramassait une phrase entière.
+  const strict = description.match(/(?<![`"'\w-])(?:Default|Défaut|par défaut)\b\s*(?:[:=]|value|is)?\s*(`[^`\n]{1,40}`|"[^"\n]{1,40}"|true\b|false\b|-?\d[\d.]*(?:px|ms|rem|%)?)/i);
   // Sans guillemets : Storybook les ajoute lui-même à l'affichage.
   return strict ? { value: strict[1].replace(/^[`"]|[`"]$/g, "").replace(/\.$/, "") } : null;
 }

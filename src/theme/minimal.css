@@ -121,6 +121,13 @@
   --lq-field-label-size: 0.875rem;
   --lq-field-label-weight: 400;
 
+  /* La barre latérale passe au-dessus de tout ce que contient la page — barres d'outils et bulles des
+     graphiques montent jusqu'à 1900 — mais reste sous les modales (2000) et la recherche (2100). */
+  --lq-sidebar-z-index: 1950;
+
+  /* Barres pleines sans filet autour : les segments dessinent la barre à eux seuls. */
+  --lq-alloc-bar-border: none;
+
   /* Les lignes de données sous un en-tête — lignes de panneau, cellules de tableau, légendes — un
      cran sous le corps de texte, comme les tableaux du gabarit : à 15 px, elles écrasaient le petit
      titre en capitales qui les coiffe. */

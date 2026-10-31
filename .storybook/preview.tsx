@@ -40,9 +40,19 @@ const preview: Preview = {
     },
   },
   decorators: [
+    // Le fond du thème couvre toute la zone d'affichage (sinon il s'arrête au contenu et laisse du
+    // blanc dessous, criant en surface sombre). Les composants pleine page — mises en page, pages,
+    // notifications fixes — déclarent `mdkPadding: 0` pour ne pas recevoir la marge de 30 px.
     (Story, context) => (
       <MinimalTheme surface={context.globals.surface === "dark" ? "dark" : "light"}>
-        <div style={{ padding: context.parameters.layout === "fullscreen" && context.viewMode === "story" ? 30 : 20 }}>
+        <div
+          style={{
+            padding: context.parameters.mdkPadding ?? (context.viewMode === "story" ? 30 : 20),
+            minHeight: context.viewMode === "story" ? "100vh" : undefined,
+            boxSizing: "border-box",
+            background: "var(--lq-color-bg)",
+          }}
+        >
           <Story />
         </div>
       </MinimalTheme>
