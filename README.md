@@ -104,6 +104,16 @@ import "@michaelthomasjach/minimal-dashboard-kit/style.css";
 </MinimalTheme>;
 ```
 
+`MinimalTheme` accepte aussi `className` (ajoutée à `mdk` sur la racine, et suivie dans les portails),
+`style` et `onSurfaceChange`. Une application qui habille déjà son arbre par une classe peut ainsi
+basculer entre le kit nu et ce thème sans perdre la sienne :
+
+```tsx
+look === "minimal"
+  ? <MinimalTheme className="mon-app" surface={surface} onSurfaceChange={setSurface}>{children}</MinimalTheme>
+  : <LqThemeProvider className="mon-app" palette="eink" surface={surface}>{children}</LqThemeProvider>;
+```
+
 Les polices (Inter, Montserrat) sont embarquées via `@fontsource` : rien n'est demandé à Google
 Fonts. Pour publier une nouvelle version : `npm version patch|minor`, puis `npm publish`
 (`prepublishOnly` construit `dist-lib/` avec `vite.config.lib.ts`).

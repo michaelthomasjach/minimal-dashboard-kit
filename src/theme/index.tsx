@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { LqThemeProvider, type LqSurface } from "@michaelthomasjach/liseuse-dashboard-kit";
 import "@michaelthomasjach/liseuse-dashboard-kit/style.css";
 // Les deux polices du thème, servies avec l'application plutôt que par Google Fonts : rien n'est
@@ -30,12 +30,27 @@ import "./minimal.css";
 export interface MinimalThemeProps {
   /** `"light"` (défaut) ou `"dark"`. */
   surface?: LqSurface;
+  /** Appelé quand un composant du kit bascule la surface (`useLqTheme().setSurface`). */
+  onSurfaceChange?: (surface: LqSurface) => void;
+  /**
+   * Classe ajoutée à `mdk` sur la racine — celle par laquelle une application habille déjà son arbre
+   * (`mr-app`…). Elle suit aussi dans les portails, comme `mdk`.
+   */
+  className?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }
 
-export function MinimalTheme({ surface = "light", children }: MinimalThemeProps) {
+export function MinimalTheme({ surface = "light", onSurfaceChange, className, style, children }: MinimalThemeProps) {
   return (
-    <LqThemeProvider palette="color" surface={surface} font="inter" className="mdk">
+    <LqThemeProvider
+      palette="color"
+      surface={surface}
+      font="inter"
+      onSurfaceChange={onSurfaceChange}
+      className={className ? `mdk ${className}` : "mdk"}
+      style={style}
+    >
       {children}
     </LqThemeProvider>
   );
