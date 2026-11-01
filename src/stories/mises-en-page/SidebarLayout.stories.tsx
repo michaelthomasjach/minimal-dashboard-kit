@@ -309,3 +309,25 @@ export const RailInFrame: Story = {
     },
   },
 };
+
+export const NestedInRail: Story = {
+  name: "Coquille imbriquée dans un rail",
+  args: { variant: "rail", stickyHeader: true },
+  render: (args) => (
+    <SidebarLayout {...args} header={<Breadcrumbs items={[{ id: "accueil", label: "Accueil" }, { id: "apercu", label: "Aperçu d'écran" }]} />}>
+      <div style={{ width: 960, height: 420, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+        <SidebarLayout fullHeight={false} logo={LOGO} navItems={NAV} header={<Breadcrumbs items={[{ id: "accueil", label: "Accueil" }, { id: "tableau", label: "Tableau de bord" }]} />}>
+          <PageContent title="Tableau de bord" />
+        </SidebarLayout>
+      </div>
+    </SidebarLayout>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Une coquille `default` dans le contenu d'une coquille `rail` — la maquette d'un écran dans une application qui a déjà son rail. Les règles du rail sont bornées à **leur** coquille (enfants directs, `:where()` pour ne pas changer la spécificité) : la barre imbriquée garde son logo, ses marges, ses libellés et son en-tête ordinaires.",
+      },
+    },
+  },
+};

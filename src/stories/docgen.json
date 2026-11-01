@@ -1,5 +1,5 @@
 {
- "version": "0.186.0",
+ "version": "0.187.0",
  "components": {
   "LqThemeProvider": {
    "displayName": "LqThemeProvider",
@@ -8316,7 +8316,7 @@
   },
   "MailPanel": {
    "displayName": "MailPanel",
-   "description": "Boîte mail en trois colonnes : dossiers (avec compteurs et « Nouveau message »), liste des\nmessages (cases à cocher, actions groupées, recherche, étoile, pièce jointe), panneau de lecture\n(en-tête, destinataires, corps, pièces jointes, Répondre / Transférer / Supprimer).\n\nChaque état — dossier ouvert, message ouvert, cases cochées, recherche — est contrôlable par sa\nprop, ou libre avec sa valeur `default…`. Les messages aussi : `messages` (l'application applique\nles actions) ou `defaultMessages` (le composant les applique lui-même, pour une démo).\n\nRemplit son conteneur (`height: 100%`) : donnez-lui une hauteur. Sous 860 px de large (requête de\nconteneur, pas de fenêtre), une seule colonne à la fois : la liste, le message ouvert avec un\nbouton « Retour », ou les dossiers derrière un bouton « Dossiers ».\n\nClavier : ↑ / ↓ (et Début / Fin) passent d'un message à l'autre dans la liste, Entrée l'ouvre.",
+   "description": "Boîte mail en trois colonnes : dossiers (avec compteurs et « Nouveau message »), liste des\r\nmessages (cases à cocher, actions groupées, recherche, étoile, pièce jointe), panneau de lecture\r\n(en-tête, destinataires, corps, pièces jointes, Répondre / Transférer / Supprimer).\r\n\r\nChaque état — dossier ouvert, message ouvert, cases cochées, recherche — est contrôlable par sa\r\nprop, ou libre avec sa valeur `default…`. Les messages aussi : `messages` (l'application applique\r\nles actions) ou `defaultMessages` (le composant les applique lui-même, pour une démo).\r\n\r\nRemplit son conteneur (`height: 100%`) : donnez-lui une hauteur. Sous 860 px de large (requête de\r\nconteneur, pas de fenêtre), une seule colonne à la fois : la liste, le message ouvert avec un\r\nbouton « Retour », ou les dossiers derrière un bouton « Dossiers ».\r\n\r\nClavier : ↑ / ↓ (et Début / Fin) passent d'un message à l'autre dans la liste, Entrée l'ouvre.",
    "props": {
     "folders": {
      "name": "folders",
@@ -8338,7 +8338,7 @@
       "name": "MailMessage[] | undefined",
       "raw": "MailMessage[] | undefined"
      },
-     "description": "Messages, contrôlés : le composant ne les modifie pas, il signale chaque action par son rappel\net l'application renvoie la liste à jour.",
+     "description": "Messages, contrôlés : le composant ne les modifie pas, il signale chaque action par son rappel\r\net l'application renvoie la liste à jour.",
      "defaultValue": null,
      "parent": {
       "name": "MailPanelProps"
@@ -8351,7 +8351,7 @@
       "name": "MailMessage[] | undefined",
       "raw": "MailMessage[] | undefined"
      },
-     "description": "Messages en mode libre (démos) : étoile, lu / non lu et suppression s'appliquent en interne, les\nrappels sont tout de même appelés. Ignoré si `messages` est fourni.",
+     "description": "Messages en mode libre (démos) : étoile, lu / non lu et suppression s'appliquent en interne, les\r\nrappels sont tout de même appelés. Ignoré si `messages` est fourni.",
      "defaultValue": null,
      "parent": {
       "name": "MailPanelProps"
@@ -8481,7 +8481,7 @@
       "name": "string",
       "raw": "string | undefined"
      },
-     "description": "Texte de la recherche, contrôlé. Elle porte sur l'expéditeur, l'objet et l'extrait, dans le\ndossier ouvert, sans tenir compte des accents ni de la casse.",
+     "description": "Texte de la recherche, contrôlé. Elle porte sur l'expéditeur, l'objet et l'extrait, dans le\r\ndossier ouvert, sans tenir compte des accents ni de la casse.",
      "defaultValue": null,
      "parent": {
       "name": "MailPanelProps"
@@ -8546,7 +8546,7 @@
       "name": "func",
       "raw": "((ids: string[]) => void) | undefined"
      },
-     "description": "En mode libre, un message supprimé passe dans le dossier `role: \"trash\"` ; supprimé depuis la\ncorbeille (ou sans corbeille), il disparaît.",
+     "description": "En mode libre, un message supprimé passe dans le dossier `role: \"trash\"` ; supprimé depuis la\r\ncorbeille (ou sans corbeille), il disparaît.",
      "defaultValue": null,
      "parent": {
       "name": "MailPanelProps"
@@ -8598,7 +8598,7 @@
       "name": "Date | undefined",
       "raw": "Date | undefined"
      },
-     "description": "Instant de référence pour les dates de la liste (l'heure pour un message du jour, le jour et le\nmois sinon). Défaut : maintenant. Fixez-le pour un rendu reproductible.",
+     "description": "Instant de référence pour les dates de la liste (l'heure pour un message du jour, le jour et le\r\nmois sinon). Défaut : maintenant. Fixez-le pour un rendu reproductible.",
      "defaultValue": null,
      "parent": {
       "name": "MailPanelProps"
@@ -12309,7 +12309,7 @@
   },
   "MatrixChart": {
    "displayName": "MatrixChart",
-   "description": "A matrix of scored cells — a correlation grid being the case it was built for, though nothing\nhere assumes correlation beyond the default `[-1, 1]` domain.\n\nColour carries two separate facts and keeps them separate: the hue is the sign, the opacity is\nthe magnitude. A cell at +1 is the positive colour at full strength, a cell at 0 is transparent,\na cell at -1 is the negative colour at full strength. That is what makes the grid readable\nwithout a legend: the eye reads \"how much\" from how loud a cell is and \"which way\" from which\ncolour it is, instead of having to place a shade along a continuous two-hue ramp.\n\nClicking a cell opens its detail underneath rather than in a tooltip. What a cell means usually\ntakes several lines, and a tooltip that has to be kept hovered is the wrong container for\nanything somebody wants to sit and read.",
+   "description": "A matrix of scored cells — a correlation grid being the case it was built for, though nothing\r\nhere assumes correlation beyond the default `[-1, 1]` domain.\r\n\r\nColour carries two separate facts and keeps them separate: the hue is the sign, the opacity is\r\nthe magnitude. A cell at +1 is the positive colour at full strength, a cell at 0 is transparent,\r\na cell at -1 is the negative colour at full strength. That is what makes the grid readable\r\nwithout a legend: the eye reads \"how much\" from how loud a cell is and \"which way\" from which\r\ncolour it is, instead of having to place a shade along a continuous two-hue ramp.\r\n\r\nClicking a cell opens its detail underneath rather than in a tooltip. What a cell means usually\r\ntakes several lines, and a tooltip that has to be kept hovered is the wrong container for\r\nanything somebody wants to sit and read.",
    "props": {
     "rows": {
      "name": "rows",
@@ -12357,7 +12357,7 @@
       "name": "[number, number] | undefined",
       "raw": "[number, number] | undefined"
      },
-     "description": "The values mapped to a full negative and a full positive tint. Default `[-1, 1]`, which is\nwhat a correlation runs between.",
+     "description": "The values mapped to a full negative and a full positive tint. Default `[-1, 1]`, which is\r\nwhat a correlation runs between.",
      "defaultValue": {
       "value": "[-1, 1]"
      },
@@ -12380,7 +12380,7 @@
        }
       ]
      },
-     "description": "`\"auto\"` ramps the two colours below by opacity (see this component's own doc); `\"manual\"`\nuses each cell's own `color` and leaves the ramp entirely to the caller.",
+     "description": "`\"auto\"` ramps the two colours below by opacity (see this component's own doc); `\"manual\"`\r\nuses each cell's own `color` and leaves the ramp entirely to the caller.",
      "defaultValue": null,
      "parent": {
       "name": "MatrixChartProps"
@@ -12432,7 +12432,7 @@
       "name": "func",
       "raw": "((value: number) => string) | undefined"
      },
-     "description": "",
+     "description": "Default: two decimals, negatives with a true minus (U+2212, \"−0.42\") rather than the hyphen\r\n`toFixed` writes, which is narrower than the digits and misaligns a column of cells.",
      "defaultValue": null,
      "parent": {
       "name": "MatrixChartProps"
@@ -12445,7 +12445,7 @@
       "name": "boolean",
       "raw": "boolean | undefined"
      },
-     "description": "Wheel to zoom, drag to pan, double-click to reset. Off leaves the matrix fixed — the right\nchoice when it already fits, since a grid that moves under an accidental scroll is worse\nthan one that cannot move at all.",
+     "description": "Wheel to zoom, drag to pan, double-click to reset. Off leaves the matrix fixed — the right\r\nchoice when it already fits, since a grid that moves under an accidental scroll is worse\r\nthan one that cannot move at all.",
      "defaultValue": null,
      "parent": {
       "name": "MatrixChartProps"
@@ -12471,7 +12471,7 @@
       "name": "number",
       "raw": "number | undefined"
      },
-     "description": "Width of the row-label gutter, in pixels. Left out, it is measured from the longest row label\nonce rendered (never more than 40 % of the chart) — a fixed 78 px cut \"Euro Stoxx 50\" down\nto \"uro Stoxx 50\".",
+     "description": "Width of the row-label gutter, in pixels. Left out, it is measured from the longest row label\r\nonce rendered (never more than 40 % of the chart) — a fixed 78 px cut \"Euro Stoxx 50\" down\r\nto \"uro Stoxx 50\".",
      "defaultValue": null,
      "parent": {
       "name": "MatrixChartProps"
@@ -21581,7 +21581,7 @@
   },
   "Textarea": {
    "displayName": "Textarea",
-   "description": "Zone de texte sur plusieurs lignes, de la même famille qu'`Input` : mêmes classes `lq-field*`,\nmême libellé, même aide, mêmes états d'erreur et de succès. En plus : hauteur en lignes, croissance\nautomatique bornée, compteur de caractères.",
+   "description": "Zone de texte sur plusieurs lignes, de la même famille qu'`Input` : mêmes classes `lq-field*`,\r\nmême libellé, même aide, mêmes états d'erreur et de succès. En plus : hauteur en lignes, croissance\r\nautomatique bornée, compteur de caractères.",
    "props": {
     "label": {
      "name": "label",
@@ -21663,7 +21663,7 @@
        }
       ]
      },
-     "description": "`\"above\"` (défaut) : libellé au-dessus. `\"inside\"` : dans la boîte, réduit dès que le champ a le\nfocus ou une valeur — la même mécanique qu'`Input`.",
+     "description": "`\"above\"` (défaut) : libellé au-dessus. `\"inside\"` : dans la boîte, réduit dès que le champ a le\r\nfocus ou une valeur — la même mécanique qu'`Input`.",
      "defaultValue": null,
      "parent": {
       "name": "TextareaProps"
@@ -22565,7 +22565,7 @@
   },
   "ProgressCircle": {
    "displayName": "ProgressCircle",
-   "description": "Cercle de progression : un anneau qui se remplit dans le sens des aiguilles d'une montre depuis\nmidi (`value` donné), ou un arc qui tourne quand la durée n'est pas connue (`value` absent).\n\nCe n'est ni une jauge (`GaugeCard`, `LevelGauge` montrent une *mesure* sur une échelle, avec ses\nbornes et ses seuils) ni un `Spinner` (qui ne dit que « ça travaille », sans rôle `progressbar`) :\nc'est le pendant circulaire de `ProgressBar`, pour un avancement là où une barre n'a pas la place\n— une vignette de fichier, une ligne de liste, le centre d'une carte.\n\nEn palette e-ink et sous `prefers-reduced-motion`, l'indéterminé ne tourne pas : l'anneau passe en\npointillés, un état que l'œil ne confond pas avec une valeur (voir ProgressCircle.css).",
+   "description": "Cercle de progression : un anneau qui se remplit dans le sens des aiguilles d'une montre depuis\r\nmidi (`value` donné), ou un arc qui tourne quand la durée n'est pas connue (`value` absent).\r\n\r\nCe n'est ni une jauge (`GaugeCard`, `LevelGauge` montrent une *mesure* sur une échelle, avec ses\r\nbornes et ses seuils) ni un `Spinner` (qui ne dit que « ça travaille », sans rôle `progressbar`) :\r\nc'est le pendant circulaire de `ProgressBar`, pour un avancement là où une barre n'a pas la place\r\n— une vignette de fichier, une ligne de liste, le centre d'une carte.\r\n\r\nEn palette e-ink et sous `prefers-reduced-motion`, l'indéterminé ne tourne pas : l'anneau passe en\r\npointillés, un état que l'œil ne confond pas avec une valeur (voir ProgressCircle.css).",
    "props": {
     "value": {
      "name": "value",
@@ -22574,7 +22574,7 @@
       "name": "number",
       "raw": "number | undefined"
      },
-     "description": "0-100. Absent : cercle indéterminé (un arc qui tourne). Hors bornes, la valeur est ramenée à\n0 ou 100 — dans le dessin comme dans `aria-valuenow`.",
+     "description": "0-100. Absent : cercle indéterminé (un arc qui tourne). Hors bornes, la valeur est ramenée à\r\n0 ou 100 — dans le dessin comme dans `aria-valuenow`.",
      "defaultValue": null,
      "parent": {
       "name": "ProgressCircleProps"
@@ -22636,7 +22636,7 @@
        }
       ]
      },
-     "description": "Couleur de l'arc, du même vocabulaire que les tons pleins de `Card` (voir `tone.ts`) et lue\ndans les mêmes variables (`--lq-tone-<ton>`). `\"default\"` prend la couleur de remplissage du\nthème, celle de `ProgressBar`.",
+     "description": "Couleur de l'arc, du même vocabulaire que les tons pleins de `Card` (voir `tone.ts`) et lue\r\ndans les mêmes variables (`--lq-tone-<ton>`). `\"default\"` prend la couleur de remplissage du\r\nthème, celle de `ProgressBar`.",
      "defaultValue": null,
      "parent": {
       "name": "ProgressCircleProps"
@@ -22649,7 +22649,7 @@
       "name": "boolean",
       "raw": "boolean | undefined"
      },
-     "description": "Affiche la valeur au centre. Ignoré en mode indéterminé. Prévoir au moins 40 px de diamètre :\nen dessous, le chiffre ne tient pas dans l'anneau.",
+     "description": "Affiche la valeur au centre. Ignoré en mode indéterminé. La taille du texte suit le diamètre\r\nintérieur de l'anneau et sa longueur, et ce qui déborde encore finit en ellipse. Prévoir au\r\nmoins 40 px de diamètre : en dessous, le chiffre devient illisible.",
      "defaultValue": null,
      "parent": {
       "name": "ProgressCircleProps"
@@ -22662,7 +22662,7 @@
       "name": "func",
       "raw": "((value: number) => ReactNode) | undefined"
      },
-     "description": "Met en forme la valeur du centre (défaut : l'entier suivi de « % »). Une chaîne rendue sert\naussi de `aria-valuetext`.",
+     "description": "Met en forme la valeur du centre (défaut : l'entier suivi de « % »). Une chaîne rendue sert\r\naussi de `aria-valuetext`.",
      "defaultValue": null,
      "parent": {
       "name": "ProgressCircleProps"
@@ -23562,7 +23562,7 @@
   },
   "MonthCalendar": {
    "displayName": "MonthCalendar",
-   "description": "Calendrier mensuel d'événements : la grille du mois du lundi au dimanche, les événements en\r\npastilles colorées, ceux de plusieurs jours en barres continues d'une case à l'autre, et un lien\r\n« +N autres » quand une case déborde. Une vue `week` les reprend en agenda, jour par jour.\r\n\r\nÀ ne pas confondre avec `Scheduler`, qui place des tâches à l'heure près sur des ressources.",
+   "description": "Calendrier mensuel d'événements : la grille du mois du lundi au dimanche, les événements en\npastilles colorées, ceux de plusieurs jours en barres continues d'une case à l'autre, et un lien\n« +N autres » quand une case déborde. Une vue `week` les reprend en agenda, jour par jour.\n\nÀ ne pas confondre avec `Scheduler`, qui place des tâches à l'heure près sur des ressources.",
    "props": {
     "events": {
      "name": "events",
@@ -23584,7 +23584,7 @@
       "name": "CalendarDateInput | undefined",
       "raw": "CalendarDateInput | undefined"
      },
-     "description": "Le jour « aujourd'hui » : marqué dans la grille, cible du bouton Aujourd'hui. Défaut : la date\r\ndu système — passez-la pour un rendu déterministe (tests, captures, Storybook).",
+     "description": "Le jour « aujourd'hui » : marqué dans la grille, cible du bouton Aujourd'hui. Défaut : la date\ndu système — passez-la pour un rendu déterministe (tests, captures, Storybook).",
      "defaultValue": null,
      "parent": {
       "name": "MonthCalendarProps"
@@ -23758,7 +23758,46 @@
       "name": "func",
       "raw": "((event: CalendarEvent) => void) | undefined"
      },
-     "description": "Un clic sur un événement.",
+     "description": "Un clic sur un événement. Appelé en plus de l'ouverture de sa fiche (voir `showEventDetails`).",
+     "defaultValue": null,
+     "parent": {
+      "name": "MonthCalendarProps"
+     }
+    },
+    "showEventDetails": {
+     "name": "showEventDetails",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Un clic sur un événement ouvre sa **fiche** dans une modale : titre, date, horaire, description.\nDéfaut : vrai. `false` : seul `onEventClick` est appelé, à l'application d'afficher ce qu'elle veut.",
+     "defaultValue": null,
+     "parent": {
+      "name": "MonthCalendarProps"
+     }
+    },
+    "renderEventDetails": {
+     "name": "renderEventDetails",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((event: CalendarEvent) => ReactNode) | undefined"
+     },
+     "description": "Un contenu libre ajouté sous la fiche d'un événement (participants, lieu, lien…).",
+     "defaultValue": null,
+     "parent": {
+      "name": "MonthCalendarProps"
+     }
+    },
+    "onEventDelete": {
+     "name": "onEventDelete",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((event: CalendarEvent) => void) | undefined"
+     },
+     "description": "Avec lui, la fiche porte un bouton « Supprimer l'événement » qui l'appelle puis se ferme. Un clic\nsur l'événement ne supprime jamais rien de lui-même.",
      "defaultValue": null,
      "parent": {
       "name": "MonthCalendarProps"
@@ -23771,7 +23810,7 @@
       "name": "func",
       "raw": "((date: Date) => void) | undefined"
      },
-     "description": "Création : un double-clic sur un jour, le « + » qui apparaît au survol d'une case, ou le\r\nbouton de la liste d'un jour. Sans lui, rien de tout cela n'est proposé.",
+     "description": "Création : un double-clic sur un jour, le « + » qui apparaît au survol d'une case, ou le\nbouton de la liste d'un jour. Sans lui, rien de tout cela n'est proposé.",
      "defaultValue": null,
      "parent": {
       "name": "MonthCalendarProps"
@@ -23927,6 +23966,19 @@
       "name": "PriceChangeTagProps"
      }
     },
+    "locale": {
+     "name": "locale",
+     "required": false,
+     "type": {
+      "name": "string",
+      "raw": "string | undefined"
+     },
+     "description": "Locale of the default format — two decimals and \" %\", \"2,40 %\" in `fr-FR` (default),\r\n\"2.40 %\" in `en-US`. The kit's other finance cards (`HoldingCard`, `ComparisonCard`) take the\r\nsame prop with the same default.",
+     "defaultValue": null,
+     "parent": {
+      "name": "PriceChangeTagProps"
+     }
+    },
     "format": {
      "name": "format",
      "required": false,
@@ -23934,7 +23986,7 @@
       "name": "func",
       "raw": "((absValue: number) => string) | undefined"
      },
-     "description": "",
+     "description": "Formats the *absolute* value; the sign (a true minus, U+2212) and the arrow are added around\r\nit. Overrides `locale`.",
      "defaultValue": null,
      "parent": {
       "name": "PriceChangeTagProps"
@@ -24644,7 +24696,7 @@
   },
   "DataTable": {
    "displayName": "DataTable",
-   "description": "Sortable, responsive (horizontally scrollable) data table — holdings, orders, transactions.\n\nTout le reste est optionnel et se combine : densité, rayures, survol, bordures, en-tête figé,\nsélection de lignes, lignes dépliables, recherche, pagination, export CSV, choix des colonnes.\nOrdre d'application : recherche, puis tri, puis pagination — la sélection et l'export portent sur\nles lignes filtrées et triées, toutes pages confondues.",
+   "description": "Sortable, responsive (horizontally scrollable) data table — holdings, orders, transactions.\r\n\r\nTout le reste est optionnel et se combine : densité, rayures, survol, bordures, en-tête figé,\r\nsélection de lignes, lignes dépliables, recherche, pagination, export CSV, choix des colonnes.\r\nOrdre d'application : recherche, puis tri, puis pagination — la sélection et l'export portent sur\r\nles lignes filtrées et triées, toutes pages confondues.",
    "props": {
     "columns": {
      "name": "columns",
@@ -24806,7 +24858,7 @@
       "name": "boolean",
       "raw": "boolean | undefined"
      },
-     "description": "Une case à cocher par ligne, et une case tri-état dans l'en-tête qui agit sur toutes les lignes\nfiltrées (toutes les pages, pas seulement la page affichée).",
+     "description": "Une case à cocher par ligne, et une case tri-état dans l'en-tête qui agit sur toutes les lignes\r\nfiltrées (toutes les pages, pas seulement la page affichée).",
      "defaultValue": null,
      "parent": {
       "name": "DataTableProps"
@@ -25384,7 +25436,7 @@
   },
   "NotificationMenu": {
    "displayName": "NotificationMenu",
-   "description": "La cloche d'une barre d'application et sa liste déroulante : un bouton-icône avec une pastille de\nnon-lus, qui ouvre sous lui un panneau de notifications — icône ou avatar, titre, texte,\nhorodatage et point non-lu par ligne, avec en-tête, pied (« Tout marquer comme lu ») et état vide.\n\nLe panneau est un `Popover` : il passe par un portail, se replace pour rester dans la fenêtre et se\nferme au clic extérieur ou sur Échap. À l'ouverture il prend le focus, pour qu'on y entre au\nclavier sans traverser toute la page — le portail le pose en fin de document — et, refermé alors\nque le focus y était, il le rend au déclencheur.\n\nC'est l'application qui tient l'état lu / non lu : le composant ne fait qu'appeler\n`onToggleRead` et `onMarkAllRead`.",
+   "description": "La cloche d'une barre d'application et sa liste déroulante : un bouton-icône avec une pastille de\r\nnon-lus, qui ouvre sous lui un panneau de notifications — icône ou avatar, titre, texte,\r\nhorodatage et point non-lu par ligne, avec en-tête, pied (« Tout marquer comme lu ») et état vide.\r\n\r\nLe panneau est un `Popover` : il passe par un portail, se replace pour rester dans la fenêtre et se\r\nferme au clic extérieur ou sur Échap. À l'ouverture il prend le focus, pour qu'on y entre au\r\nclavier sans traverser toute la page — le portail le pose en fin de document — et, refermé alors\r\nque le focus y était, il le rend au déclencheur.\r\n\r\nC'est l'application qui tient l'état lu / non lu : le composant ne fait qu'appeler\r\n`onToggleRead` et `onMarkAllRead`.",
    "props": {
     "items": {
      "name": "items",
@@ -25419,7 +25471,7 @@
       "name": "string",
       "raw": "string | undefined"
      },
-     "description": "Nom du déclencheur pour les lecteurs d'écran, et titre par défaut du panneau. Défaut :\n« Notifications ».",
+     "description": "Nom du déclencheur pour les lecteurs d'écran, et titre par défaut du panneau. Défaut :\r\n« Notifications ».",
      "defaultValue": null,
      "parent": {
       "name": "NotificationMenuProps"
@@ -25535,7 +25587,7 @@
       "name": "ReactNode",
       "raw": "ReactNode"
      },
-     "description": "Contenu libre du pied, à côté de « Tout marquer comme lu » — un lien « Toutes les\nnotifications ».",
+     "description": "Contenu libre du pied, à côté de « Tout marquer comme lu » — un lien « Toutes les\r\nnotifications ».",
      "defaultValue": null,
      "parent": {
       "name": "NotificationMenuProps"
@@ -26276,7 +26328,7 @@
   },
   "BottomNav": {
    "displayName": "BottomNav",
-   "description": "Barre de navigation basse d'application mobile : trois à cinq destinations, icône et libellé,\nl'active marquée, une pastille de compteur au besoin.",
+   "description": "Barre de navigation basse d'application mobile : trois à cinq destinations, icône et libellé,\r\nl'active marquée, une pastille de compteur au besoin.",
    "props": {
     "items": {
      "name": "items",
@@ -26285,7 +26337,7 @@
       "name": "BottomNavItem[]",
       "raw": "BottomNavItem[]"
      },
-     "description": "De 3 à 5 destinations. Au-delà, les libellés n'ont plus la place sur un téléphone : regroupez\nle reste derrière une entrée « Plus ».",
+     "description": "De 3 à 5 destinations. Au-delà, les libellés n'ont plus la place sur un téléphone : regroupez\r\nle reste derrière une entrée « Plus ».",
      "defaultValue": null,
      "parent": {
       "name": "BottomNavProps"
@@ -26332,7 +26384,7 @@
        }
       ]
      },
-     "description": "`\"fixed\"` (défaut) : collée au bas de la fenêtre, au-dessus du contenu, avec la marge de la zone\nsûre (`safe-area-inset-bottom`) des téléphones à encoche. `\"static\"` : dans le flux, là où on la pose.",
+     "description": "`\"fixed\"` (défaut) : collée au bas de la fenêtre, au-dessus du contenu, avec la marge de la zone\r\nsûre (`safe-area-inset-bottom`) des téléphones à encoche. `\"static\"` : dans le flux, là où on la pose.",
      "defaultValue": null,
      "parent": {
       "name": "BottomNavProps"
@@ -26353,7 +26405,7 @@
        }
       ]
      },
-     "description": "`\"always\"` (défaut) : tous les libellés. `\"active\"` : seul celui de l'entrée active, les autres\nrestent pour les lecteurs d'écran.",
+     "description": "`\"always\"` (défaut) : tous les libellés. `\"active\"` : seul celui de l'entrée active, les autres\r\nrestent pour les lecteurs d'écran.",
      "defaultValue": null,
      "parent": {
       "name": "BottomNavProps"
@@ -27498,7 +27550,7 @@
       "name": "string",
       "raw": "string | undefined"
      },
-     "description": "",
+     "description": "Défaut « Votre mot de passe ». Court à dessein : le champ fait moins de 300 px de large, un\r\ntexte plus long y était rogné.",
      "defaultValue": null,
      "parent": {
       "name": "LockScreenPageProps"
@@ -27625,7 +27677,7 @@
   },
   "ServerErrorPage": {
    "displayName": "ServerErrorPage",
-   "description": "Page d'erreur serveur centrée — même famille que `NotFoundPage` : un grand code, un titre, une\nexplication, de quoi réessayer ou repartir, et l'identifiant d'incident à transmettre au support.",
+   "description": "Page d'erreur serveur centrée — même famille que `NotFoundPage` : un grand code, un titre, une\r\nexplication, de quoi réessayer ou repartir, et l'identifiant d'incident à transmettre au support.",
    "props": {
     "code": {
      "name": "code",
@@ -27686,7 +27738,7 @@
       "name": "func",
       "raw": "(() => void | Promise<unknown>) | undefined"
      },
-     "description": "Ajoute le bouton « Réessayer ». S'il rend une promesse, le bouton reste occupé jusqu'à ce\nqu'elle soit tenue ou rompue.",
+     "description": "Ajoute le bouton « Réessayer ». S'il rend une promesse, le bouton reste occupé jusqu'à ce\r\nqu'elle soit tenue ou rompue.",
      "defaultValue": null,
      "parent": {
       "name": "ServerErrorPageProps"
@@ -27712,7 +27764,7 @@
       "name": "func",
       "raw": "(() => void) | undefined"
      },
-     "description": "Avec `onHome`, l'action « accueil » est un bouton qui l'appelle (votre routeur navigue) ;\nsans, c'est un lien vers `homeHref`. `homeHref={null}` retire l'action.",
+     "description": "Avec `onHome`, l'action « accueil » est un bouton qui l'appelle (votre routeur navigue) ;\r\nsans, c'est un lien vers `homeHref`. `homeHref={null}` retire l'action.",
      "defaultValue": null,
      "parent": {
       "name": "ServerErrorPageProps"
@@ -27816,7 +27868,7 @@
       "name": "boolean",
       "raw": "boolean | undefined"
      },
-     "description": "Occupe au moins toute la hauteur de la fenêtre (`100dvh`) — pour une page rendue seule.\nSans, la page remplit son conteneur (`min-height: 100%`) : elle tient dans un cadre.",
+     "description": "Occupe au moins toute la hauteur de la fenêtre (`100dvh`) — pour une page rendue seule.\r\nSans, la page remplit son conteneur (`min-height: 100%`) : elle tient dans un cadre.",
      "defaultValue": null,
      "parent": {
       "name": "ServerErrorPageProps"

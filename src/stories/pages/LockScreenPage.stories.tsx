@@ -71,7 +71,7 @@ const meta = {
     unlocking: { control: "boolean" },
     unlockLabel: { control: "text", table: { defaultValue: { summary: '"Déverrouiller"' } } },
     passwordLabel: { control: "text", table: { defaultValue: { summary: '"Mot de passe"' } } },
-    passwordPlaceholder: { control: "text", table: { defaultValue: { summary: '"Mot de passe pour déverrouiller"' } } },
+    passwordPlaceholder: { control: "text", table: { defaultValue: { summary: '"Votre mot de passe"' } } },
     switchUserLabel: { control: "text", table: { defaultValue: { summary: "\"Ce n'est pas vous ?\"" } } },
     switchUserHref: { control: "text" },
     time: { control: "text" },

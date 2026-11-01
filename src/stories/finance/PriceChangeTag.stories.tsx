@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { PriceChangeTag } from "@michaelthomasjach/liseuse-dashboard-kit";
 
-/** Le format français d'un pourcentage : virgule décimale, espace avant le signe. */
-const pct = (n: number) => `${n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} %`;
-
 /**
  * L'écart signé du kit : flèche, signe et valeur, en vert ou en rouge. C'est lui qu'on retrouve
  * dans `StatCard`, `HoldingCard`, `ComparisonCard` et les widgets de portefeuille.
@@ -21,17 +18,18 @@ const meta = {
           "",
           "**Comportement** — `value` est signé (`2.4`, `-1.1`). Le composant choisit seul la flèche, la couleur et le signe (`+`, ou le vrai signe moins `−`), puis passe la **valeur absolue** à `format`. Zéro compte comme une hausse : il s'affiche en vert, `+0,00 %`.",
           "",
-          "**Format** — sans `format`, le kit écrit `v.toFixed(2) + \" %\"`, soit `2.37 %` avec un **point** décimal. Dans une interface française, passez toujours un `format` (`toLocaleString(\"fr-FR\")`) ; il sert aussi à changer d'unité (points, euros).",
+          "**Format** — sans `format`, deux décimales et « % » dans la `locale` donnée, `fr-FR` par défaut : `2,37 %`, virgule décimale. `locale=\"en-US\"` rend `2.37 %`. `format` reprend la main pour changer d'unité (points, euros) ; il l'emporte sur `locale`.",
           "",
           "**Thème** — `--lq-color-up` et `--lq-color-down` (vert `#19ad79` et rouge `#d83c31` en clair, éclaircis d'un cran en sombre), `--lq-font-weight-bold`.",
         ].join("\n"),
       },
     },
   },
-  args: { value: 2.37, format: pct, showIcon: true },
+  args: { value: 2.37, locale: "fr-FR", showIcon: true },
   argTypes: {
     value: { control: { type: "number", step: 0.1 } },
-    format: { control: false, table: { defaultValue: { summary: "(v) => `${v.toFixed(2)} %`" } } },
+    locale: { control: "text", table: { defaultValue: { summary: '"fr-FR"' } } },
+    format: { control: false, table: { defaultValue: { summary: "deux décimales et « % » dans `locale`" } } },
     showIcon: { table: { defaultValue: { summary: "true" } } },
   },
 } satisfies Meta<typeof PriceChangeTag>;
@@ -75,7 +73,20 @@ export const KitDefaultFormat: Story = {
   args: { value: 2.37, format: undefined },
   parameters: {
     docs: {
-      description: { story: "Sans `format` : `+2.37 %`, avec un point décimal. C'est le rendu qu'on obtient dans les composants qui n'exposent pas le format (voir `HoldingCard`, `ComparisonCard`)." },
+      description: { story: "Sans `format` ni `locale` : `+2,37 %`, au format français, avec le vrai signe moins en baisse. C'est le rendu qu'on obtient dans les composants qui n'exposent pas le format." },
     },
   },
+};
+
+export const Locale: Story = {
+  name: "Autre locale",
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
+      <PriceChangeTag value={2.4} />
+      <PriceChangeTag value={-1.1} />
+      <PriceChangeTag value={2.4} locale="en-US" />
+      <PriceChangeTag value={-1.1} locale="en-US" />
+    </div>
+  ),
+  parameters: { docs: { description: { story: "`locale` ne change que le séparateur décimal du format par défaut : `+2,40 %` en `fr-FR`, `+2.40 %` en `en-US`. Le signe reste le vrai moins `−` (U+2212)." } } },
 };

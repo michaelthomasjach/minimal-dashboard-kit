@@ -171,3 +171,29 @@ export const InFrame: Story = {
     },
   },
 };
+
+export const InWideFrame: Story = {
+  name: "Dans un cadre large",
+  args: { fullHeight: false },
+  render: (args) => (
+    <div style={{ padding: 30 }}>
+      <div style={{ width: 1100, height: 640, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+        <LoginPage {...args}>
+          <Input label="Adresse e-mail" type="email" autoComplete="email" placeholder="vous@entreprise.fr" leadingIcon={<UserIcon size={16} />} />
+          <InputPassword label="Mot de passe" autoComplete="current-password" />
+          <Button block selected>
+            Se connecter
+          </Button>
+        </LoginPage>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`fullHeight={false}` dans un cadre de 1100 × 640, au-dessus du seuil : l'image reste et **couvre** sa colonne, sans en dicter la hauteur. C'est le panneau du formulaire qui fixe la hauteur de la page — elle tient dans les 640 px du cadre, sans barre de défilement.",
+      },
+    },
+  },
+};

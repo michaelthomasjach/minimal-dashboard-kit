@@ -27,7 +27,7 @@ const meta = {
           "",
           "**Navigation** — flèches précédent / suivant (un mois, ou une semaine en vue `week`) et « Aujourd'hui ». Le jour affiché se contrôle avec `date` + `onDateChange`, ou se laisse libre avec `defaultDate`. La vue se contrôle avec `view` + `onViewChange` (`defaultView`), et `showViewSwitch={false}` retire le sélecteur Mois / Semaine. `actions` ajoute un contenu libre à droite de la barre.",
           "",
-          "**Sélection et création** — un clic sur une case la sélectionne (`selectedDate` + `onSelectedDateChange`, ou `defaultSelectedDate`) et appelle `onDayClick`. `onEventClick` reçoit l'événement cliqué. Avec `onCreate`, un **double-clic** sur un jour, le **« + »** qui apparaît au survol d'une case et le bouton « Nouvel événement » de la liste du jour appellent `onCreate(date)` ; sans lui, rien de tout cela n'est proposé.",
+          "**Sélection et création** — un clic sur une case la sélectionne (`selectedDate` + `onSelectedDateChange`, ou `defaultSelectedDate`) et appelle `onDayClick`. **Un clic sur un événement ouvre sa fiche** dans une modale : titre, date (ou « Du … au … » sur plusieurs jours), horaire ou « Toute la journée », description ; `renderEventDetails(event)` y ajoute un contenu libre, et avec `onEventDelete` elle porte un bouton « Supprimer l'événement ». `onEventClick` reçoit aussi l'événement cliqué ; `showEventDetails={false}` retire la fiche pour laisser l'application afficher la sienne. Un clic ne supprime jamais rien de lui-même. Avec `onCreate`, un **double-clic** sur un jour, le **« + »** qui apparaît au survol d'une case et le bouton « Nouvel événement » de la liste du jour appellent `onCreate(date)` ; sans lui, rien de tout cela n'est proposé.",
           "",
           "**Clavier et accessibilité** — la grille est un `role=\"grid\"` à **tabindex itinérant** : une seule case dans l'ordre de tabulation. **Flèches** d'un jour ou d'une semaine, **Origine / Fin** au lundi / dimanche, **Page préc. / suiv.** d'un mois — la grille change de mois quand le focus en sort. **Entrée** ou **Espace** sélectionne le jour et, s'il a des événements (ou si `onCreate` est fourni), ouvre sa liste, focus sur le premier événement ; **Échap** la ferme et rend le focus à la case. Aujourd'hui porte `aria-current=\"date\"`, la case sélectionnée `aria-selected`, et chaque case lit sa date complète. Le titre du mois est annoncé (`aria-live`) quand on navigue.",
           "",
@@ -126,11 +126,11 @@ export const CreateEvents: Story = {
           onCreate={(d) =>
             setEvents((list) => [...list, { id: `n${list.length}-${d.getTime()}`, title: "Nouvel événement", start: d, allDay: true, tone: "success" }])
           }
-          onEventClick={(ev) => setEvents((list) => list.filter((e) => e.id !== ev.id))}
+          onEventDelete={(ev) => setEvents((list) => list.filter((e) => e.id !== ev.id))}
         />
         <Text muted size="sm">
           {selected ? `Jour sélectionné : ${selected.toLocaleDateString("fr-FR", { dateStyle: "full" })}.` : "Cliquez un jour."} Double-clic ou « + » pour
-          créer, clic sur un événement pour le retirer.
+          créer, clic sur un événement pour voir sa fiche (et l’y supprimer).
         </Text>
       </div>
     );
@@ -139,7 +139,7 @@ export const CreateEvents: Story = {
     docs: {
       description: {
         story:
-          "Avec `onCreate`, un double-clic sur une case ou le « + » de son coin ajoute un événement ; ici, un clic sur un événement le retire (`onEventClick`). La sélection est contrôlée (`selectedDate` + `onSelectedDateChange`).",
+          "Avec `onCreate`, un double-clic sur une case ou le « + » de son coin ajoute un événement ; ici, un clic sur un événement ouvre sa fiche, et son bouton « Supprimer l'événement » le retire (`onEventDelete`). La sélection est contrôlée (`selectedDate` + `onSelectedDateChange`).",
       },
     },
   },

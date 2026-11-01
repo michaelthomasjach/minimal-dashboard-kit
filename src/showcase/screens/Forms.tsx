@@ -1,25 +1,26 @@
 import { useState } from "react";
 import { Card, Text, Button, Toggle } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { ScreenHead } from "../Specimen";
-import { Input, Select, Checkbox, TagInput } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { Input, RadioGroup, Checkbox, TagInput, type RadioOption } from "@michaelthomasjach/liseuse-dashboard-kit";
 
-const PLANS = [
-  { value: "mensuel", label: "Mensuel" },
-  { value: "annuel", label: "Annuel — deux mois offerts" },
-  { value: "perso", label: "Sur mesure" },
+type Plan = "mensuel" | "annuel" | "perso";
+
+const PLANS: RadioOption<Plan>[] = [
+  { value: "mensuel", label: "Mensuel", description: "Sans engagement, résiliable à la fin de chaque mois." },
+  { value: "annuel", label: "Annuel — deux mois offerts", description: "Facturé une fois par an, au prix de dix mois." },
+  { value: "perso", label: "Sur mesure", description: "Volumes et conditions négociés avec notre équipe commerciale." },
 ];
 
 /**
- * L'écran des formulaires : les contrôles du kit dans le thème, et le second manque qu'il révèle.
+ * L'écran des formulaires : les contrôles du kit dans le thème.
  *
- * Tout ce qu'on attend d'un formulaire d'administration est là — champ, liste, cases, interrupteur,
- * étiquettes — sauf le **bouton radio**, qui n'existe pas dans le kit. `SegmentedControl` sert
- * parfois de remplaçant, mais il ne l'est pas : un groupe radio porte des libellés longs, s'empile
- * verticalement et accepte une description par option. Le choix du plan ci-dessous est exactement
- * ce cas, et il est rendu avec une `Select` faute de mieux.
+ * Tout ce qu'on attend d'un formulaire d'administration est là — champ, groupe radio, cases,
+ * interrupteur, étiquettes. Le choix de la formule est le cas d'école du `RadioGroup` : des
+ * libellés longs, empilés, une description sous chaque option — ce que ni une `Select` (les
+ * options cachées) ni un `SegmentedControl` (des libellés courts, en ligne) ne rendent.
  */
 export function Forms() {
-  const [plan, setPlan] = useState<string | null>("annuel");
+  const [plan, setPlan] = useState<Plan | null>("annuel");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -48,7 +49,7 @@ export function Forms() {
               error={emailError}
               helperText={emailError ? undefined : "Sert uniquement à l'envoi des factures."}
             />
-            <Select label="Formule" options={PLANS} value={plan} onChange={setPlan} placeholder="Choisir une formule" />
+            <RadioGroup label="Formule" options={PLANS} value={plan} onChange={setPlan} />
             <TagInput label="Étiquettes" value={tags} onChange={setTags} placeholder="Ajouter…" />
           </div>
         </Card>
@@ -61,8 +62,8 @@ export function Forms() {
               <Text size="sm">Recevoir les alertes de facturation</Text>
             </div>
             <Text size="sm" muted>
-              Le groupe radio manque au kit : la formule ci-contre devrait en être un, avec une
-              description sous chaque option. Elle est rendue en liste déroulante en attendant.
+              La formule ci-contre est un groupe radio : une description sous chaque option, et les
+              flèches du clavier pour passer de l'une à l'autre.
             </Text>
           </div>
         </Card>

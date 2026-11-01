@@ -24,7 +24,7 @@ const meta = {
           "- `size` : `sm` (24 px, dans une ligne de texte), `md` (48 px, défaut), `lg` (96 px) ou un nombre de px.",
           "- `thickness` : l'épaisseur du trait en px ; par défaut un douzième du diamètre, 2 px au moins (4 px à 48).",
           "- `tone` : la couleur de l'arc, du même vocabulaire que les tuiles pleines de `Card` — `default`, `accent`, `success`, `info`, `danger`, `warning`, `dark`.",
-          "- `showValue` : la valeur au centre (ignorée en indéterminé) ; prévoir 40 px de diamètre au moins. `formatValue` la met en forme (défaut : « 64 % ») et, si elle rend une chaîne, sert aussi de texte lu par le lecteur d'écran.",
+          "- `showValue` : la valeur au centre (ignorée en indéterminé) ; sa taille suit le diamètre intérieur et la longueur du texte, avec une ellipse en dernier recours ; prévoir 40 px de diamètre au moins. `formatValue` la met en forme (défaut : « 64 % ») et, si elle rend une chaîne, sert aussi de texte lu par le lecteur d'écran.",
           "- `label` : le nom accessible (« Progression », ou « Chargement… » en indéterminé).",
           "",
           "**Accessibilité** — `role=\"progressbar\"`, `aria-valuemin` 0, `aria-valuemax` 100, `aria-valuenow` en déterminé (absent en indéterminé, qui porte `aria-busy`), `aria-valuetext` quand `formatValue` rend une chaîne. Le cercle n'est pas focalisable : il n'y a rien à y faire au clavier.",
@@ -78,9 +78,10 @@ export const WithValue: Story = {
       <ProgressCircle value={38} size="lg" showValue />
       <ProgressCircle value={100} size="lg" showValue tone="success" />
       <ProgressCircle value={72} size={64} showValue formatValue={(v) => `${Math.round((v / 100) * 50)}/50`} label="Fichiers envoyés" />
+      <ProgressCircle value={64} size={120} thickness={10} showValue formatValue={() => "218 / 340"} label="Lignes rapprochées" />
     </div>
   ),
-  parameters: { docs: { description: { story: "`showValue` met le chiffre au centre, `formatValue` le réécrit — ici « 36/50 » fichiers, qui devient aussi le texte lu par le lecteur d'écran. À 0, l'arc ne laisse pas de point à midi." } } },
+  parameters: { docs: { description: { story: "`showValue` met le chiffre au centre, `formatValue` le réécrit — ici « 36/50 » fichiers, qui devient aussi le texte lu par le lecteur d'écran. Un texte plus long (« 218 / 340 ») réduit pour tenir dans l'anneau, et finit en ellipse s'il n'y tient toujours pas. À 0, l'arc ne laisse pas de point à midi." } } },
 };
 
 export const Sizes: Story = {

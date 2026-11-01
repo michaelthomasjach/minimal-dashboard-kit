@@ -7,7 +7,8 @@ import { CALENDAR_EVENTS, CALENDAR_TODAY } from "../appData";
  * Le calendrier de l'équipe. « Aujourd'hui » est fixé (`CALENDAR_TODAY`) pour que l'écran ne
  * change pas d'un jour à l'autre. Créer un événement — double-clic sur un jour, « + » au survol, ou
  * le bouton de la barre — en ajoute un, sans titre propre, au jour choisi : assez pour voir la
- * grille réagir, sans formulaire à monter.
+ * grille réagir, sans formulaire à monter. Un clic sur un événement ouvre sa fiche (une modale du
+ * kit) ; on peut l'y supprimer.
  */
 export function Calendar() {
   const [events, setEvents] = useState<CalendarEvent[]>(CALENDAR_EVENTS);
@@ -27,6 +28,7 @@ export function Calendar() {
         selectedDate={selected}
         onSelectedDateChange={setSelected}
         onCreate={create}
+        onEventDelete={(ev) => setEvents((all) => all.filter((e) => e.id !== ev.id))}
         actions={
           <Button tone="primary" icon={<PlusIcon size={16} />} onClick={() => create(selected instanceof Date ? selected : new Date(`${selected}T12:00`))}>
             Nouvel événement
