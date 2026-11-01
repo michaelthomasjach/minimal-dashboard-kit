@@ -157,8 +157,8 @@ Défauts relevés en montant les planches, à corriger dans le kit aussi :
 
 ### À faire dans ce dépôt
 
-- Le dépôt distant n'existe pas encore. `gh` n'est pas installé sur ce poste, donc c'est à Michael
-  de le créer, puis `git remote add origin …` et `git push -u origin master`.
+- Dépôt public : https://github.com/michaelthomasjach/minimal-dashboard-kit (créé le 2026-11-01 par
+  l'API GitHub avec `GITHUB_TOKEN`, `gh` n'étant pas installé), branche `master`.
 - Le cockpit connaît ce dossier (projet `minimal-dashboard-kit`, enregistré le 2026-10-31).
 - Le paquet est **publié** sur GitHub Packages : `@michaelthomasjach/minimal-dashboard-kit` (depuis la
   v0.1.0, 2026-11-01). Il ré-exporte tout le kit et ajoute `MinimalTheme` (`src/index.ts`). Build
