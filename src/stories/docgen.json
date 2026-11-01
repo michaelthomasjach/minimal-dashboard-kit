@@ -1,5 +1,5 @@
 {
- "version": "0.184.1",
+ "version": "0.185.0",
  "components": {
   "LqThemeProvider": {
    "displayName": "LqThemeProvider",
@@ -19614,7 +19614,7 @@
   },
   "DataTable": {
    "displayName": "DataTable",
-   "description": "Sortable, responsive (horizontally scrollable) data table — holdings, orders, transactions.",
+   "description": "Sortable, responsive (horizontally scrollable) data table — holdings, orders, transactions.\n\nTout le reste est optionnel et se combine : densité, rayures, survol, bordures, en-tête figé,\nsélection de lignes, lignes dépliables, recherche, pagination, export CSV, choix des colonnes.\nOrdre d'application : recherche, puis tri, puis pagination — la sélection et l'export portent sur\nles lignes filtrées et triées, toutes pages confondues.",
    "props": {
     "columns": {
      "name": "columns",
@@ -19689,6 +19689,250 @@
       "raw": "string | undefined"
      },
      "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "density": {
+     "name": "density",
+     "required": false,
+     "type": {
+      "name": "enum",
+      "raw": "'normal' | 'condensed' | undefined",
+      "value": [
+       {
+        "value": "\"normal\""
+       },
+       {
+        "value": "\"condensed\""
+       }
+      ]
+     },
+     "description": "`\"condensed\"` resserre les cellules — listes longues, tableaux secondaires. Défaut `\"normal\"`.",
+     "defaultValue": {
+      "value": "\"normal\""
+     },
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "striped": {
+     "name": "striped",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Une ligne sur deux teintée.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "hover": {
+     "name": "hover",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Surligne la ligne survolée, même sans `onRowClick`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "bordered": {
+     "name": "bordered",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Filets verticaux entre les colonnes, et un cadre.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "maxHeight": {
+     "name": "maxHeight",
+     "required": false,
+     "type": {
+      "name": "string | number | undefined",
+      "raw": "string | number | undefined"
+     },
+     "description": "Hauteur maximale du corps ; au-delà il défile et l'en-tête reste figé. Ex. `320` ou `\"40vh\"`.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "selectable": {
+     "name": "selectable",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Une case à cocher par ligne, et une case tri-état dans l'en-tête qui agit sur toutes les lignes\nfiltrées (toutes les pages, pas seulement la page affichée).",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "selectedKeys": {
+     "name": "selectedKeys",
+     "required": false,
+     "type": {
+      "name": "string[] | undefined",
+      "raw": "string[] | undefined"
+     },
+     "description": "Sélection contrôlée. Sans elle, le tableau garde la sienne.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "defaultSelectedKeys": {
+     "name": "defaultSelectedKeys",
+     "required": false,
+     "type": {
+      "name": "string[] | undefined",
+      "raw": "string[] | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "onSelectionChange": {
+     "name": "onSelectionChange",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((keys: string[]) => void) | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "renderExpanded": {
+     "name": "renderExpanded",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((row: T) => ReactNode) | undefined"
+     },
+     "description": "Rend une ligne dépliable : un chevron en tête, et ce contenu sur toute la largeur dessous.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "isExpandable": {
+     "name": "isExpandable",
+     "required": false,
+     "type": {
+      "name": "func",
+      "raw": "((row: T) => boolean) | undefined"
+     },
+     "description": "Ne déplie que les lignes pour lesquelles ceci renvoie vrai. Défaut : toutes.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "defaultExpandedKeys": {
+     "name": "defaultExpandedKeys",
+     "required": false,
+     "type": {
+      "name": "string[] | undefined",
+      "raw": "string[] | undefined"
+     },
+     "description": "",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "pageSize": {
+     "name": "pageSize",
+     "required": false,
+     "type": {
+      "name": "number",
+      "raw": "number | undefined"
+     },
+     "description": "Pagine par paquets de cette taille. Sans elle, toutes les lignes s'affichent.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "searchable": {
+     "name": "searchable",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Un champ de recherche au-dessus : il filtre sur le texte de chaque colonne visible.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "exportable": {
+     "name": "exportable",
+     "required": false,
+     "type": {
+      "name": "boolean | { filename?: string | undefined; } | undefined",
+      "raw": "boolean | { filename?: string | undefined; } | undefined"
+     },
+     "description": "Un bouton qui télécharge les lignes filtrées et triées (toutes les pages), colonnes visibles.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "columnPicker": {
+     "name": "columnPicker",
+     "required": false,
+     "type": {
+      "name": "boolean",
+      "raw": "boolean | undefined"
+     },
+     "description": "Un menu pour masquer ou réafficher les colonnes.",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "toolbar": {
+     "name": "toolbar",
+     "required": false,
+     "type": {
+      "name": "ReactNode",
+      "raw": "ReactNode"
+     },
+     "description": "Contenu libre à gauche de la barre d'outils — titre, bouton « Ajouter »…",
+     "defaultValue": null,
+     "parent": {
+      "name": "DataTableProps"
+     }
+    },
+    "labels": {
+     "name": "labels",
+     "required": false,
+     "type": {
+      "name": "Partial<DataTableLabels> | undefined",
+      "raw": "Partial<DataTableLabels> | undefined"
+     },
+     "description": "Textes de l'interface, en français par défaut.",
      "defaultValue": null,
      "parent": {
       "name": "DataTableProps"

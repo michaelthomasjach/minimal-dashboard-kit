@@ -150,6 +150,22 @@
      titre en capitales qui les coiffe. */
   --lq-row-font-size: 0.8125rem;
 
+  /* Les tableaux du gabarit (mesurés sur ses pages « Tables » et « Data tables ») : cellules à 20 px,
+     12 px en condensé ; en-tête à 14 / 18 px, dans la couleur du texte et non atténué ; pagination en
+     simples liens de 11 px sans cadre, la page courante en gras. */
+  --lq-table-cell-padding-y: 20px;
+  --lq-table-cell-padding-x: 20px;
+  --lq-table-condensed-padding-y: 12px;
+  --lq-table-head-padding-y: 14px;
+  --lq-table-head-padding-x: 18px;
+  --lq-table-head-color: var(--lq-color-text);
+  --lq-table-page-border: 0 none;
+  --lq-table-page-bg: transparent;
+  --lq-table-page-font-size: 11px;
+  --lq-table-page-current-bg: transparent;
+  --lq-table-page-current-color: var(--lq-color-text);
+  --lq-table-page-current-weight: 700;
+
   --lq-transition-fast: 120ms ease;
   --lq-transition-base: 200ms ease;
 
@@ -186,6 +202,10 @@
   --lq-color-focus-ring: rgba(114, 82, 211, 0.35);
   --lq-color-hover: rgba(33, 33, 33, 0.05);
   --lq-color-overlay: rgba(33, 33, 33, 0.5);
+
+  /* Rayure : le gris du fond de page. Survol : le bleu très pâle du gabarit. */
+  --lq-table-stripe-bg: #f4f4f4;
+  --lq-table-hover-bg: #d3eeff;
 
   --lq-color-danger: #d83c31;
   /* Le jaune des boutons du gabarit (#ffd945) est illisible en texte, et le kit lit cette variable
@@ -238,6 +258,11 @@
   --lq-color-focus-ring: rgba(154, 131, 230, 0.45);
   --lq-color-hover: rgba(255, 255, 255, 0.06);
   --lq-color-overlay: rgba(10, 12, 16, 0.62);
+
+  /* Le gabarit n'a pas de tableau sombre : rayure à peine plus claire que le panneau, survol dans
+     le bleu « complete » assourdi, comme le bleu pâle de la surface claire. */
+  --lq-table-stripe-bg: rgba(255, 255, 255, 0.03);
+  --lq-table-hover-bg: rgba(0, 114, 236, 0.16);
 
   --lq-color-danger: #ec6a60;
   --lq-color-warning: #f2c94c;

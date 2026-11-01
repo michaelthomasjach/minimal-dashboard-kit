@@ -14,7 +14,7 @@
     "docgen": "node scripts/docgen.mjs"
   },
   "dependencies": {
-    "@michaelthomasjach/liseuse-dashboard-kit": "^0.184.1",
+    "@michaelthomasjach/liseuse-dashboard-kit": "^0.185.1",
     "d3": "^7.9.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

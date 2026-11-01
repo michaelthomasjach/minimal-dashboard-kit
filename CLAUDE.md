@@ -114,7 +114,19 @@ les badges du kit sont en pilule là où le gabarit met des étiquettes à 3 px.
   pour tomber pile sur les trous du kit et les **montrer** au lieu de les masquer.
 - Treize planches (`src/showcase/screens/components/`) : **chaque export public du kit** y est montré
   vivant, famille par famille, avec le gabarit `src/showcase/Specimen.tsx`. Données déterministes.
-- Thème calé sur les valeurs mesurées de `pages.revox.io` (voir plus haut), kit en v0.181.0.
+- Thème calé sur les valeurs mesurées de `pages.revox.io` (voir plus haut), kit en v0.185.1.
+- La Vue d'ensemble reproduit le tableau de bord du gabarit (tuiles défilantes, graphiques,
+  géolocalisation, charge serveur…) avec nos propres données et des illustrations SVG générées.
+- Tableaux : toutes les variantes des pages « Tables » / « Data tables » du gabarit, portées par le
+  seul `DataTable` du kit (v0.185) — condensé, rayé, survol, bordé, en-tête figé (`maxHeight`),
+  sélection, lignes dépliables, recherche, pagination, export CSV, choix des colonnes. Ses variables
+  `--lq-table-*` sont réglées dans `minimal.css` aux mesures du gabarit.
+- Storybook (`npm run storybook`, port 6007 ; celui du kit tourne d'habitude sur 6006 ou 6013) :
+  même version (10.5.6) et **même menu, nœud pour nœud**, que celui du kit e-ink. L'ordre est
+  écrit en dur dans `storySort` (`.storybook/preview.tsx`) — à régénérer depuis l'`index.json` du
+  Storybook du kit quand il gagne une page. Les stories de la couche sont un jeu à part, aligné à la
+  main sur celui du kit ; Storybook lit le kit **en source** (alias vers `../Dashboard liseuse/src`),
+  et `npm run docgen` régénère `src/stories/docgen.json` (tables de props).
 
 Vérifié : les 16 écrans rendus dans Chrome headless, en clair et en sombre, sans erreur
 d'exécution — la seule exception connue est un avertissement React de `WorldExposureMap` (trois
@@ -127,7 +139,7 @@ Par ordre d'utilité, repris du comparatif complet qui vit dans le dépôt voisi
 
 1. `Radio` / `RadioGroup` — le seul contrôle de formulaire standard absent. `SegmentedControl` ne le
    remplace pas : un groupe radio porte des libellés longs et s'empile verticalement.
-2. `DataTable` : pagination, puis sélection de lignes, filtre, en-tête figé, export.
+2. `DataTable` : lignes éditables en place (le reste est fait depuis v0.185).
 3. `ButtonGroup` et barre d'outils, cercle de progression, onglets verticaux.
 
 Défauts relevés en montant les planches, à corriger dans le kit aussi :

@@ -169,6 +169,11 @@ body {
   align-items: start;
 }
 
+.mdk-grid--tables {
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  align-items: start;
+}
+
 /* ---- les planches de composants (`Specimen.tsx`) ---- */
 
 .mdk-specimens {

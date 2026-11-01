@@ -22,6 +22,23 @@ export const ORDERS: Order[] = [
   { id: "C-4828", client: "Ferme du Pré", produit: "Licence poste", quantite: 2, montant: 720, statut: "payée", date: "2026-10-25" },
 ];
 
+/** 57 commandes, pour ce qui a besoin de volume — pagination, recherche, en-tête figé. Mêmes valeurs
+ *  que `ORDERS_LONG` dans les données de stories du kit : les deux Storybook montrent le même tableau. */
+export const ORDERS_LONG: Order[] = Array.from({ length: 57 }, (_, i) => {
+  const base = ORDERS[(i * 5) % ORDERS.length];
+  const quantite = 1 + ((i * 7) % 24);
+  const unit = base.montant / base.quantite;
+  const day = 28 - Math.floor(i / 3);
+  return {
+    ...base,
+    id: `C-${4821 + i}`,
+    quantite,
+    montant: Math.round(quantite * unit),
+    statut: i % 7 === 3 ? "annulée" : i % 4 === 1 ? "en attente" : "payée",
+    date: `2026-10-${String(day).padStart(2, "0")}`,
+  };
+});
+
 /** Le ton de `Badge` qui dit un statut de commande. Ici et non dans chaque écran : deux écrans
  *  montrent la même colonne, et deux correspondances écrites séparément finissent par ne plus
  *  dire la même chose. */
