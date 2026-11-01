@@ -1,6 +1,15 @@
 import type { ReactNode } from "react";
 import { LqThemeProvider, type LqSurface } from "@michaelthomasjach/liseuse-dashboard-kit";
 import "@michaelthomasjach/liseuse-dashboard-kit/style.css";
+// Les deux polices du thème, servies avec l'application plutôt que par Google Fonts : rien n'est
+// demandé à un tiers au chargement de la page, et le rendu ne dépend pas d'un réseau externe.
+// Inter pour le texte (400 à 700), Montserrat pour les petits titres en capitales (500 et 600).
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat/600.css";
 import "./minimal.css";
 
 /**
@@ -18,7 +27,13 @@ import "./minimal.css";
  * `surface` reste ouvert, parce que clair et sombre sont deux vraies variantes de ce thème-ci,
  * écrites l'une comme l'autre dans `minimal.css`.
  */
-export function MinimalTheme({ surface = "light", children }: { surface?: LqSurface; children: ReactNode }) {
+export interface MinimalThemeProps {
+  /** `"light"` (défaut) ou `"dark"`. */
+  surface?: LqSurface;
+  children: ReactNode;
+}
+
+export function MinimalTheme({ surface = "light", children }: MinimalThemeProps) {
   return (
     <LqThemeProvider palette="color" surface={surface} font="inter" className="mdk">
       {children}

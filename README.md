@@ -57,6 +57,34 @@ export const SCREENS: Screen[] = [
 ];
 ```
 
+## Utiliser le paquet
+
+Publié sur GitHub Packages sous `@michaelthomasjach/minimal-dashboard-kit`. Il ré-exporte **tous**
+les composants du kit et ajoute `MinimalTheme` : une seule dépendance à déclarer.
+
+```ini
+# .npmrc de l'application — le jeton reste une variable d'environnement
+@michaelthomasjach:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+```sh
+npm install @michaelthomasjach/minimal-dashboard-kit react react-dom d3
+```
+
+```tsx
+import { MinimalTheme, Card, DataTable } from "@michaelthomasjach/minimal-dashboard-kit";
+import "@michaelthomasjach/minimal-dashboard-kit/style.css";
+
+<MinimalTheme surface="light">
+  <App />
+</MinimalTheme>;
+```
+
+Les polices (Inter, Montserrat) sont embarquées via `@fontsource` : rien n'est demandé à Google
+Fonts. Pour publier une nouvelle version : `npm version patch|minor`, puis `npm publish`
+(`prepublishOnly` construit `dist-lib/` avec `vite.config.lib.ts`).
+
 ## Démarrer
 
 ```bash

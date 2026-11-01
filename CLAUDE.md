@@ -160,14 +160,20 @@ Défauts relevés en montant les planches, à corriger dans le kit aussi :
 - Le dépôt distant n'existe pas encore. `gh` n'est pas installé sur ce poste, donc c'est à Michael
   de le créer, puis `git remote add origin …` et `git push -u origin master`.
 - Le cockpit connaît ce dossier (projet `minimal-dashboard-kit`, enregistré le 2026-10-31).
-- Rien ne décide encore si ce paquet sera publié. Il est `private: true` pour l'instant.
+- Le paquet est **publié** sur GitHub Packages : `@michaelthomasjach/minimal-dashboard-kit` (depuis la
+  v0.1.0, 2026-11-01). Il ré-exporte tout le kit et ajoute `MinimalTheme` (`src/index.ts`). Build
+  du paquet : `npm run build:lib` (`vite.config.lib.ts`, sortie `dist-lib/`, le kit, React et les
+  polices restent externes) ; `prepublishOnly` le lance. Publier : `npm version patch|minor`,
+  `npm publish`. Les polices viennent de `@fontsource` (importées par `MinimalTheme`), plus de Google
+  Fonts.
 
 ## Conventions de travail
 
 - `npm install` a besoin de `GITHUB_TOKEN` dans le shell (le kit est sur GitHub Packages). Il est
   déjà exporté sur le poste de Michael. Ne jamais écrire un jeton réel dans `.npmrc`, qui est
   commité — la valeur reste `${GITHUB_TOKEN}`.
-- `npm run build` lance le typecheck avant de construire. `npm run typecheck` seul existe aussi.
+- `npm run build` lance le typecheck puis construit **la vitrine** (`dist/`) ; `npm run build:lib`
+  construit le paquet. `npm run typecheck` seul existe aussi.
 - Commits en conventional commits, corps explicatif en français, et on commite et pousse à la fin
   de chaque tâche terminée — c'est une consigne permanente de Michael.
 - La règle « bump de version à chaque commit » vient du dépôt du kit, où la version est affichée

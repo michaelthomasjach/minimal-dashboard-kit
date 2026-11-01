@@ -1,9 +1,30 @@
 {
-  "name": "minimal-dashboard-kit",
+  "name": "@michaelthomasjach/minimal-dashboard-kit",
   "version": "0.1.0",
-  "description": "Couche de thème « minimal » par-dessus @michaelthomasjach/liseuse-dashboard-kit, et la vitrine qui la montre.",
+  "description": "Les composants de @michaelthomasjach/liseuse-dashboard-kit, habillés d'un thème de tableau de bord d'administration (calé sur le gabarit Pages). Surfaces claire et sombre.",
   "type": "module",
-  "private": true,
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "main": "./dist-lib/minimal-dashboard-kit.cjs.js",
+  "module": "./dist-lib/minimal-dashboard-kit.es.js",
+  "types": "./dist-lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist-lib/index.d.ts",
+      "import": "./dist-lib/minimal-dashboard-kit.es.js",
+      "require": "./dist-lib/minimal-dashboard-kit.cjs.js"
+    },
+    "./style.css": "./dist-lib/style.css"
+  },
+  "files": [
+    "dist-lib"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -11,14 +32,19 @@
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "npm run docgen && storybook build -o storybook-static",
-    "docgen": "node scripts/docgen.mjs"
+    "docgen": "node scripts/docgen.mjs",
+    "build:lib": "tsc --noEmit && vite build --config vite.config.lib.ts",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "d3": "^7.9.0"
   },
   "dependencies": {
     "@michaelthomasjach/liseuse-dashboard-kit": "^0.186.0",
-    "d3": "^7.9.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1"
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0"
   },
   "devDependencies": {
     "@storybook/addon-docs": "10.5.6",
@@ -28,9 +54,14 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
+    "d3": "^7.9.0",
+    "react": "^18.3.1",
     "react-docgen-typescript": "^2.4.0",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.1",
     "storybook": "10.5.6",
     "typescript": "~5.6.2",
-    "vite": "^6.0.7"
+    "vite": "^6.0.7",
+    "vite-plugin-dts": "^4.5.4"
   }
 }
