@@ -452,6 +452,17 @@
   --lq-sidebar-sub-bg: #21252d;
 }
 
+/* En surface sombre, l'ardoise #2b303b est aussi celle des panneaux, donc de la barre de tête : la barre latérale s'y
+   confondait. Elle descend sous le fond de page (#16191e), comme la barre des tableaux de bord sombres, avec son
+   en-tête et ses sous-menus d'un cran plus clairs. */
+.mdk.lq-root[data-lq-surface="dark"] [data-lq-region="sidebar"] {
+  --lq-color-panel: #0f1115;
+  --lq-color-hover: #1c1f26;
+  --lq-sidebar-head-bg: #121419;
+  --lq-sidebar-head-border: #1c1f26;
+  --lq-sidebar-sub-bg: #15171c;
+}
+
 /* Dans une tuile pleine, le cercle de progression repasse dans l'encre du ton au lieu du gris du
    texte posé plus haut. */
 .mdk.lq-root [data-lq-tone] > * {
