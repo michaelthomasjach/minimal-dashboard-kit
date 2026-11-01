@@ -508,3 +508,13 @@
   backdrop-filter: none;
   --lq-sticky-header-shadow: 0 1px 0 var(--lq-color-border-subtle);
 }
+
+/* ---- le corps des cartes ---- */
+
+/* Le texte courant d'une carte en 13 px, comme les lignes de tableau et le contenu des widgets du gabarit : hérité
+   de la page, il sortait à la taille du texte de l'application, plus gros que tout le reste de la carte. En px et
+   non en rem : la taille racine appartient à l'application. Ce qui fixe sa propre taille (chiffres clés, graphiques)
+   la garde. */
+.mdk.lq-root .lq-panel__body {
+  font-size: var(--mdk-panel-body-font-size, 13px);
+}
