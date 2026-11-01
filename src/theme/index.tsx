@@ -26,6 +26,10 @@ import "./minimal.css";
  *
  * `surface` reste ouvert, parce que clair et sombre sont deux vraies variantes de ce thème-ci,
  * écrites l'une comme l'autre dans `minimal.css`.
+ *
+ * Les champs (`Input`, `InputNumber`, `Select`, `InputDropdown`…) prennent leur libellé dans la
+ * boîte, comme les « form-group-default » du gabarit : c'est une anatomie, pas une variable, d'où
+ * `fieldLabelPosition="inside"` posé ici (kit ≥ 0.188). Un champ qui reçoit `labelPosition` garde le sien.
  */
 export interface MinimalThemeProps {
   /** `"light"` (défaut) ou `"dark"`. */
@@ -47,6 +51,7 @@ export function MinimalTheme({ surface = "light", onSurfaceChange, className, st
       palette="color"
       surface={surface}
       font="inter"
+      fieldLabelPosition="inside"
       onSurfaceChange={onSurfaceChange}
       className={className ? `mdk ${className}` : "mdk"}
       style={style}
