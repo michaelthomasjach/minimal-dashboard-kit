@@ -472,3 +472,39 @@
   --lq-color-hover: #21252d;
   --lq-color-accent: #ffffff;
 }
+
+/* ---- les liens ---- */
+
+/* Un `<a>` du contenu prend le violet du primaire, comme les liens du gabarit (« Goto request box »),
+   et non le bleu par défaut du navigateur : le kit ne colore pas les liens bruts. En `:where()`,
+   cette règle ne pèse rien, donc tout lien qu'un composant ou une application habille déjà garde
+   sa couleur ; elle ne remplace que celle du navigateur. Dans la barre latérale et la barre de tête
+   du panneau, où l'accent passe au blanc, le lien suit. */
+:where(.mdk.lq-root) a {
+  color: var(--mdk-color-link, var(--lq-color-accent));
+  text-decoration: none;
+  transition: color var(--lq-transition-fast, 120ms);
+}
+
+:where(.mdk.lq-root) a:hover {
+  color: var(--mdk-color-link-hover, color-mix(in srgb, var(--lq-color-accent) 80%, var(--lq-color-text)));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:where(.mdk.lq-root) a:focus-visible {
+  outline: 2px solid var(--lq-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---- la barre de tête collante ---- */
+
+/* Blanche et pleine, séparée du contenu par un simple filet, comme l'en-tête du gabarit : le voile
+   translucide et l'ombre portée du kit la grisaient sur le fond de page, et coupaient d'une ombre
+   un bandeau de titre blanc posé juste dessous. */
+.mdk.lq-root .lq-sidebar-layout--sticky-header > .lq-sidebar-layout__main > .lq-sidebar-layout__header {
+  background-color: var(--lq-color-panel);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  --lq-sticky-header-shadow: 0 1px 0 var(--lq-color-border-subtle);
+}
