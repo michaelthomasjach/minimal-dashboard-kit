@@ -40,22 +40,41 @@ const preview: Preview = {
     options: {
       // Le même ordre que le Storybook du kit (../Dashboard liseuse/.storybook/preview.tsx) : la
       // page d'accueil, puis des plus petites briques aux plus grands assemblages. Ce qui n'est pas
-      // listé (Audio, Scheduler) garde sa place alphabétique après.
+      // listé garde sa place alphabétique après.
       storySort: {
+        // L'ordre exact du menu du kit e-ink, groupe par groupe : sans les sous-listes, Storybook
+        // rangerait chaque groupe dans l'ordre de découverte des fichiers, qui n'est pas le même ici
+        // (fichiers de la couche mêlés à ceux empruntés au kit). À régénérer depuis l'index.json du kit.
         order: [
           "Accueil",
           "Foundations",
+          ["Variables du thème", "Animated Icons", "Icons", "Typography", "LqThemeProvider"],
           "Primitives",
+          ["Avatar", "Badge", "Button", "Card", "Carousel", "CodeBlock", "ColorSwatchButton", "ContextMenu", "DropdownPanel", "ExpandableCard", "FieldGroup", "Heading", "Highlight", "IconButton", "Jumbotron", "LegendRow", "LevelGauge", "Modal", "Panel", "PanelCollapse", "PanelRow", "PeriodTable", "QuoteMark", "SearchOverlay", "SegmentedControl", "TabbedCard", "Tabs", "Testimonial", "Text", "Toggle", "Tooltip", "TreeView"],
           "Forms",
+          ["Checkbox", "CheckboxButton", "Chip", "ChipGroup", "Input", ["CreditCardInput", "Input", "InputDropdown", "InputNumber", "InputPassword", "MaskedInput", "Masked inputs", "PhoneInput", "Select", "TagInput"], "DateInput", "DatePicker", "DateRangePicker", "DateTimePicker", "Dropzone", "Popover", "RangeSlider", "Tag", "WysiwygEditor"],
           "Feedback",
+          ["AlertList", "GuidedTour", "Loaders", "ProgressBar", "Skeleton", "Spinner", "Stepper", "Notification", "NotificationMenu", "NotificationProvider"],
           "Charts",
+          ["AlertsPanel", "BarChart", "CandlestickChart", ["État du marché", "Captures de diagrammes", "Captures de props"], "ChartAxis", "ChartEventTooltip", "ChartTooltip", "ChartWorkspace", "DeltaChart", "DonutChart", "EarningsDotChart", "GaugeChart", "Heatmap", "LineAreaChart", "MatrixChart", "SankeyChart", "SeasonalityView", "Sparkline", "Courtier", "Scripting (dev)", ["EngineDebugHarness", "ScriptingStateDebugHarness"], "Stratégie", ["Graphiques"], "Vertical Distribution"],
           "Map",
+          ["World Exposure Map", "Interactive Globe", "Dot Map", "Tile Map"],
           "Finance",
+          ["ComparisonCard", "DataTable", "GaugeCard", "HighlightStatCard", "HoldingCard", "PriceChangeTag", "StatCard"],
           "Finance Widgets",
+          ["MarketMoversWidget", "PortfolioSummaryWidget", "WatchlistWidget"],
           "Widgets",
+          ["AlertMarker", "AlertMarkerStack", "AllocationSlider", "AnalogClock", "ClockWidget", "DashboardGrid", "DashboardGridItem", "DayTimelineWidget", "DemandMeters", "EnergyWidget", "FpsMeter", "IconDock", "KanbanBoard", "KnowledgeBase", "LightDetailModal", "LightsWidget", "LiveTile", "MetricListWidget", "MusicPlayerWidget", "ObjectiveTracker", "ShuttersWidget", "SkillTree", "WeatherWidget"],
           "Dashboard",
+          ["Maison — tableau de bord"],
           "Layouts",
+          ["Breadcrumbs", "UserMenu", "HeaderLayout", "SidebarLayout"],
           "Pages",
+          ["LoginPage", "NotFoundPage", "SignUpPage"],
+          "Audio",
+          ["Balance, Niveaux, Égaliseur", "BalanceControl", "Equalizer", "LevelMeter"],
+          "Scheduler",
+          ["Planning de ressources", "SchedulerTaskModal"],
         ],
       },
     },
