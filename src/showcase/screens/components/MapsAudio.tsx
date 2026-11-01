@@ -6,6 +6,7 @@ import {
   Equalizer,
   InteractiveGlobe,
   LevelMeter,
+  MonthCalendar,
   Scheduler,
   SchedulerTaskModal,
   Text,
@@ -17,6 +18,7 @@ import {
   type SchedulerTask,
 } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { Specimen, SpecimenGrid, SpecimenScreen } from "../../Specimen";
+import { CALENDAR_EVENTS, CALENDAR_TODAY } from "../../appData";
 import {
   EQ_BANDS,
   GLOBE_FLOWS,
@@ -75,6 +77,7 @@ export function MapsAudio() {
   const picked = GLOBE_NODES.find((n) => n.id === node);
 
   const [route, setRoute] = useState(MAP_ROUTES[0].id);
+  const [calendarLog, setCalendarLog] = useState("Cliquez un événement, ou double-cliquez un jour pour en créer un.");
 
   const [balance, setBalance] = useState(0);
   const [split, setSplit] = useState(-20);
@@ -91,7 +94,7 @@ export function MapsAudio() {
   return (
     <SpecimenScreen
       title="Cartes, audio, planning"
-      intro="Un globe, une carte à tuiles, trois contrôles audio et le planning de ressources — les grandes surfaces du kit."
+      intro="Un globe, une carte à tuiles, trois contrôles audio, le planning de ressources et le calendrier — les grandes surfaces du kit."
     >
       <SpecimenGrid>
         <Specimen
@@ -242,6 +245,19 @@ export function MapsAudio() {
               onClose={() => setModalTaskId(null)}
             />
           ) : null}
+        </Specimen>
+
+        <Specimen name="MonthCalendar" description="Le calendrier du mois : événements sur plusieurs jours, lien « +N autres », jour sélectionné et sa liste, bascule vers la semaine." wide>
+          <MonthCalendar
+            events={CALENDAR_EVENTS}
+            today={CALENDAR_TODAY}
+            defaultSelectedDate={CALENDAR_TODAY}
+            onEventClick={(e) => setCalendarLog(`Événement : ${e.title}`)}
+            onCreate={(d) => setCalendarLog(`Créer un événement le ${d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}`)}
+          />
+          <Text size="sm" muted>
+            {calendarLog}
+          </Text>
         </Specimen>
       </SpecimenGrid>
     </SpecimenScreen>

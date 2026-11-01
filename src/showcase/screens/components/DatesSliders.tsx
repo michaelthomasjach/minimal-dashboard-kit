@@ -6,6 +6,7 @@ import {
   DateRangePicker,
   DateTimePicker,
   RangeSlider,
+  Slider,
   type DateRange,
 } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { Specimen, SpecimenGrid, SpecimenScreen } from "../../Specimen";
@@ -13,6 +14,8 @@ import { Specimen, SpecimenGrid, SpecimenScreen } from "../../Specimen";
 const jour = (d: Date | null) => (d ? d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "—");
 const euro = (n: number) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
 const signe = (n: number) => `${n > 0 ? "+" : ""}${n} %`;
+const pourcent = (n: number) => `${n} %`;
+const decibels = (n: number) => `${n > 0 ? "+" : ""}${n} dB`;
 
 const AUJOURD_HUI = new Date(2026, 9, 31);
 
@@ -33,11 +36,19 @@ export function DatesSliders() {
   const [montant, setMontant] = useState<[number, number]>([500, 4500]);
   const [variation, setVariation] = useState<[number, number]>([-15, 25]);
   const [anciennete, setAnciennete] = useState<[number, number]>([2, 8]);
+  const [volume, setVolume] = useState(60);
+  const [remise, setRemise] = useState(15);
+  const [seuil, setSeuil] = useState(80);
+  const [aigus, setAigus] = useState(4);
+  const [graves, setGraves] = useState(-2);
+  const [actions, setActions] = useState<[number, number]>([25, 75]);
+  const [budget, setBudget] = useState<[number, number]>([1200, 3400]);
+  const [plage, setPlage] = useState<[number, number]>([30, 60]);
 
   return (
     <SpecimenScreen
       title="Dates et curseurs"
-      intro="Saisie de dates au clavier ou au calendrier, périodes, horodatages, et curseurs à deux poignées."
+      intro="Saisie de dates au clavier ou au calendrier, périodes, horodatages, et curseurs à une ou deux poignées."
     >
       <SpecimenGrid>
         <Specimen name="DateInput" description="La date tapée au clavier, au format jj/mm/aaaa — sans calendrier.">
@@ -111,6 +122,56 @@ export function DatesSliders() {
               value={anciennete}
               onChange={setAnciennete}
               disabled
+            />
+          </div>
+        </Specimen>
+
+        <Specimen name="Slider" description="Une valeur à une poignée : bulle au survol, graduations nommées, tons, et la même chose à la verticale.">
+          <Slider label="Volume des alertes" value={volume} onChange={setVolume} formatValue={pourcent} />
+          <Slider
+            label="Remise accordée"
+            min={0}
+            max={30}
+            step={5}
+            value={remise}
+            onChange={setRemise}
+            marks={[0, 10, 20, 30].map((v) => ({ value: v, label: pourcent(v) }))}
+            showValue="always"
+            formatValue={pourcent}
+            tone="success"
+          />
+          <Slider label="Seuil d'alerte de stock" value={seuil} onChange={setSeuil} step={10} marks tone="danger" formatValue={pourcent} />
+          <Slider label="Ancienneté minimale (ans)" min={0} max={10} defaultValue={3} disabled />
+          <div className="mdk-wrap mdk-wrap--sliders">
+            <Slider orientation="vertical" height={140} label="Aigus" min={-12} max={12} value={aigus} onChange={setAigus} formatValue={decibels} tone="info" />
+            <Slider orientation="vertical" height={140} label="Graves" min={-12} max={12} value={graves} onChange={setGraves} formatValue={decibels} tone="warning" />
+          </div>
+        </Specimen>
+
+        <Specimen name="RangeSlider" description="Les options partagées avec Slider : graduations nommées, bulles permanentes ou au survol, tons, orientation verticale.">
+          <RangeSlider
+            label="Part en actions"
+            min={0}
+            max={100}
+            step={5}
+            value={actions}
+            onChange={setActions}
+            formatValue={pourcent}
+            marks={[0, 25, 50, 75, 100].map((v) => ({ value: v, label: pourcent(v) }))}
+          />
+          <RangeSlider label="Budget" min={0} max={5000} step={100} value={budget} onChange={setBudget} showValue="always" formatValue={euro} tone="info" />
+          <div className="mdk-wrap mdk-wrap--sliders">
+            <RangeSlider
+              orientation="vertical"
+              height={140}
+              label="Heures creuses"
+              min={0}
+              max={100}
+              value={plage}
+              onChange={setPlage}
+              showValue="auto"
+              formatValue={pourcent}
+              tone="success"
             />
           </div>
         </Specimen>

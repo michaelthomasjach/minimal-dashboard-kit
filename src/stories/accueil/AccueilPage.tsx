@@ -66,9 +66,9 @@ const FAMILIES: { name: string; lead: string; open: string }[] = [
   { name: "Widgets", lead: "Tuiles vivantes, horloges, météo, Kanban, objectifs, base de connaissances.", open: "Widgets/LiveTile" },
   { name: "Dashboard", lead: "Un tableau de bord assemblé de bout en bout avec les widgets.", open: "Dashboard/Maison — tableau de bord" },
   { name: "Layouts", lead: "Barre latérale, barre haute, fil d'Ariane, menu utilisateur.", open: "Layouts/SidebarLayout" },
-  { name: "Pages", lead: "Connexion, inscription, page introuvable.", open: "Pages/LoginPage" },
+  { name: "Pages", lead: "Connexion, inscription, profil, facture, verrouillage, erreurs 404 et 500.", open: "Pages/LoginPage" },
   { name: "Audio", lead: "Balance, vumètres et égaliseur.", open: "Audio/Equalizer" },
-  { name: "Scheduler", lead: "Planning de ressources et sa fenêtre de tâche.", open: "Scheduler/Planning de ressources" },
+  { name: "Scheduler", lead: "Planning de ressources, sa fenêtre de tâche, calendrier mensuel.", open: "Scheduler/MonthCalendar" },
 ];
 
 const SWATCHES = ["--lq-color-bg", "--lq-color-panel", "--mdk-color-text-strong", "--lq-color-text", "--lq-color-text-muted", "--lq-color-border", "--lq-color-accent", "--lq-color-up", "--lq-color-down", "--lq-color-warning", "--lq-color-info", "--lq-color-violet", "--lq-color-sky", "--lq-color-green", "--lq-color-amber", "--lq-color-rose"];
@@ -81,22 +81,34 @@ const TYPE_SCALE = [
 const SHAPES = ["--lq-radius-sm", "--lq-radius-md", "--lq-radius-lg", "--lq-radius-pill"];
 const TOKEN_COUNT = TOKEN_GROUPS.reduce((n, g) => n + g.tokens.length, 0);
 
-const USAGE_SNIPPET = `import { MinimalTheme } from "minimal-dashboard-kit/theme";
-import { Button, Card } from "@michaelthomasjach/liseuse-dashboard-kit";
+const USAGE_SNIPPET = `import { MinimalTheme, Button, Card } from "@michaelthomasjach/minimal-dashboard-kit";
+import "@michaelthomasjach/minimal-dashboard-kit/style.css";
 
 export function App() {
   return (
     <MinimalTheme surface="light">
       <Card title="Commandes">
-        <Button>Exporter</Button>
+        <Button tone="primary">Exporter</Button>
       </Card>
     </MinimalTheme>
   );
 }`;
-const FONTS_SNIPPET = `<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600&display=swap" rel="stylesheet" />`;
+const FONTS_SNIPPET = `# .npmrc — le paquet est sur GitHub Packages
+@michaelthomasjach:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=\${GITHUB_TOKEN}
+
+npm install @michaelthomasjach/minimal-dashboard-kit react react-dom d3`;
 const SHOWCASE_SNIPPET = `npm install      # GITHUB_TOKEN exporté : le kit est sur GitHub Packages
 npm run dev      # la vitrine, sur http://localhost:5173
 npm run storybook`;
+
+/** La vitrine : publiée sous `vitrine/` à côté de ce Storybook sur GitHub Pages ; en local, le
+ *  serveur de `npm run dev`. L'iframe de la story est servie à la racine du Storybook, d'où l'URL
+ *  relative. */
+const SHOWCASE_URL =
+  typeof window !== "undefined" && window.location.hostname === "localhost"
+    ? "http://localhost:5173/"
+    : new URL("vitrine/", typeof window !== "undefined" ? window.location.href : "http://localhost/").href;
 
 function SectionHead({ eyebrow, title, lead }: { eyebrow: string; title: ReactNode; lead: ReactNode }) {
   return (
@@ -220,11 +232,12 @@ export function AccueilPage({ kitVersion, componentCount }: AccueilPageProps) {
             Parcourir les composants
           </Button>
           <Button onClick={() => open("Foundations/Variables du thème")}>Les variables du thème</Button>
-          <Button onClick={() => window.open("http://localhost:5173/", "_blank", "noopener")}>Ouvrir la vitrine</Button>
+          <Button onClick={() => window.open(SHOWCASE_URL, "_blank", "noopener")}>Ouvrir la vitrine</Button>
         </div>
         <p className="mdk-home__hint">
-          La vitrine — trois écrans de référence : Vue d'ensemble, Tableaux, Formulaires — se lance à part
-          avec <code>npm run dev</code>. La bascule <strong>Surface</strong> de la barre d'outils fait passer
+          La vitrine — le tableau de bord, les tableaux, les formulaires, les écrans d'application et une
+          planche par famille de composants — est publiée à côté de ce Storybook, et se lance en local avec{" "}
+          <code>npm run dev</code>. La bascule <strong>Surface</strong> de la barre d'outils fait passer
           toute cette page, et toutes les autres, en sombre.
         </p>
         <div className="mdk-home__stage-frame">
@@ -464,16 +477,16 @@ export function AccueilPage({ kitVersion, componentCount }: AccueilPageProps) {
           title="Un composant autour de l'application."
           lead={
             <>
-              <code>MinimalTheme</code> charge la feuille du kit et celle du thème, et pose la classe{" "}
-              <code>mdk</code> sur la racine du thème. L'application charge les polices elle-même : Inter
-              pour le texte, Montserrat pour les petits titres.
+              Un seul paquet : il ré-exporte tous les composants du kit et ajoute <code>MinimalTheme</code>,
+              qui charge la feuille du kit, celle du thème et les deux polices (Inter, Montserrat,
+              embarquées — rien n'est demandé à Google Fonts) et pose la classe <code>mdk</code>.
             </>
           }
         />
         <div className="mdk-home__code">
           <CodeBlock code={USAGE_SNIPPET} filename="App.tsx" highlight="javascript" showLineNumbers />
           <div className="mdk-home__code-side">
-            <CodeBlock code={FONTS_SNIPPET} filename="index.html" />
+            <CodeBlock code={FONTS_SNIPPET} language="bash" />
             <CodeBlock code={SHOWCASE_SNIPPET} language="bash" />
           </div>
         </div>

@@ -1,5 +1,17 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
+  ActivityFeed,
+  Avatar,
+  Badge,
+  Button,
+  ChatPanel,
+  Gallery,
+  Lightbox,
+  MailPanel,
+  NotesPanel,
+  PanelRow,
+  Quickview,
+  Timeline,
   AlertMarker,
   AlertMarkerStack,
   AllocationSlider,
@@ -48,6 +60,82 @@ import {
   SERVICES,
   SKILLS,
 } from "../../widgetData";
+import {
+  ACTIVITY_POSTS,
+  CHAT_CONTACTS,
+  CHAT_MESSAGES,
+  CHAT_NOW,
+  GALLERY_IMAGES,
+  GALLERY_IMAGES_PLAIN,
+  MAIL_FOLDERS,
+  MAIL_MESSAGES,
+  MAIL_NOW,
+  NOTES,
+  NOTES_NOW,
+} from "../../appData";
+import { TIMELINE } from "../../timelineIcons";
+
+/** Le panneau rapide : trois onglets, de quoi voir la barre de tête et ce qui défile dessous. */
+const QUICK_NOTES = [
+  { titre: "Relancer Lemoine SAS", texte: "Facture d'octobre toujours impayée, relance par téléphone jeudi.", date: "29 oct." },
+  { titre: "Atelier utilisateurs", texte: "Recherche, export, lisibilité sur tablette : à prioriser.", date: "26 oct." },
+  { titre: "Recette lot 1", texte: "Prévoir deux demi-journées avec Hugo.", date: "22 oct." },
+];
+
+const QUICK_ALERTS: { titre: string; detail: string; tone: "down" | "warning" | "info" }[] = [
+  { titre: "Serveur de recette injoignable", detail: "depuis 08:12", tone: "down" },
+  { titre: "Stock bas : ruban adhésif", detail: "12 unités", tone: "warning" },
+  { titre: "Sauvegarde terminée", detail: "03:00", tone: "info" },
+];
+
+const QUICK_PEOPLE = ["Camille Roux", "Hugo Lambert", "Inès Morel", "Léa Fontaine", "Nathan Girard"];
+
+const QUICK_TABS = [
+  {
+    id: "notes",
+    label: "Notes",
+    content: (
+      <div className="mdk-stack">
+        {QUICK_NOTES.map((n) => (
+          <div key={n.titre} className="mdk-stack mdk-stack--tight">
+            <Text weight="bold" size="sm">
+              {n.titre}
+            </Text>
+            <Text size="sm">{n.texte}</Text>
+            <Text size="xs" muted>
+              {n.date}
+            </Text>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+  {
+    id: "alertes",
+    label: "Alertes",
+    content: (
+      <div>
+        {QUICK_ALERTS.map((a) => (
+          <PanelRow key={a.titre} label={a.titre} value={<Badge tone={a.tone}>{a.detail}</Badge>} />
+        ))}
+      </div>
+    ),
+  },
+  {
+    id: "equipe",
+    label: "Équipe",
+    content: (
+      <div className="mdk-stack">
+        {QUICK_PEOPLE.map((name) => (
+          <div key={name} className="mdk-row">
+            <Avatar name={name} size={32} />
+            <Text size="sm">{name}</Text>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+];
 
 /** Les couleurs de branche passent en variable CSS dans le kit : un jeton du thème y est donc accepté tel quel. */
 const BRANCHES: SkillTreeBranch[] = [
@@ -164,6 +252,10 @@ export function ToolWidgets() {
 
   const [lastAlert, setLastAlert] = useState("—");
 
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [quickview, setQuickview] = useState(false);
+
   const [capValues, setCapValues] = useState<Record<string, number>>({ produit: 50, support: 25, dette: 10 });
   const [stealValues, setStealValues] = useState<Record<string, number>>({ produit: 60, support: 25, dette: 15 });
 
@@ -173,7 +265,7 @@ export function ToolWidgets() {
   return (
     <SpecimenScreen
       title="Widgets outils"
-      intro="Listes de valeurs, grille, arbre de compétences, base de connaissances, Kanban, objectifs, dock, alertes, compteur d'images et partage."
+      intro="Listes de valeurs, grille, arbre de compétences, base de connaissances, Kanban, objectifs, dock, alertes, compteur d'images, partage ; puis frise, fil d'activité, galerie, panneau rapide, messagerie, notes et boîte mail."
     >
       <SpecimenGrid>
         <Specimen name="MetricListWidget" description="Un panneau libellé / valeur : le plus simple des widgets, et le plus réutilisé.">
@@ -334,6 +426,80 @@ export function ToolWidgets() {
           <Text size="sm" muted>
             useFps sur la même scène : {Math.round(sceneReading.fps)} i/s, au plus lent {Math.round(sceneReading.min)} i/s, {sceneReading.ms.toFixed(1)} ms par image.
           </Text>
+        </Specimen>
+
+        <Specimen name="Timeline" description="La frise : regroupée par jour, l'entrée en cours signalée, une pastille par ton ou par icône.">
+          <Timeline entries={TIMELINE} ariaLabel="Activité de l'équipe" />
+        </Specimen>
+
+        <Specimen name="Timeline" description="Les deux autres dispositions : compacte, sans regroupement, et en alternance de part et d'autre de l'axe, encadrée.">
+          <Timeline entries={TIMELINE.slice(0, 4)} variant="compact" groupByDay={false} ariaLabel="Activité récente" />
+          <Timeline entries={TIMELINE.slice(0, 4)} variant="alternate" boxed groupByDay={false} ariaLabel="Activité récente, en alternance" />
+        </Specimen>
+
+        <Specimen name="ActivityFeed" description="Le fil d'une équipe : publications en cartes, mentions J'aime, partages et commentaires dépliables.">
+          <ActivityFeed posts={ACTIVITY_POSTS} currentUser={{ name: "Claire Lemoine" }} defaultOpenComments={["p1"]} />
+        </Specimen>
+
+        <Specimen name="ActivityFeed" description="La variante en liste, plus dense, pour une colonne latérale.">
+          <ActivityFeed posts={ACTIVITY_POSTS} variant="list" currentUser={{ name: "Claire Lemoine" }} />
+        </Specimen>
+
+        <Specimen name="Gallery" description="La galerie : filtre par catégorie, grandes vignettes (span), légende au survol, visionneuse au clic." wide>
+          <Gallery images={GALLERY_IMAGES} filterable lightboxThumbnails ariaLabel="Œuvres de la boutique" />
+        </Specimen>
+
+        <Specimen name="Gallery" description="La maçonnerie : chaque image garde ses proportions, légende toujours visible, filtre en commandes segmentées." wide>
+          <Gallery images={GALLERY_IMAGES_PLAIN.slice(0, 8)} layout="masonry" columns={4} overlay="always" filterable filterStyle="segmented" ariaLabel="Œuvres, en maçonnerie" />
+        </Specimen>
+
+        <Specimen name="Lightbox" description="La visionneuse seule : flèches, compteur, vignettes, Échap pour fermer — ouverte ici depuis une liste à soi.">
+          <div className="mdk-wrap">
+            {GALLERY_IMAGES_PLAIN.slice(0, 4).map((image, i) => (
+              <Button
+                key={image.id}
+                onClick={() => {
+                  setLightboxIndex(i);
+                  setLightboxOpen(true);
+                }}
+              >
+                {image.title}
+              </Button>
+            ))}
+          </div>
+          <Lightbox
+            images={GALLERY_IMAGES_PLAIN.slice(0, 4)}
+            index={lightboxIndex}
+            onIndexChange={setLightboxIndex}
+            open={lightboxOpen}
+            onClose={() => setLightboxOpen(false)}
+            thumbnails
+          />
+        </Specimen>
+
+        <Specimen name="Quickview" description="Le panneau rapide qui glisse depuis le bord : onglets, contenu qui défile, fermeture par la croix, Échap ou le fond.">
+          <div className="mdk-row">
+            <Button onClick={() => setQuickview(true)}>Ouvrir le panneau rapide</Button>
+          </div>
+          <Quickview open={quickview} onClose={() => setQuickview(false)} ariaLabel="Panneau rapide" tabs={QUICK_TABS} />
+        </Specimen>
+
+        <Specimen name="ChatPanel" description="La messagerie : contacts et présence, fil du jour avec accusés de lecture, saisie au bas ; sous 640 px, une colonne à la fois." wide>
+          <div className="mdk-frame mdk-frame--panel">
+            <ChatPanel contacts={CHAT_CONTACTS} messages={CHAT_MESSAGES} defaultActiveContactId="ava" now={CHAT_NOW} />
+          </div>
+        </Specimen>
+
+        <Specimen name="NotesPanel" description="Le carnet : liste cherchable à gauche, note éditable à droite, création et suppression." wide>
+          <div className="mdk-frame mdk-frame--notes">
+            <NotesPanel notes={NOTES} defaultActiveNoteId="release" now={NOTES_NOW} />
+          </div>
+        </Specimen>
+
+        <Specimen name="MailPanel" description="La boîte mail : dossiers et libellés, liste avec cases et étoiles, message ouvert avec ses pièces jointes." wide>
+          <div className="mdk-frame mdk-frame--mail">
+            <MailPanel folders={MAIL_FOLDERS} defaultMessages={MAIL_MESSAGES} defaultSelectedId="m1" now={MAIL_NOW} ariaLabel="Boîte mail" />
+          </div>
         </Specimen>
       </SpecimenGrid>
     </SpecimenScreen>

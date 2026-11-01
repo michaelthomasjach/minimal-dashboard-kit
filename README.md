@@ -6,6 +6,29 @@ et la vitrine qui la montre.
 Le kit porte la logique des composants ; ce dépôt ne porte que leur apparence, plus les écrans de
 démonstration. Aucun composant n'est réécrit ici tant qu'une variable suffit à le rhabiller.
 
+**En ligne :** [Storybook](https://michaelthomasjach.github.io/minimal-dashboard-kit/) — chaque composant, son code et ses props ·
+[Vitrine](https://michaelthomasjach.github.io/minimal-dashboard-kit/vitrine/) — le tableau de bord, les écrans d'application et une planche par famille.
+
+## Aperçu
+
+![Vue d'ensemble — le tableau de bord, en surface claire](docs/images/vue-ensemble.png)
+
+| | |
+|---|---|
+| ![Vue d'ensemble en surface sombre](docs/images/vue-ensemble-sombre.png) | ![Tableaux : pagination, recherche, sélection, rayures, en-tête figé](docs/images/tableaux.png) |
+| **Surface sombre** — dérivée de la barre latérale du gabarit | **Tableaux** — pagination, recherche, sélection, export, en-tête figé |
+| ![Messagerie](docs/images/messagerie.png) | ![Boîte mail en surface sombre](docs/images/boite-mail.png) |
+| **Messagerie** — `ChatPanel` | **Boîte mail** — `MailPanel`, en sombre |
+| ![Calendrier mensuel](docs/images/calendrier.png) | ![Galerie](docs/images/galerie.png) |
+| **Calendrier** — `MonthCalendar` | **Galerie** — `Gallery` et sa visionneuse |
+| ![Frise et fil d'activité](docs/images/frise.png) | ![Formulaires](docs/images/formulaires.png) |
+| **Frise et fil d'activité** — `Timeline`, `ActivityFeed` | **Formulaires** — champs à libellé intégré |
+
+![Planche des champs : radios, curseurs, zone de texte, états d'erreur et de succès](docs/images/planche-champs.png)
+
+Les illustrations des écrans sont générées en code (SVG) ; aucune image ni aucun code du gabarit
+Pages n'est repris — seules ses valeurs (couleurs, tailles, ombres) ont été mesurées.
+
 ## Comment ça marche
 
 Le kit ne code aucune couleur, aucun rayon, aucun espacement en dur : ses ~200 composants lisent

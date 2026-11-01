@@ -18,6 +18,9 @@ import {
   CheckboxButton,
   Dropzone,
   WysiwygEditor,
+  RadioGroup,
+  Radio,
+  Textarea,
   SearchIcon,
   UserIcon,
   type InputDropdownOption,
@@ -69,6 +72,19 @@ const CANAUX = [
 ] as const;
 type Canal = (typeof CANAUX)[number]["value"];
 
+const FORMULES = [
+  { value: "mensuel", label: "Mensuel", description: "29 € par mois, sans engagement." },
+  { value: "annuel", label: "Annuel", description: "290 € par an : deux mois offerts." },
+  { value: "perso", label: "Sur mesure", description: "Au-delà de 50 utilisateurs, sur devis." },
+  { value: "essai", label: "Essai gratuit", description: "Déjà utilisé sur ce compte.", disabled: true },
+];
+
+const ENVOIS = [
+  { value: "courriel", label: "Courriel" },
+  { value: "courrier", label: "Courrier" },
+  { value: "les-deux", label: "Les deux" },
+];
+
 const NOTE_INITIALE =
   "<h3>Relance trimestrielle</h3><p>Le client a demandé un <strong>report d'échéance</strong> pour la facture F-2041. " +
   "Accord de principe, sous réserve de :</p><ul><li>un premier versement avant le 15 ;</li><li>la mise à jour du RIB.</li></ul>";
@@ -110,6 +126,12 @@ export function Fields() {
     new File(["x".repeat(184_000)], "releve-octobre-2026.pdf", { type: "application/pdf" }),
   ]);
   const [note, setNote] = useState(NOTE_INITIALE);
+  const [formule, setFormule] = useState("annuel");
+  const [envoi, setEnvoi] = useState<string | null>(null);
+  const [relance, setRelance] = useState("douce");
+  const [commentaire, setCommentaire] = useState("Client fidèle depuis 2021. Préfère être appelé le matin.");
+  const [motif, setMotif] = useState("");
+  const [courriel, setCourriel] = useState("compta@lemoine.fr");
 
   const toutesNotifs = Object.values(notifications);
   const toutCoche = toutesNotifs.every(Boolean);
@@ -118,7 +140,7 @@ export function Fields() {
   return (
     <SpecimenScreen
       title="Champs"
-      intro="Tout ce qui se saisit : champs texte, masqués, numériques, listes, étiquettes, cases et éditeur riche."
+      intro="Tout ce qui se saisit : champs texte, masqués, numériques, listes, étiquettes, cases, boutons radio, texte long et éditeur riche."
     >
       <SpecimenGrid>
         <Specimen name="Input" description="Le champ texte de base, avec ses états d'aide, d'erreur et de désactivation.">
@@ -155,7 +177,60 @@ export function Fields() {
           </div>
         </Specimen>
 
-        <Specimen name="MaskedInput · PhoneInput · CreditCardInput" description="Des champs à motif : l'application ne garde que les chiffres.">
+        <Specimen name="Input" description="L'état de succès : un message de confirmation sous le champ, ou le filet seul (success booléen), l'aide restant en place.">
+          <Input
+            label="Adresse de facturation"
+            type="email"
+            value={courriel}
+            onChange={(e) => setCourriel(e.target.value)}
+            success={courriel.includes("@") ? "Adresse vérifiée." : undefined}
+            error={courriel.includes("@") ? undefined : "Adresse incomplète."}
+          />
+          <Input label="Code promotionnel" defaultValue="AUTOMNE26" success helperText="Remise de 10 % appliquée au panier." />
+        </Specimen>
+
+        <Specimen name="RadioGroup · Radio" description="Un choix exclusif à libellés longs : empilé avec une description par option, en ligne, ou en erreur ; et la case seule.">
+          <RadioGroup label="Formule" options={FORMULES} value={formule} onChange={setFormule} helperText="Modifiable à chaque échéance." />
+          <RadioGroup
+            label="Envoi des factures"
+            orientation="horizontal"
+            options={ENVOIS}
+            value={envoi}
+            onChange={setEnvoi}
+            required
+            error={envoi ? undefined : "Choisissez un mode d'envoi."}
+          />
+          <div className="mdk-wrap">
+            <Radio name="relance" value="douce" label="Relance douce" checked={relance === "douce"} onChange={setRelance} />
+            <Radio name="relance" value="ferme" label="Mise en demeure" checked={relance === "ferme"} onChange={setRelance} />
+            <Radio name="relance-off" value="off" label="Désactivée" disabled />
+          </div>
+        </Specimen>
+
+        <Specimen name="Textarea" description="Le texte long : hauteur qui suit la saisie et compteur, libellé dans la boîte, erreur ou succès.">
+          <Textarea
+            label="Commentaire interne"
+            value={commentaire}
+            onChange={(e) => setCommentaire(e.target.value)}
+            autoResize
+            minRows={2}
+            maxRows={6}
+            maxLength={240}
+            showCount
+            helperText="Visible de l'équipe seulement."
+          />
+          <Textarea
+            labelPosition="inside"
+            label="Motif du litige"
+            value={motif}
+            onChange={(e) => setMotif(e.target.value)}
+            rows={3}
+            error={motif.length >= 10 ? undefined : "Dix caractères au moins."}
+          />
+          <Textarea label="Adresse de livraison" defaultValue={"48 quai Saint-Vincent\n69001 Lyon"} rows={2} resize="none" success="Adresse reconnue." />
+        </Specimen>
+
+        <Specimen name="MaskedInput · PhoneInput · CreditCardInput"description="Des champs à motif : l'application ne garde que les chiffres.">
           <MaskedInput label="IBAN" mask="FR## #### #### #### #### #### ###" value={iban} onChange={setIban} />
           <div className="mdk-row mdk-row--fill">
             <PhoneInput label="Téléphone" value={phone} onChange={setPhone} />

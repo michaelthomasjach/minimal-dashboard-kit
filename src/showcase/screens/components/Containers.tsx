@@ -17,6 +17,7 @@ import {
   Toggle,
   Text,
   Badge,
+  Input,
   type TreeNode,
   type PeriodTableColumn,
   type PeriodTableRow,
@@ -58,6 +59,52 @@ const DOCUMENTS: TreeNode[] = [
   },
   { id: "cgv", label: "CGV en vigueur.pdf", icon: <FileIcon size={16} /> },
 ];
+
+/** Le même classement sans icône posée : `showIcons` y dessine dossiers et fichiers d'après la
+ *  présence d'enfants. « Archives » se charge à la première ouverture (`hasChildren` sans enfants). */
+const DOSSIERS: TreeNode[] = [
+  {
+    id: "d-clients",
+    label: "Clients",
+    children: [
+      {
+        id: "d-lemoine",
+        label: "Lemoine SAS",
+        children: [
+          { id: "d-lemoine-contrat", label: "Contrat-cadre 2026.pdf" },
+          { id: "d-lemoine-tva", label: "Attestation TVA.pdf" },
+          { id: "d-lemoine-factures", label: "Factures T3.zip" },
+        ],
+      },
+      {
+        id: "d-vallee",
+        label: "Groupe Vallée",
+        children: [
+          { id: "d-vallee-devis", label: "Devis D-0193.pdf" },
+          { id: "d-vallee-bon", label: "Bon de commande.pdf" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "d-compta",
+    label: "Comptabilité",
+    children: [
+      { id: "d-compta-grand-livre", label: "Grand livre 2026.xlsx" },
+      { id: "d-compta-tva", label: "Déclarations TVA", children: [{ id: "d-compta-tva-t3", label: "TVA T3 2026.pdf" }] },
+    ],
+  },
+  { id: "d-archives", label: "Archives", hasChildren: true },
+];
+
+/** Le chargement paresseux d'« Archives » : une demi-seconde, puis trois années. */
+const loadArchives = (node: TreeNode) =>
+  new Promise<TreeNode[]>((resolve) =>
+    window.setTimeout(
+      () => resolve(["2023", "2024", "2025"].map((year) => ({ id: `${node.id}-${year}`, label: `Exercice ${year}.zip` }))),
+      500,
+    ),
+  );
 
 /** Les quatre derniers trimestres, plus récents à droite, comme se lit un compte de résultat. */
 const QUARTERS: PeriodTableColumn[] = [
@@ -141,6 +188,18 @@ export function Containers() {
   const [modal, setModal] = useState<"default" | "wide" | null>(null);
   const [selectedDoc, setSelectedDoc] = useState<string | null>("lemoine-contrat");
   const [lastRow, setLastRow] = useState<string | null>(null);
+  const [checkedDocs, setCheckedDocs] = useState<string[]>(["d-lemoine-contrat", "d-lemoine-tva"]);
+  const [treeQuery, setTreeQuery] = useState("tva");
+  const [treeLog, setTreeLog] = useState("Clic droit sur un nœud pour ses actions.");
+  const [refreshedAt, setRefreshedAt] = useState("09:12");
+
+  const refresh = () =>
+    new Promise<void>((resolve) =>
+      window.setTimeout(() => {
+        setRefreshedAt("09:13");
+        resolve();
+      }, 900),
+    );
 
   const foldProps = (id: string) => ({ open: fold === id, onOpenChange: (o: boolean) => setFold(o ? id : null) });
 
@@ -219,7 +278,22 @@ export function Containers() {
           </Card>
         </Specimen>
 
-        <Specimen name="ExpandableCard" description="Carte dont le corps se replie derrière son en-tête ; fermée puis ouverte.">
+        <Specimen name="Card" description="Le plein écran (maximizable) : le bouton de l'en-tête, ou Échap, détache la carte puis la rend à sa place ; ici avec l'actualisation (onRefresh).">
+          <Card
+            title="Encaissements du jour"
+            meta={`mis à jour à ${refreshedAt}`}
+            maximizable
+            onRefresh={refresh}
+            footer={<Text size="sm" muted>Trois virements attendus avant 17 h.</Text>}
+          >
+            <PanelRow label="Lemoine SAS" value="14 400 €" />
+            <PanelRow label="Cabinet Roux" value="6 000 €" />
+            <PanelRow label="Groupe Vallée" value="48 000 €" />
+            <PanelRow label="Atelier Nord" value="2 350 €" />
+          </Card>
+        </Specimen>
+
+        <Specimen name="ExpandableCard"description="Carte dont le corps se replie derrière son en-tête ; fermée puis ouverte.">
           <ExpandableCard title="Détail de la facture F-2026-0412" meta="14 400 €">
             <PanelRow label="Abonnement annuel × 12" value="12 000 €" />
             <PanelRow label="TVA 20 %" value="2 400 €" />
@@ -303,6 +377,35 @@ export function Containers() {
 
         <Specimen name="TreeView" description="Arborescence dépliable avec sélection ; un nœud désactivé.">
           <TreeView nodes={DOCUMENTS} selectedId={selectedDoc} onSelect={setSelectedDoc} defaultExpandedIds={["clients", "lemoine", "compta"]} />
+        </Specimen>
+
+        <Specimen name="TreeView" description="Cases à cocher (un parent partiel est indéterminé), icônes de dossier et de fichier, filets de guidage, menu au clic droit, et « Archives » chargé à l'ouverture.">
+          <TreeView
+            nodes={DOSSIERS}
+            checkable
+            checkedIds={checkedDocs}
+            onCheckedChange={setCheckedDocs}
+            showIcons
+            showGuides
+            defaultExpandedIds={["d-clients", "d-lemoine"]}
+            loadChildren={loadArchives}
+            contextMenu={(node) => [
+              { label: "Ouvrir", hint: "Entrée", onSelect: () => setTreeLog(`Ouvrir « ${node.label} »`) },
+              { label: "Renommer", hint: "F2", onSelect: () => setTreeLog(`Renommer « ${node.label} »`) },
+              { label: "Télécharger", disabled: Boolean(node.children), onSelect: () => setTreeLog(`Télécharger « ${node.label} »`) },
+              { separator: true },
+              { label: "Supprimer", onSelect: () => setTreeLog(`Supprimer « ${node.label} »`) },
+            ]}
+            ariaLabel="Documents à envoyer"
+          />
+          <Text size="sm" muted>
+            {checkedDocs.length} document{checkedDocs.length > 1 ? "s" : ""} coché{checkedDocs.length > 1 ? "s" : ""} · {treeLog}
+          </Text>
+        </Specimen>
+
+        <Specimen name="TreeView" description="Le filtre : les ancêtres des nœuds trouvés se déplient seuls et la partie trouvée est surlignée ; ici en densité compacte.">
+          <Input size="small" placeholder="Filtrer, par exemple « tva » ou « vallee »" value={treeQuery} onChange={(e) => setTreeQuery(e.target.value)} aria-label="Filtrer les documents" />
+          <TreeView nodes={DOSSIERS} filter={treeQuery} filterEmptyMessage="Aucun document ne correspond." showIcons density="compact" ariaLabel="Documents filtrés" />
         </Specimen>
 
         <Specimen name="Jumbotron" description="Bannière d'accueil : ton par défaut puis ton accent." wide>

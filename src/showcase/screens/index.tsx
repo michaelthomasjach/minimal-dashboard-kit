@@ -1,8 +1,15 @@
 import type { ReactElement } from "react";
-import { BarChartIcon, FileIcon, GridIcon, HomeIcon, LayersIcon, PencilIcon, TableIcon } from "@michaelthomasjach/liseuse-dashboard-kit";
+import { BarChartIcon, BriefcaseIcon, FileIcon, GridIcon, HomeIcon, LayersIcon, PencilIcon, TableIcon } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { Overview } from "./Overview";
 import { Tables } from "./Tables";
 import { Forms } from "./Forms";
+import { Messages } from "./Messages";
+import { Mail } from "./Mail";
+import { Calendar } from "./Calendar";
+import { GalleryScreen } from "./GalleryScreen";
+import { Feed } from "./Feed";
+import { Profile } from "./Profile";
+import { Invoice } from "./Invoice";
 import { Primitives } from "./components/Primitives";
 import { Containers } from "./components/Containers";
 import { Icons } from "./components/Icons";
@@ -52,6 +59,7 @@ export interface Screen {
 export const GROUP_ICONS: Record<string, ReactElement> = {
   "Tableau de bord": <HomeIcon />,
   "Données": <TableIcon />,
+  "Applications": <BriefcaseIcon />,
   "Composants · base": <LayersIcon />,
   "Composants · saisie": <PencilIcon />,
   "Composants · données": <BarChartIcon />,
@@ -63,6 +71,15 @@ export const SCREENS: Screen[] = [
   { id: "overview", label: "Vue d'ensemble", path: "", group: "Tableau de bord", details: "Douze derniers mois", source: "Overview", render: () => <Overview /> },
   { id: "tables", label: "Tableaux", path: "tableaux", group: "Données", source: "Tables", render: () => <Tables /> },
   { id: "forms", label: "Formulaires", path: "formulaires", group: "Données", source: "Forms", render: () => <Forms /> },
+
+  // Les écrans d'application du gabarit Pages : chacun pose un composant du kit en situation.
+  { id: "app-messages", label: "Messagerie", path: "applications/messagerie", group: "Applications", source: "Messages", render: () => <Messages /> },
+  { id: "app-mail", label: "Boîte mail", path: "applications/mail", group: "Applications", source: "Mail", render: () => <Mail /> },
+  { id: "app-calendar", label: "Calendrier", path: "applications/calendrier", group: "Applications", source: "Calendar", render: () => <Calendar /> },
+  { id: "app-gallery", label: "Galerie", path: "applications/galerie", group: "Applications", source: "GalleryScreen", render: () => <GalleryScreen /> },
+  { id: "app-feed", label: "Frise", path: "applications/frise", group: "Applications", source: "Feed", render: () => <Feed /> },
+  { id: "app-profile", label: "Profil", path: "applications/profil", group: "Applications", source: "Profile", render: () => <Profile /> },
+  { id: "app-invoice", label: "Facture", path: "applications/facture", group: "Applications", source: "Invoice", render: () => <Invoice /> },
 
   // Les planches : chaque export du kit, famille par famille, dans le thème.
   { id: "c-primitives", label: "Primitives", path: "composants/primitives", group: "Composants · base", source: "Primitives", render: () => <Primitives /> },

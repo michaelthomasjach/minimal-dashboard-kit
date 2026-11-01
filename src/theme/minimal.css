@@ -219,9 +219,12 @@
   --lq-mail-folder-radius: 0 999px 999px 0;
   --lq-mail-folder-active-color: #0072ec;
 
-  /* Panneau latéral : 285 px, barre de tête de 38 px. */
+  /* Panneau latéral : 285 px, barre de tête de 38 px. Lui et la carte en plein écran
+     passent au-dessus de la barre latérale, que ce thème monte à 1950 (voir plus haut). */
   --lq-quickview-width: 285px;
   --lq-quickview-head-height: 38px;
+  --lq-quickview-z-index: 2000;
+  --lq-card-maximized-z-index: 2000;
 
   /* Calendrier : événements à angles vifs, sans liseré ; aujourd'hui marqué d'une pastille verte. */
   --lq-calendar-event-radius: 0;

@@ -1,6 +1,10 @@
-import { useState, type MouseEvent } from "react";
+import { Fragment, useState, type MouseEvent } from "react";
 import {
   Button,
+  ButtonGroup,
+  Toolbar,
+  FloatingActionButton,
+  Input,
   IconButton,
   ColorSwatchButton,
   Toggle,
@@ -34,6 +38,21 @@ import {
   CreditCardIcon,
   BellIcon,
   LockIcon,
+  BoldIcon,
+  ItalicIcon,
+  UnderlineIcon,
+  AlignLeftIcon,
+  AlignCenterIcon,
+  AlignRightIcon,
+  UndoIcon,
+  RedoIcon,
+  LinkIcon,
+  SearchIcon,
+  FileIcon,
+  CalendarIcon,
+  UploadCloudIcon,
+  CommentIcon,
+  type FloatingAction,
 } from "@michaelthomasjach/liseuse-dashboard-kit";
 import { SpecimenScreen, SpecimenGrid, Specimen } from "../../Specimen";
 
@@ -97,6 +116,31 @@ const WEBHOOK_PAYLOAD = `{
   "montant": 14400
 }`;
 
+const VIEWS = [
+  { value: "jour", label: "Jour" },
+  { value: "semaine", label: "Semaine" },
+  { value: "mois", label: "Mois" },
+];
+
+const STYLE_ITEMS = [
+  { value: "bold", icon: <BoldIcon size={16} />, ariaLabel: "Gras" },
+  { value: "italic", icon: <ItalicIcon size={16} />, ariaLabel: "Italique" },
+  { value: "underline", icon: <UnderlineIcon size={16} />, ariaLabel: "Souligné" },
+];
+
+const ALIGN_ITEMS = [
+  { value: "left", icon: <AlignLeftIcon size={16} />, ariaLabel: "Aligner à gauche" },
+  { value: "center", icon: <AlignCenterIcon size={16} />, ariaLabel: "Centrer" },
+  { value: "right", icon: <AlignRightIcon size={16} />, ariaLabel: "Aligner à droite" },
+];
+
+const FAB_ACTIONS: Omit<FloatingAction, "onSelect">[] = [
+  { id: "facture", label: "Nouvelle facture", icon: <FileIcon /> },
+  { id: "rdv", label: "Planifier un rendez-vous", icon: <CalendarIcon /> },
+  { id: "client", label: "Ajouter un client", icon: <UserIcon /> },
+  { id: "import", label: "Importer", icon: <UploadCloudIcon />, disabled: true },
+];
+
 /**
  * La planche des primitives : les briques sans lesquelles aucun écran ne se compose — boutons,
  * interrupteurs, onglets, typographie, petits indicateurs.
@@ -116,6 +160,16 @@ export function Primitives() {
   const [reportTab, setReportTab] = useState("ventes");
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
   const [lastAction, setLastAction] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [view, setView] = useState("semaine");
+  const [marks, setMarks] = useState<string[]>(["bold"]);
+  const [align, setAlign] = useState("left");
+  const [lastFab, setLastFab] = useState<string | null>(null);
+
+  const save = () => {
+    setSaving(true);
+    window.setTimeout(() => setSaving(false), 1500);
+  };
 
   const menuItems: ContextMenuItem[] = [
     { label: "Modifier la commande", icon: <PencilIcon size={14} />, onSelect: () => setLastAction("Modifier"), hint: "E" },
@@ -151,7 +205,113 @@ export function Primitives() {
           </Button>
         </Specimen>
 
-        <Specimen name="IconButton" description="Action sans libellé — le libellé passe en aria-label. Deux tailles.">
+        <Specimen name="Button" description="Les tons et les variantes : plein, contour, discret, lien ; et le chargement, qui garde la largeur du bouton.">
+          <div className="mdk-wrap">
+            <Button tone="primary">Primaire</Button>
+            <Button tone="success">Succès</Button>
+            <Button tone="info">Info</Button>
+            <Button tone="warning">Avertissement</Button>
+            <Button tone="danger">Danger</Button>
+          </div>
+          <div className="mdk-wrap">
+            <Button tone="primary" variant="outline">
+              Contour
+            </Button>
+            <Button tone="danger" variant="outline" icon={<TrashIcon size={16} />}>
+              Supprimer
+            </Button>
+            <Button variant="ghost">Discret</Button>
+            <Button tone="primary" variant="link">
+              Lien
+            </Button>
+          </div>
+          <div className="mdk-wrap">
+            <Button tone="primary" loading={saving} loadingLabel="Enregistrement…" onClick={save} icon={<SaveIcon size={16} />}>
+              Enregistrer
+            </Button>
+            <Button tone="success" loading>
+              Envoi en cours
+            </Button>
+          </div>
+        </Specimen>
+
+        <Specimen name="ButtonGroup" description="Des boutons accolés : choix unique à libellés, choix multiple à icônes, empilés ou en pleine largeur.">
+          <div className="mdk-wrap">
+            <ButtonGroup ariaLabel="Vue du planning" items={VIEWS} value={view} onChange={setView} />
+            <ButtonGroup ariaLabel="Style du texte" selection="multiple" items={STYLE_ITEMS} value={marks} onChange={setMarks} />
+          </div>
+          <div className="mdk-wrap mdk-align-start">
+            <ButtonGroup orientation="vertical" ariaLabel="Actions sur la commande">
+              <Button icon={<PencilIcon size={16} />}>Modifier</Button>
+              <Button icon={<CopyIcon size={16} />}>Dupliquer</Button>
+              <Button icon={<TrashIcon size={16} />}>Supprimer</Button>
+            </ButtonGroup>
+            <ButtonGroup size="sm" ariaLabel="Période" items={[...PERIODS]} defaultValue="30j" />
+          </div>
+          <ButtonGroup block ariaLabel="Vue du planning, pleine largeur" items={VIEWS} value={view} onChange={setView} />
+        </Specimen>
+
+        <Specimen name="Toolbar" description="Une barre d'outils : groupes séparés par un filet, action principale à droite, flèches du clavier pour circuler ; puis la version compacte, sans fond." wide>
+          <Toolbar
+            ariaLabel="Mise en forme"
+            start={[
+              <Fragment key="history">
+                <IconButton icon={<UndoIcon size={18} />} ariaLabel="Annuler" />
+                <IconButton icon={<RedoIcon size={18} />} ariaLabel="Rétablir" />
+              </Fragment>,
+              <ButtonGroup key="style" ariaLabel="Style" selection="multiple" items={STYLE_ITEMS} value={marks} onChange={setMarks} />,
+              <ButtonGroup key="align" ariaLabel="Alignement" items={ALIGN_ITEMS} value={align} onChange={setAlign} />,
+              <IconButton key="link" icon={<LinkIcon size={18} />} ariaLabel="Insérer un lien" />,
+            ]}
+            end={
+              <Button tone="primary" icon={<SaveIcon size={16} />}>
+                Enregistrer
+              </Button>
+            }
+          />
+          <Toolbar
+            ariaLabel="Commandes"
+            density="compact"
+            plain
+            start={[
+              <div key="search" className="mdk-toolbar-search">
+                <Input size="small" placeholder="Rechercher une commande" leadingIcon={<SearchIcon size={14} />} aria-label="Rechercher une commande" />
+              </div>,
+              <Fragment key="actions">
+                <IconButton size="sm" icon={<RefreshIcon size={14} />} ariaLabel="Actualiser" />
+                <IconButton size="sm" icon={<TrashIcon size={14} />} ariaLabel="Supprimer la sélection" disabled />
+              </Fragment>,
+            ]}
+            end={[
+              <Button key="export" variant="outline">Exporter</Button>,
+              <Button key="new" tone="primary" icon={<PlusIcon size={14} />}>
+                Nouvelle commande
+              </Button>,
+            ]}
+          />
+        </Specimen>
+
+        <Specimen name="FloatingActionButton" description="Le bouton flottant, posé dans son cadre : à droite il déploie ses actions, à gauche il agit seul.">
+          <div className="mdk-stage">
+            <p className="mdk-stage__note">{lastFab ? `Dernière action : ${lastFab}` : "Aucune action choisie."}</p>
+            <FloatingActionButton
+              ariaLabel="Créer"
+              position="absolute"
+              actions={FAB_ACTIONS.map((a) => ({ ...a, onSelect: () => setLastFab(a.label) }))}
+            />
+            <FloatingActionButton
+              ariaLabel="Ouvrir la discussion"
+              icon={<CommentIcon />}
+              tone="success"
+              size="sm"
+              position="absolute"
+              placement="bottom-left"
+              onClick={() => setLastFab("Ouvrir la discussion")}
+            />
+          </div>
+        </Specimen>
+
+        <Specimen name="IconButton"description="Action sans libellé — le libellé passe en aria-label. Deux tailles.">
           <div className="mdk-wrap">
             <IconButton icon={<SettingsIcon size={18} />} ariaLabel="Paramètres" />
             <IconButton icon={<RefreshIcon size={18} />} ariaLabel="Actualiser" />

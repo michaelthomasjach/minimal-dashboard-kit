@@ -4,6 +4,7 @@ import {
   Spinner,
   Skeleton,
   ProgressBar,
+  ProgressCircle,
   Stepper,
   GuidedTour,
   AlertList,
@@ -139,7 +140,29 @@ export function Feedback() {
           </div>
         </Specimen>
 
-        <Specimen name="Stepper" description="Les étapes d'un parcours : l'étape courante pleine, le passé atténué, l'avenir plus encore.">
+        <Specimen name="ProgressCircle" description="La progression en anneau : trois tailles nommées ou des pixels, la valeur au centre, les tons ; sans valeur, il tourne.">
+          <div className="mdk-wrap mdk-wrap--baseline">
+            <ProgressCircle value={avancement} size="lg" showValue label="Import des contacts" />
+            <ProgressCircle value={82} size="md" tone="success" showValue label="Objectif trimestriel" />
+            <ProgressCircle value={35} size="md" tone="warning" showValue label="Quota d'envoi" />
+            <ProgressCircle value={92} size="md" tone="danger" showValue label="Stockage" />
+            <ProgressCircle value={58} size="sm" tone="info" label="Synchronisation" />
+            <ProgressCircle size="sm" label="Chargement" />
+          </div>
+          <div className="mdk-wrap mdk-wrap--baseline">
+            <ProgressCircle
+              value={avancement}
+              size={120}
+              thickness={10}
+              showValue
+              formatValue={(v) => `${Math.round((v / 100) * 340)}`}
+              label="Fiches importées sur 340"
+            />
+            <ProgressCircle value={avancement} size={72} tone="dark" showValue label="Avancement" />
+          </div>
+        </Specimen>
+
+        <Specimen name="Stepper"description="Les étapes d'un parcours : l'étape courante pleine, le passé atténué, l'avenir plus encore.">
           <Stepper steps={ETAPES_IMPORT} active={etape} />
           <div className="mdk-row">
             <Button onClick={() => setEtape((e) => Math.max(0, e - 1))} disabled={etape === 0}>

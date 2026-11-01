@@ -134,26 +134,23 @@ pays de `world-atlas` sans `id`, clés en double), à corriger dans le kit.
 
 ### Manques connus, à combler **dans le kit**
 
-Par ordre d'utilité, repris du comparatif complet qui vit dans le dépôt voisin
-(`../Dashboard liseuse/docs/comparatif-revox.md` — à lire avant de planifier quoi que ce soit) :
+Comblés en v0.185–0.186 (2026-11-01) : pagination / sélection / recherche / export / en-tête figé de
+`DataTable`, Radio / RadioGroup, Slider, Textarea, état de succès des champs, ButtonGroup, Toolbar,
+FloatingActionButton, tons et chargement de Button, Card plein écran, ProgressCircle, Timeline,
+ActivityFeed, Gallery / Lightbox, ChatPanel, NotesPanel, MailPanel, Quickview, MonthCalendar,
+BottomNav, ProfilePage, InvoicePage, LockScreenPage, ServerErrorPage, variantes de TreeView, et une
+quarantaine de défauts (focus et clavier, pages en 100vh → `fullHeight`, formats français…). La liste
+de ces défauts et leur statut : comparer avec `../Dashboard liseuse/docs/comparatif-revox.md`.
 
-1. `Radio` / `RadioGroup` — le seul contrôle de formulaire standard absent. `SegmentedControl` ne le
-   remplace pas : un groupe radio porte des libellés longs et s'empile verticalement.
-2. `DataTable` : lignes éditables en place (le reste est fait depuis v0.185).
-3. `ButtonGroup` et barre d'outils, cercle de progression, onglets verticaux.
-
-Défauts relevés en montant les planches, à corriger dans le kit aussi :
-- `DatePicker` / `DateRangePicker` / `DateTimePicker` : le déclencheur ne fixe pas `color`, la
-  valeur s'affiche en noir sur la surface sombre.
-- `IconButton` : le padding natif du bouton n'est pas remis à zéro, l'icône est rétrécie.
-- `Notification` : un « 0 » parasite avec `autoDismissMs: 0` (`{autoDismissMs && …}`).
-- Pages (`LoginPage`, `SignUpPage`, `NotFoundPage`, layouts) en `100vh` : elles ne tiennent pas dans
-  un cadre.
-- Nombres formatés à l'anglaise sans prop pour changer (`ComparisonCard`, `HoldingCard`,
-  `PortfolioSummaryWidget`, `MarketMoversWidget`, `LevelMeter`, dates de `CandlestickChart`).
-- Libellés rognés ou superposés : `MatrixChart`, `DeltaChart`, axe des prix de `ChartWorkspace`,
-  bouton plein écran de `SankeyChart` ; `ChartWorkspace` ignore `layout="desktop"` sous 1500 px.
-- `Carousel` sans image : la flèche recouvre le titre, le point actif est invisible.
+Restent, relevés en montant la vitrine :
+- `DataTable` : édition en ligne.
+- `LoginPage` / `SignUpPage` en `fullHeight={false}` : l'image reste dans le flux et fixe la hauteur.
+- `SidebarLayout` imbriquée dans une `SidebarLayout variant="rail"` : les règles du rail fuient.
+- `ProgressCircle` : la valeur au centre n'est pas contenue dans l'anneau.
+- `LockScreenPage` : le texte d'exemple par défaut est rogné à 276 px.
+- `Button` (~45 px) et `IconButton` (40 px) n'ont pas la même hauteur dans le kit nu.
+- `PriceChangeTag` formate à l'anglaise ; `MatrixChart` écrit les négatifs avec un tiret.
+- Pas d'utilitaire partagé `.lq-visually-hidden` ; `Input` : l'erreur n'est pas annoncée (`role="alert"`).
 
 ### À faire dans ce dépôt
 

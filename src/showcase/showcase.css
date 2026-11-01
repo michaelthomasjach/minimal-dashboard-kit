@@ -1018,3 +1018,93 @@ body {
   margin: var(--lq-space-2) 0 0;
   font-size: var(--lq-text-sm);
 }
+
+/* ---- planches : les composants ajoutés en v0.186 ---- */
+
+/* Le champ de recherche d'une barre d'outils : une largeur à lui, la barre ne l'étire pas. */
+.mdk-toolbar-search {
+  width: 240px;
+}
+
+/* Une ligne de texte posée en haut d'une scène, au-dessus de ce qui flotte. */
+.mdk-stage__note {
+  margin: var(--lq-space-4);
+  font-size: var(--lq-text-sm);
+  color: var(--lq-color-text-muted);
+}
+
+/* Des curseurs verticaux côte à côte, alignés par le bas. */
+.mdk-wrap--sliders {
+  align-items: flex-end;
+  gap: var(--lq-space-6);
+}
+
+/* Les panneaux qui remplissent leur parent (messagerie, notes, boîte mail) : une hauteur à eux. */
+.mdk-frame--panel {
+  height: 520px;
+}
+
+.mdk-frame--notes {
+  height: 440px;
+}
+
+.mdk-frame--mail {
+  height: 620px;
+}
+
+.mdk-page-frame--short {
+  height: 460px;
+}
+
+/* Un téléphone, pour la navigation du bas : le contenu défile, la barre reste au pied. */
+.mdk-phone {
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+  max-width: 100%;
+  height: 480px;
+  overflow: hidden;
+  background: var(--lq-color-bg);
+  border: 1px solid var(--lq-color-border-subtle);
+  border-radius: var(--lq-radius-lg);
+}
+
+.mdk-phone__screen {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--lq-space-3);
+  min-height: 0;
+  padding: var(--lq-space-4);
+  overflow: auto;
+}
+
+.mdk-phone__block {
+  flex: none;
+  height: 56px;
+  background: var(--lq-color-panel);
+  border-radius: var(--lq-radius-md);
+  box-shadow: var(--lq-shadow-panel);
+}
+
+/* ---- groupe « Applications » ---- */
+
+/* Un écran d'application en plein cadre (messagerie, boîte mail) : toute la hauteur que la barre
+   haute laisse à la zone de contenu, moins la marge de celle-ci en haut et en bas. La barre haute
+   mesure 60 px (59 plus son filet) ; la marge est celle de la zone de contenu du kit. */
+.mdk-app-fill {
+  --mdk-topbar-height: 60px;
+  height: calc(100dvh - var(--mdk-topbar-height) - 2 * var(--lq-space-6));
+  min-height: 480px;
+}
+
+/* Les écrans d'application prennent toute la largeur, comme ceux du gabarit. */
+.mdk-screen--full {
+  max-width: none;
+}
+
+/* La frise et le fil, côte à côte tant que la largeur le permet. */
+.mdk-grid--feed {
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  align-items: start;
+}
