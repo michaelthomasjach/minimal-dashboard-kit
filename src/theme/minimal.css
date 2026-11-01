@@ -129,6 +129,22 @@
   /* Barres pleines sans filet autour : les segments dessinent la barre à eux seuls. */
   --lq-alloc-bar-border: none;
 
+  /* Les tuiles pleines du tableau de bord du gabarit (mesurées) : vert, violet, bleu « complete »,
+     rouge, jaune à texte gris, et le gris de la tuile météo. Tuiles à 25 px de marge, titre 27 px
+     en graisse 500. Carte en points : repère gris foncé, sans liseré. */
+  --lq-tone-accent: #7252d3;
+  --lq-tone-success: #19ad79;
+  --lq-tone-info: #0072ec;
+  --lq-tone-danger: #d83c31;
+  --lq-tone-warning: #ffd945;
+  --lq-tone-warning-text: #4b4b4b;
+  --lq-tone-dark: #757575;
+  --lq-tile-padding: 25px;
+  --lq-tile-title-size: 1.6875rem;
+  --lq-tile-title-weight: 500;
+  --lq-dot-map-marker: #626262;
+  --lq-dot-map-marker-ring: 0px;
+
   /* Les lignes de données sous un en-tête — lignes de panneau, cellules de tableau, légendes — un
      cran sous le corps de texte, comme les tableaux du gabarit : à 15 px, elles écrasaient le petit
      titre en capitales qui les coiffe. */

@@ -7,6 +7,8 @@ import {
   LinkIcon,
   LayersIcon,
   MoonIcon,
+  NotificationMenu,
+  type NotificationMenuItem,
   ProgressBar,
   SearchIcon,
   SearchOverlay,
@@ -49,6 +51,28 @@ function RouteProgress() {
   );
 }
 
+const NOTIFICATIONS: NotificationMenuItem[] = [
+  { id: "n1", title: "Camille Leroy", meta: "a partagé un document", text: "Le rapport trimestriel des ventes est prêt à relire.", time: "il y a 5 min", unread: true },
+  { id: "n2", title: "Facturation", meta: "3 factures en retard", text: "Groupe Vallée, Studio Bélier et Cabinet Roux dépassent 30 jours.", time: "il y a 1 h", unread: true, tone: "danger" },
+  { id: "n3", title: "Déploiement", meta: "terminé", text: "La version 0.184 est en production.", time: "hier", tone: "success" },
+  { id: "n4", title: "Hugo Mercier", meta: "vous a mentionné", text: "« On regarde le tableau de bord ensemble demain ? »", time: "hier" },
+];
+
+/** La cloche de la barre haute et sa liste : l'état lu / non lu est tenu ici, comme le veut le kit. */
+function Notifications() {
+  const [items, setItems] = useState(NOTIFICATIONS);
+  return (
+    <NotificationMenu
+      items={items}
+      icon={<BellIcon size={18} />}
+      label="Notifications"
+      badge="dot"
+      onToggleRead={(item) => setItems((all) => all.map((n) => (n.id === item.id ? { ...n, unread: !n.unread } : n)))}
+      onMarkAllRead={() => setItems((all) => all.map((n) => ({ ...n, unread: false })))}
+    />
+  );
+}
+
 /**
  * La barre haute, dans l'anatomie de celle du gabarit Pages : la marque, trois icônes d'action (la
  * première avec sa pastille), un séparateur, le champ de recherche réduit à une invite, puis à
@@ -73,10 +97,7 @@ function TopBar({
       <RouteProgress />
       {showBrand && <span className="mdk-logo mdk-topbar__brand">minimal</span>}
       <div className="mdk-topbar__icons">
-        <button type="button" className="mdk-topbar__icon" aria-label="Notifications, 3 non lues">
-          <BellIcon size={18} />
-          <span className="mdk-topbar__bubble" aria-hidden="true" />
-        </button>
+        <Notifications />
         <button type="button" className="mdk-topbar__icon" aria-label="Liens">
           <LinkIcon size={18} />
         </button>

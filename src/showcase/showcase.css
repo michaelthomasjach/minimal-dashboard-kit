@@ -562,3 +562,454 @@ body {
   left: calc(-1 * var(--lq-space-5));
   --lq-color-fill-track: transparent;
 }
+
+/* ---- écran « Vue d'ensemble » : la réplique du tableau de bord du gabarit ----
+   Les proportions sont celles du gabarit à 1 424 px : moitié gauche (grande tuile puis deux
+   cartes) contre une grille 2 × 2 de tuiles ; puis 3 / 4 / 3, 2 / 1, et 3 / 2,5 / 4. Les cartes y
+   sont séparées de 10 px, plus serré que les planches. */
+.mdk-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 1360px;
+}
+
+.mdk-dash__row {
+  display: grid;
+  gap: 10px;
+  align-items: start;
+}
+
+.mdk-dash__row--head {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mdk-dash__row--b {
+  grid-template-columns: 3fr 4fr 3fr;
+}
+
+.mdk-dash__row--c {
+  grid-template-columns: 2fr 1fr;
+}
+
+.mdk-dash__row--d {
+  grid-template-columns: 3fr 2.5fr 4fr;
+}
+
+.mdk-dash__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mdk-dash__pair,
+.mdk-dash__quad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mdk-dash__ring {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.mdk-dash__tickers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--lq-space-4);
+  margin-top: var(--lq-space-3);
+}
+
+.mdk-dash__ticker-line {
+  display: flex;
+  align-items: center;
+  gap: var(--lq-space-2);
+}
+
+.mdk-dash__symbol {
+  font-size: var(--lq-text-xs);
+  font-weight: var(--lq-font-weight-semibold);
+}
+
+.mdk-dash__small {
+  font-size: var(--lq-text-xs);
+}
+
+.mdk-dash__up {
+  color: var(--lq-color-up);
+}
+
+.mdk-dash__down {
+  color: var(--lq-color-down);
+}
+
+.mdk-dash__warn {
+  color: var(--lq-color-warning);
+}
+
+.mdk-dash__soft {
+  opacity: 0.76;
+}
+
+.mdk-dash__split {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--lq-space-3);
+}
+
+.mdk-dash__split--top {
+  align-items: flex-start;
+}
+
+.mdk-dash__green-title {
+  font-size: var(--lq-text-xl);
+  color: var(--lq-color-up);
+}
+
+.mdk-dash__accent-title {
+  font-size: var(--lq-text-h3);
+  font-weight: var(--lq-font-weight-heading);
+  color: var(--lq-color-accent);
+}
+
+.mdk-dash__total {
+  font-size: var(--lq-text-xl);
+}
+
+/* Le graphique déborde jusqu'aux bords de la carte, sous ses marges intérieures. */
+.mdk-dash__bleed {
+  margin: 0 calc(-1 * var(--lq-space-5)) calc(-1 * var(--lq-space-5));
+}
+
+.mdk-dash__sales {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--lq-space-3);
+  align-items: end;
+}
+
+.mdk-dash__sales p,
+.mdk-dash__weekly p,
+.mdk-dash__quotes p {
+  margin: 0 0 var(--lq-space-1);
+}
+
+.mdk-dash__sales .mdk-dash__plain-title {
+  margin-bottom: var(--lq-space-5);
+}
+
+.mdk-dash__amount {
+  font-size: var(--lq-text-h4);
+}
+
+.mdk-dash__amount small {
+  font-size: var(--lq-text-md);
+}
+
+.mdk-dash__bars {
+  min-width: 0;
+}
+
+.mdk-dash__tile-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lq-space-4);
+}
+
+.mdk-dash__tile-icon-box {
+  display: inline-flex;
+  padding: var(--lq-space-2);
+  background: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.mdk-dash__weather-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--lq-space-2);
+  height: 100%;
+  padding: var(--lq-tile-padding);
+}
+
+.mdk-dash__degrees {
+  font-size: 2.75rem;
+  font-weight: var(--lq-font-weight-heading);
+  line-height: 1;
+}
+
+.mdk-dash__today {
+  align-self: flex-start;
+  padding: 2px 5px;
+  font-family: var(--lq-label-font);
+  font-size: var(--lq-label-size);
+  font-weight: var(--lq-font-weight-semibold);
+  background: color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: var(--lq-radius-md);
+}
+
+.mdk-dash__quotes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-4);
+  padding: var(--lq-tile-padding);
+}
+
+.mdk-dash__quote-name {
+  font-size: var(--lq-text-lg);
+}
+
+.mdk-dash__weekly {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--lq-space-3);
+}
+
+.mdk-dash__value {
+  margin: 0 0 var(--lq-space-2);
+  font-size: var(--lq-text-h4);
+  font-weight: var(--lq-font-weight-heading);
+}
+
+.mdk-dash__pill {
+  padding: 2px 5px;
+  font-size: var(--lq-text-xs);
+  font-weight: var(--lq-font-weight-semibold);
+  background: color-mix(in srgb, currentColor 25%, transparent);
+  border-radius: var(--lq-radius-md);
+}
+
+.mdk-dash__inline-stats {
+  font-size: var(--lq-text-sm);
+}
+
+.mdk-dash__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lq-space-2);
+  padding: 0;
+  font: inherit;
+  font-size: var(--lq-text-sm);
+  color: var(--lq-color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mdk-dash__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--lq-color-border);
+  border-radius: 50%;
+  transition: transform var(--lq-transition-base);
+}
+
+.mdk-dash__chevron--open {
+  transform: rotate(180deg);
+}
+
+.mdk-dash__secret {
+  margin-top: auto;
+}
+
+.mdk-dash__secret-body {
+  padding-top: var(--lq-space-2);
+}
+
+.mdk-dash__dots {
+  letter-spacing: 0.1em;
+  color: var(--lq-color-text-muted);
+}
+
+.mdk-dash__tesla-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--lq-space-3);
+  margin-bottom: var(--lq-space-3);
+}
+
+.mdk-dash__company {
+  font-size: var(--lq-text-h3);
+  font-weight: var(--lq-font-weight-heading);
+}
+
+.mdk-dash__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lq-space-2);
+  font-size: var(--lq-text-h3);
+}
+
+.mdk-dash__price small {
+  font-size: var(--lq-text-xs);
+}
+
+.mdk-dash__more-line {
+  display: flex;
+  align-items: center;
+  gap: var(--lq-space-2);
+  margin: var(--lq-space-3) 0 0;
+  font-size: var(--lq-text-sm);
+}
+
+.mdk-dash__link {
+  color: var(--lq-color-accent);
+}
+
+.mdk-dash__geo {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--lq-space-4);
+  margin: 0 calc(-1 * var(--lq-space-5)) calc(-1 * var(--lq-space-5)) 0;
+}
+
+.mdk-dash__geo-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lq-space-4);
+  padding-bottom: var(--lq-space-5);
+}
+
+.mdk-dash__server-stats {
+  display: flex;
+  gap: var(--lq-space-6);
+  margin-bottom: var(--lq-space-4);
+}
+
+.mdk-dash__server-stats div,
+.mdk-dash__page-stats div,
+.mdk-dash__page-name div {
+  display: flex;
+  flex-direction: column;
+}
+
+.mdk-dash__server-stats strong {
+  font-size: var(--lq-text-xl);
+  font-weight: var(--lq-font-weight-medium);
+}
+
+.mdk-dash__server-stats span {
+  font-size: var(--lq-text-xs);
+}
+
+.mdk-dash__quote {
+  margin: 0;
+  font-size: var(--lq-text-lg);
+}
+
+.mdk-dash__quote-values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: var(--lq-text-xl);
+}
+
+.mdk-dash__page-name {
+  display: flex;
+  align-items: center;
+  gap: var(--lq-space-3);
+  margin-bottom: var(--lq-space-4);
+}
+
+.mdk-dash__eyebrow {
+  font-family: var(--lq-label-font);
+  font-size: var(--lq-label-size);
+  letter-spacing: var(--lq-label-tracking);
+  text-transform: uppercase;
+  color: var(--lq-color-text-muted);
+}
+
+.mdk-dash__page-stats {
+  display: flex;
+  gap: var(--lq-space-6);
+  margin-bottom: var(--lq-space-3);
+}
+
+.mdk-dash__weather-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mdk-dash__weather-head p {
+  margin: 0;
+}
+
+.mdk-dash__day {
+  font-size: var(--lq-text-h4);
+}
+
+.mdk-dash__hot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lq-space-2);
+  font-size: var(--lq-text-h3);
+  color: var(--lq-color-down);
+}
+
+.mdk-dash__weather-title {
+  margin: var(--lq-space-5) 0 var(--lq-space-2);
+  padding-bottom: var(--lq-space-2);
+  border-bottom: 1px solid var(--lq-color-border-subtle);
+}
+
+.mdk-dash__weather-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--lq-space-5);
+}
+
+.mdk-dash__hours {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-top: var(--lq-space-4);
+  text-align: center;
+}
+
+.mdk-dash__hours div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--lq-space-2);
+  padding: var(--lq-space-2) 0;
+  border-left: 1px solid var(--lq-color-border-subtle);
+}
+
+.mdk-dash__hours div:first-child {
+  border-left: none;
+}
+
+.mdk-dash__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--lq-space-4);
+  padding: var(--lq-space-6) 0 var(--lq-space-2);
+  font-size: var(--lq-text-xs);
+  color: var(--lq-color-text-muted);
+}
+
+@media (max-width: 1100px) {
+  .mdk-dash__row--head,
+  .mdk-dash__row--b,
+  .mdk-dash__row--c,
+  .mdk-dash__row--d {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mdk-dash__stock-value {
+  margin: var(--lq-space-2) 0 0;
+  font-size: var(--lq-text-sm);
+}
