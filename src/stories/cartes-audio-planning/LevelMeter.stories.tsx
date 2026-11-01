@@ -53,7 +53,9 @@ const meta = {
           "",
           "**Échelle et zones** — `range` (défaut `[-60, 0]` dBFS) ; `warnAt` (−6 dB) ouvre la zone chaude, `clipAt` (−1 dB) l'écrêtage et allume le voyant. Pour un pourcentage : `range={[0, 100]}` et `unit=\"\"`.",
           "",
-          "**Variantes** — `orientation` (`vertical`, la forme d'une tranche de console, ou `horizontal`), `segments` (24 blocs par défaut — le vumètre que tout le monde sait lire ; `0` pour une barre continue), `showScale`, `showValue`, `thickness` (10 px) et `length` (140 px en vertical, toute la largeur en horizontal).",
+          "**Variantes** — `orientation` (`vertical`, la forme d'une tranche de console, ou `horizontal`), `segments` (24 blocs par défaut — le vumètre que tout le monde sait lire ; `0` pour une barre continue), `showScale`, `showValue`, `thickness` (10 px) et `length` (140 px en vertical, toute la largeur en horizontal). Sur une échelle courte, les graduations qui se toucheraient sont omises (0, −6, −12… sur 150 px plutôt que 0, −3 et −6 l'un sur l'autre).",
+          "",
+          "**Formats** — les nombres sont en français par défaut (`locale=\"fr-FR\"`) : « −14,0 », avec un vrai signe moins, sur la valeur, l'échelle et le texte lu par les lecteurs d'écran. `formatValue` remplace le format de la valeur.",
           "",
           "**Thème** — `--lq-color-fill` (niveau), `--lq-color-warning` (zone chaude), `--lq-color-danger` (écrêtage), `--lq-color-fill-track`, `--lq-color-border`, `--lq-color-bg`, `--lq-color-text`, `--lq-color-text-muted`, `--lq-radius-sm`, `--lq-space-2`.",
         ].join("\n"),
@@ -83,6 +85,8 @@ const meta = {
     segments: { control: { type: "range", min: 0, max: 48, step: 1 } },
     thickness: { control: { type: "range", min: 4, max: 24, step: 1 } },
     length: { control: { type: "range", min: 80, max: 400, step: 10 } },
+    locale: { control: "text", table: { defaultValue: { summary: '"fr-FR"' } } },
+    formatValue: { control: false },
   },
 } satisfies Meta<typeof LevelMeter>;
 

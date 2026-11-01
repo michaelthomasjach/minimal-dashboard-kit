@@ -16,13 +16,13 @@ const meta = {
         component: [
           "**Page d'erreur** centrée — 404 le plus souvent : un grand code, une phrase d'explication, une action pour repartir, et au choix une illustration au-dessus.",
           "",
-          "**Quand l'utiliser** — la route inconnue d'un routeur, ou un enregistrement introuvable (facture supprimée, lien expiré). Elle occupe au moins toute la hauteur de la fenêtre : rendez-la seule, ou dans la zone de contenu d'une coquille. Pour une liste simplement vide, un message dans la liste suffit.",
+          "**Quand l'utiliser** — la route inconnue d'un routeur, ou un enregistrement introuvable (facture supprimée, lien expiré). Par défaut elle occupe au moins toute la hauteur de la fenêtre : rendez-la seule. Dans la zone de contenu d'une coquille ou dans un cadre, passez `fullHeight={false}` : elle remplit son conteneur et s'y centre (story « Dans un cadre »). Pour une liste simplement vide, un message dans la liste suffit.",
           "",
           "**Anatomie** — `illustration` (n'importe quel `ReactNode`, en couleur pâle), `title` (le code, « 404 » par défaut, en très grand et en chiffres tabulaires), `message` (« Cette page n'existe pas ou a été déplacée. » par défaut), puis l'action, libellée `actionLabel` (« Retour à l'accueil » par défaut).",
           "",
           "**L'action** — avec `onAction`, c'est un `Button` qui l'appelle (votre routeur navigue). Sans `onAction`, c'est un **lien** `<a>` vers `actionHref` (`/` par défaut), stylé en bouton : il recharge la page, ce qui convient à une application sans routeur côté client.",
           "",
-          "**Accessibilité** — le code est un simple texte, pas un titre : la page n'a **aucun** élément `<h1>`. Un lecteur d'écran qui parcourt les titres n'y trouve rien.",
+          "**Accessibilité** — le code (`title`) est le `<h1>` de la page : un lecteur d'écran qui parcourt les titres sait d'emblée où il est tombé.",
           "",
           "**Thème** — `--lq-color-bg`, `--lq-color-text` (code), `--lq-color-text-muted` (message, illustration), `--lq-font-weight-bold`, `--lq-space-3`, `--lq-space-6`, et les variables du bouton.",
         ].join("\n"),
@@ -72,4 +72,25 @@ export const AsLink: Story = {
   name: "Lien plutôt que bouton",
   args: { onAction: undefined, actionHref: "#accueil", actionLabel: "Retour à l'accueil" },
   parameters: { docs: { description: { story: "Sans `onAction`, l'action est un lien `<a href>` à l'apparence d'un bouton." } } },
+};
+
+export const InFrame: Story = {
+  name: "Dans un cadre",
+  args: { fullHeight: false },
+  decorators: [
+    (Story) => (
+      <div style={{ padding: 30 }}>
+        <div style={{ width: 420, height: 380, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story: "`fullHeight={false}` : la page prend la hauteur de son cadre (420 × 380) et s'y centre, au lieu d'imposer celle de la fenêtre ; la taille du code suit la largeur du cadre.",
+      },
+    },
+  },
 };

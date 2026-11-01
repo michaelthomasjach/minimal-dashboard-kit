@@ -21,7 +21,7 @@ const LOGO = (
   <span style={{ fontSize: "1.375rem", fontWeight: 700, lineHeight: 1, letterSpacing: "-0.04em", color: "var(--lq-color-text)" }}>minimal</span>
 );
 
-/** Un `<form>` est un seul enfant de la zone de formulaire du kit : il reprend lui-même l'espacement. */
+/** L'espacement de la zone de formulaire du kit, pour un `<form>` à soi et pour le bloc des conditions. */
 const FORM_STYLE = { display: "flex", flexDirection: "column", gap: "var(--lq-space-4)" } as const;
 
 type Fields = { name: string; email: string; password: string };
@@ -105,11 +105,11 @@ const meta = {
           "",
           "**Anatomie** — `imageSrc` (obligatoire), `imageAlt`, `logo`, `title` (`<h1>`), `subtitle`, `children` (les champs), `terms` (la case de conditions générales, ou toute mention à accepter), `footer` (« Déjà un compte ? »).",
           "",
-          "**Le formulaire vous appartient** — champs, validation et envoi sont à vous, dans un vrai `<form>` (Entrée envoie, `autoComplete=\"new-password\"` déclenche la suggestion de mot de passe). `terms` est rendu **hors** de `children` : si le bouton d'envoi se place sous la case — l'ordre attendu —, il est hors du `<form>` et s'y rattache par l'attribut `form=\"…\"`, comme ici. Un `<form>` étant un seul enfant de la zone de formulaire, donnez-lui l'espacement du kit (`gap: var(--lq-space-4)`).",
+          "**Le formulaire** — champs, validation et envoi sont à vous (`autoComplete=\"new-password\"` déclenche la suggestion de mot de passe). Avec `onSubmit`, le kit enveloppe **les champs et `terms`** dans un même `<form>` : le bouton d'envoi peut se placer sous la case, et une case `required` y prend part à la validation (story « Dans un cadre »). Sans `onSubmit`, `terms` est rendu hors de `children` : un bouton placé sous la case se rattache à votre `<form>` par l'attribut `form=\"…\"`, comme dans les autres stories. Un `<form>` passé en enfant reçoit l'espacement du kit.",
           "",
           "**Conditions générales** — le bouton reste désactivé tant que la case n'est pas cochée : c'est l'usage, pas un comportement du kit, qui ne relie pas `terms` à l'envoi.",
           "",
-          "**Écran étroit** — sous **900 px**, l'image disparaît et le panneau prend toute la page.",
+          "**Hauteur et écran étroit** — par défaut (`fullHeight`), au moins toute la hauteur de la fenêtre, et sous **900 px** de fenêtre l'image disparaît. Avec `fullHeight={false}`, la page remplit son conteneur et le seuil se mesure sur sa propre largeur.",
           "",
           "**Thème** — celui de `LoginPage` : `--lq-color-bg`, `--lq-color-text`, `--lq-color-text-muted`, `--lq-font-weight-bold`, `--lq-space-4` à `--lq-space-6`.",
         ].join("\n"),
@@ -155,4 +155,43 @@ export const Invitation: Story = {
   args: { title: "Rejoindre Lemoine SAS", subtitle: "Hugo Mercier vous invite dans l'espace de son équipe.", footer: undefined },
   render: signUp({ name: "", email: "ines.roux@lemoine.fr", password: "" }, false, false),
   parameters: { docs: { description: { story: "Le même gabarit pour accepter une invitation : l'adresse est déjà connue." } } },
+};
+
+export const InFrame: Story = {
+  name: "Dans un cadre",
+  args: { fullHeight: false },
+  render: function Render(args) {
+    const [terms, setTerms] = useState(false);
+    const [sent, setSent] = useState(false);
+    return (
+      <div style={{ padding: 30 }}>
+        <div style={{ width: 760, height: 600, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+          <SignUpPage
+            {...args}
+            subtitle={sent ? "Formulaire envoyé (démonstration)." : args.subtitle}
+            onSubmit={() => setSent(true)}
+            terms={
+              <div style={FORM_STYLE}>
+                <Checkbox checked={terms} onChange={setTerms} label="J'accepte les conditions générales et la politique de confidentialité" />
+                <Button type="submit" block selected disabled={!terms}>
+                  Créer mon compte
+                </Button>
+              </div>
+            }
+          >
+            <Input label="Nom complet" autoComplete="name" placeholder="Claire Lemoine" />
+            <Input label="Adresse e-mail professionnelle" type="email" autoComplete="email" placeholder="vous@entreprise.fr" />
+          </SignUpPage>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`fullHeight={false}` dans un cadre étroit, et `onSubmit` : champs, case et bouton sont dans le même `<form>` du kit — plus besoin de l'attribut `form=\"…\"`.",
+      },
+    },
+  },
 };

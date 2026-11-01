@@ -31,6 +31,8 @@ const meta = {
           "",
           "**Les étapes font la durée** — une fois une tâche segmentée (« Segmenter », puis « Ajouter »), la somme des étapes **est** sa durée : modifier une étape déplace la fin de la tâche plutôt que de laisser un écart qu'on découvrirait plus tard. Une étape ajoutée prend un pas de `snapMinutes` à elle seule : ajouter une étape allonge la tâche, elle ne raccourcit pas en silence le travail déjà décrit.",
           "",
+          "**Tâche verrouillée** — une tâche `locked` tient ici la même promesse que sur le planning : début, fin, ressource et durées des étapes sont en lecture seule, on ne la segmente pas, on n'ajoute ni ne retire d'étape, et « Supprimer » est désactivé. Ce qu'elle **est** — titre, description, état, rayures, noms des étapes — reste modifiable.",
+          "",
           "**Montage** — le composant est toujours ouvert : c'est à l'application de le monter et de le démonter (`{task ? <SchedulerTaskModal … /> : null}`). `resources` remplit la liste des ressources ; `snapMinutes` arrondit les heures saisies ; `locale` (`fr-FR` par défaut) leur format.",
           "",
           "**Thème** — celles de `Modal` (`--lq-color-panel`, `--lq-color-overlay`, `--lq-shadow-modal`, `--lq-radius-lg`), puis `--lq-color-border`, `--lq-color-border-subtle`, `--lq-color-text-muted`, `--lq-color-danger`, `--lq-color-focus-ring`, `--lq-control-border-width`, `--lq-radius-sm`, `--lq-radius-md`, `--lq-space-2`, `--lq-space-3`, et celles des champs, de `Select` et de `SegmentedControl`.",
@@ -115,7 +117,7 @@ export const NoSteps: Story = {
 export const Locked: Story = {
   name: "Tâche verrouillée",
   args: { task: task("t9") },
-  parameters: { docs: { description: { story: "« Maintenance préventive » est verrouillée sur le planning (`locked`) : la fiche, elle, reste modifiable." } } },
+  parameters: { docs: { description: { story: "« Maintenance préventive » est verrouillée (`locked`) : horaires, ressource et étapes sont figés, la suppression aussi ; titre, description et état restent modifiables." } } },
 };
 
 export const HalfHourSnap: Story = {

@@ -21,13 +21,13 @@ const meta = {
           "",
           "**Le point d'ancrage est le bout de la pointe** — le milieu du bord inférieur de l'élément. Pour planter l'épingle en `(x, y)`, placez-la en `position: absolute; left: x; top: y` et décalez-la de `transform: translate(-50%, -100%)`. Rien ne déborde de ce bord : l'ombre au sol est dessinée dessus.",
           "",
-          "**Gravité et taille** — `severity` : `critical` au rouge de danger, `warning` à l'ambre, `info` à l'accent. `size` : `sm` (24 px) ou `md` (32 px, défaut). `count` au-delà de 1 ajoute une bulle chiffrée, plafonnée à « 99+ ».",
+          "**Gravité et taille** — `severity` : `critical` au rouge de danger, `warning` à l'ambre, `info` à l'accent. `size` : `sm` (24 px) ou `md` (32 px, défaut). `count` au-delà de 1 ajoute une bulle chiffrée, plafonnée à « 99+ » — à « 9+ » en `sm`, avec une bulle plus petite posée en dehors de la pastille (le nom accessible garde le compte exact).",
           "",
           "**Mouvement** — par défaut l'épingle **rebondit** doucement, à intervalles, et grossit au survol et au focus depuis sa pointe (l'ancrage ne bouge pas). `bounce={false}` la fige ; `prefers-reduced-motion` aussi.",
           "",
           "**Accessibilité** — c'est un bouton : `label` est à la fois l'infobulle et le nom accessible, complété du compte (« Quai 3 engorgé (4) »). La gravité n'est dite que par la couleur et la forme : nommez-la dans `label` si elle compte (« Critique : … »). Sur un pointeur grossier, la zone cliquable déborde de la pastille pour offrir 40 px au doigt.",
           "",
-          "**Thème** — `--lq-color-danger`, `--lq-color-amber`, `--lq-color-accent` (gravités), `--lq-color-accent-contrast` (triangle), `--lq-color-panel` (cerclage), `--lq-color-focus-ring`, `--lq-font-weight-heavy` et `--lq-text-xs` (bulle chiffrée).",
+          "**Thème** — `--lq-color-danger`, `--lq-color-amber`, `--lq-color-accent` (gravités), `--lq-color-accent-contrast` (triangle), `--lq-color-warning-contrast` (triangle sur l'ambre, facultative : à défaut, `--lq-color-text` en clair et `--lq-color-bg` en sombre, l'encre claire n'y atteignant que 1,4:1), `--lq-color-panel` (cerclage), `--lq-color-focus-ring`, `--lq-font-weight-heavy` et `--lq-text-xs` (bulle chiffrée).",
         ].join("\n"),
       },
     },
@@ -62,7 +62,7 @@ export const Severities: Story = {
       ))}
     </div>
   ),
-  parameters: { docs: { description: { story: "Les trois gravités, en `md` puis en `sm`, sans compte, avec 3 et avec 120 (affiché « 99+ ») ; rebond coupé." } } },
+  parameters: { docs: { description: { story: "Les trois gravités, en `md` puis en `sm`, sans compte, avec 3 et avec 120 (affiché « 9+ » en `sm`) ; rebond coupé." } } },
 };
 
 export const OnPlan: Story = {

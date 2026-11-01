@@ -20,7 +20,7 @@ const meta = {
           "",
           "**Anatomie** — une `Panel` avec `title` (en petites capitales) et `meta` (à droite de l'en-tête, par exemple la période). Dessous, `primary` puis `secondary`, chacun de forme `{ label, value, delta? }` : un libellé pâle, la valeur en grand (`ReactNode`, à formater vous-même), et l'écart en `PriceChangeTag` si `delta` est fourni.",
           "",
-          "**Format de l'écart** — `delta` sort toujours au format par défaut du kit (`+14.20 %`, point décimal) : il n'y a pas de prop pour le régler. Si le format compte, laissez `delta` de côté et écrivez l'écart dans `value` ou dans `meta`.",
+          "**Format de l'écart** — `delta` sort en français par défaut (`+14,20 %`). `locale` change la langue ; `formatDelta` le format entier — il reçoit l'écart **en valeur absolue**, le signe et la flèche sont posés autour.",
           "",
           "**Thème** — la carte : `--lq-color-panel`, `--lq-shadow-panel`, `--lq-radius-lg` ; le filet : `--lq-color-border-subtle` ; les libellés : `--lq-color-text-muted` ; `--lq-space-4`.",
         ].join("\n"),
@@ -36,6 +36,8 @@ const meta = {
   argTypes: {
     title: { control: "text" },
     meta: { control: "text" },
+    locale: { control: "text", table: { defaultValue: { summary: '"fr-FR"' } } },
+    formatDelta: { control: false },
   },
   render: (args) => (
     <div style={{ maxWidth: 420 }}>

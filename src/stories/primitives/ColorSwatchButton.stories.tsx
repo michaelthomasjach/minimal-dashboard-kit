@@ -27,7 +27,7 @@ const meta = {
           "",
           "**Quand l'utiliser** — un choix parmi quelques teintes nommées : étiqueter un segment client, colorer une série, choisir la lumière d'une pièce. Le nom compte autant que la couleur — il reste lisible pour qui distingue mal les teintes. Pour un choix de libellés sans couleur, `SegmentedControl` ou `Chip`.",
           "",
-          "**Comportement** — c'est une case à cocher (`role=\"checkbox\"`, `aria-checked`) **sans état propre** : le parent tient la sélection, passe `selected` et réagit à `onClick`. Pour un choix exclusif, ne cochez qu'une pastille à la fois (story « Choix d'une teinte ») ; pour un choix multiple, gardez un ensemble de valeurs.",
+          "**Comportement** — une pastille **sans état propre** : le parent tient la sélection, passe `selected` et réagit à `onClick`. Par défaut c'est une case à cocher (`role=\"checkbox\"`, `aria-checked`) : choix multiple, le parent garde un ensemble de valeurs. Avec `exclusive`, elle devient un bouton radio (`role=\"radio\"`) : choix d'une seule teinte (story « Choix d'une teinte »), groupe à envelopper dans un conteneur `role=\"radiogroup\"` muni d'un `aria-label`.",
           "",
           "**Couleur** — `color` accepte toute couleur CSS. Préférez les variables du thème (`var(--lq-color-green)`…) : la pastille suivra la surface sombre sans rien faire.",
           "",
@@ -36,7 +36,7 @@ const meta = {
       },
     },
   },
-  args: { label: "Violet", color: "var(--lq-color-accent)", selected: false, onClick: fn() },
+  args: { label: "Violet", color: "var(--lq-color-accent)", selected: false, exclusive: false, onClick: fn() },
   argTypes: { color: { control: "text" } },
 } satisfies Meta<typeof ColorSwatchButton>;
 
@@ -56,13 +56,14 @@ export const ExclusiveChoice: Story = {
     const [swatch, setSwatch] = useState("accent");
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <div role="radiogroup" aria-label="Teinte du segment" style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {SWATCHES.map((s) => (
             <ColorSwatchButton
               key={s.id}
               label={s.label}
               color={s.color}
               selected={swatch === s.id}
+              exclusive
               onClick={() => {
                 setSwatch(s.id);
                 args.onClick?.();
@@ -76,7 +77,7 @@ export const ExclusiveChoice: Story = {
       </div>
     );
   },
-  parameters: { docs: { description: { story: "Le parent ne coche qu'une pastille : un clic en coche une et décoche la précédente." } } },
+  parameters: { docs: { description: { story: "`exclusive` : chaque pastille est un bouton radio, dans un `role=\"radiogroup\"`. Le parent ne coche qu'une pastille : un clic en coche une et décoche la précédente." } } },
 };
 
 export const MultipleChoice: Story = {

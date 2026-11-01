@@ -41,9 +41,11 @@ const meta = {
         component: [
           "Défilement horizontal de diapositives, une à la fois, dans une hauteur fixe (`height`, 320 px par défaut). Chaque enfant est une diapositive, dessinée pleine largeur : le carrousel ne décide rien de son contenu — un `Jumbotron`, une carte, une image.",
           "",
+          "**Accessibilité** — une région `aria-roledescription=\"carrousel\"`, nommée par `ariaLabel` ; chaque diapositive est un groupe « 2 sur 3 », et celles qui sont cachées sont `aria-hidden` et inertes (leurs boutons sortent de l'ordre de tabulation).",
+          "",
           "**Navigation** — deux flèches (`arrows`, des `IconButton` « Diapositive précédente / suivante ») qui bouclent d'un bout à l'autre, et une rangée de points (`dots`) qui mènent chacun à sa diapositive et marquent l'active par `aria-current`. Les diapositives cachées sont `aria-hidden`.",
           "",
-          "**Lecture automatique** — `autoplayInterval` (en millisecondes) avance d'une diapositive à intervalle régulier, en pause tant que la souris survole le carrousel. Absent ou 0 : pas de lecture automatique. Le kit ne la suspend ni au focus clavier ni quand le système demande moins de mouvement : gardez-la pour du contenu décoratif.",
+          "**Lecture automatique** — `autoplayInterval` (en millisecondes) avance d'une diapositive à intervalle régulier, en pause tant que la souris survole le carrousel **ou que le focus clavier y est**. Elle ne démarre pas quand le système demande moins de mouvement (`prefers-reduced-motion: reduce`), et la transition y devient instantanée. Absent ou 0 : pas de lecture automatique.",
           "",
           "**État** — non contrôlé par défaut (`defaultIndex`, 0) ; contrôlé avec `index` et `onIndexChange(index)`.",
           "",
@@ -81,7 +83,7 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          "Deux défauts du kit se voient ici. Les flèches se posent par-dessus la diapositive à 12 px du bord, sans lui réserver de marge : le texte d'un `Jumbotron`, qui commence à 30 px dans ce thème, passe dessous. Et le point actif prend `--lq-color-bg`, la couleur du fond de page : sur une diapositive claire, il est plus pâle que les points inactifs.",
+          "Les flèches se posent par-dessus la diapositive : le carrousel réserve leur place de chaque côté d'un `Jumbotron` (`--lq-carousel-arrow-gutter`, la largeur d'une flèche et sa marge), dont le texte ne passe donc plus dessous. Le point actif prend `--lq-color-fill`, lisible sur une diapositive claire comme sur une photo.",
       },
     },
   },

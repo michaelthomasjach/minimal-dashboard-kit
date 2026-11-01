@@ -40,7 +40,7 @@ const meta = {
           "",
           "**Orientation** — `horizontal` (défaut) : une rangée soulignée d'un filet ; `vertical` : une colonne, l'indicateur sur le bord, pour une navigation latérale de réglages.",
           "",
-          "**Accessibilité** — `role=\"tablist\"` avec `aria-orientation`, chaque onglet en `role=\"tab\"` avec `aria-selected`. Chaque onglet est un bouton : Tab passe de l'un à l'autre, Entrée ou Espace l'active ; les flèches ne déplacent pas le focus.",
+          "**Accessibilité** — `role=\"tablist\"` avec `aria-orientation`, chaque onglet en `role=\"tab\"` avec `aria-selected`. Un seul arrêt de tabulation, l'onglet actif ; ← → (↑ ↓ en vertical) passent à l'onglet voisin et l'activent, Début et Fin aux extrémités, en sautant les onglets désactivés et en bouclant.",
           "",
           "**Thème** — `--lq-color-accent` (indicateur), `--lq-color-border-subtle` (filet), `--lq-color-text`, `--lq-color-text-muted`, `--lq-color-hover`, et les intitulés : `--lq-caption-font`, `--lq-caption-size`, `--lq-caption-weight`, `--lq-caption-tracking`, `--lq-caption-transform`.",
         ].join("\n"),

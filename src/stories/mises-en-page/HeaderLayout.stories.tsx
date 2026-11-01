@@ -94,9 +94,9 @@ const meta = {
           "",
           "**Anatomie** — une barre de 60 px qui **reste collée en haut** de la fenêtre pendant le défilement : `logo` à gauche, puis `navItems` en liens horizontaux, puis `actions` poussées à droite (recherche, notifications, `UserMenu`). Le contenu (`children`) vient dessous, avec une marge de `--lq-space-6`.",
           "",
-          "**Menu (`navItems`)** — chaque entrée `{ id, label, href?, onClick?, active? }` est un vrai lien `<a>` (`href`, ou `#` à défaut ; avec `onClick`, le lien ne suit pas son `href`). `active` marque la page courante — en couleur de texte et en gras — mais **sans** `aria-current` : un lecteur d'écran ne sait pas quelle page est active. Pas de sous-menus.",
+          "**Menu (`navItems`)** — chaque entrée `{ id, label, href?, onClick?, active? }` est un vrai lien `<a>` (`href`, ou `#` à défaut ; avec `onClick`, le lien ne suit pas son `href`). `active` marque la page courante — en couleur de texte et en gras, et `aria-current=\"page\"` pour les lecteurs d'écran. Pas de sous-menus.",
           "",
-          "**Écran étroit** — sous **860 px**, le menu disparaît de la barre au profit d'un bouton menu (à droite des actions) qui déplie les entrées en liste verticale sous la barre ; un choix la referme. Sans `navItems`, pas de bouton.",
+          "**Écran étroit** — sous **860 px**, le menu disparaît de la barre au profit d'un bouton menu (à droite des actions, `aria-expanded`) qui déplie les entrées en liste verticale sous la barre ; un choix la referme. Sans `navItems`, pas de bouton. Le seuil se mesure sur la fenêtre ; avec `fullHeight={false}`, la coquille remplit son conteneur (`min-height: 100%`) et le seuil se mesure sur **sa** largeur (story « Dans un cadre »).",
           "",
           "**Thème** — la barre : `--lq-color-panel`, filet `--lq-color-border-subtle` ; les liens : `--lq-color-text-muted`, `--lq-color-text` (survol, page active), `--lq-font-weight-medium` / `--lq-font-weight-bold` ; la page : `--lq-color-bg`, `--lq-space-6`. Contrairement à la barre latérale, la couche ne la passe pas en sombre.",
         ].join("\n"),
@@ -131,4 +131,26 @@ export const StickyBar: Story = {
   name: "Barre collante",
   render: shell(true),
   parameters: { docs: { description: { story: "Faites défiler le cadre : la barre reste en haut, au-dessus du contenu." } } },
+};
+
+export const InFrame: Story = {
+  name: "Dans un cadre",
+  args: { fullHeight: false },
+  decorators: [
+    (Story) => (
+      <div style={{ padding: 30 }}>
+        <div style={{ width: 640, height: 420, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`fullHeight={false}` dans un cadre de 640 px : la coquille remplit le cadre et replie son menu derrière le bouton, parce que **sa** largeur passe sous 860 px — quelle que soit celle de la fenêtre.",
+      },
+    },
+  },
 };

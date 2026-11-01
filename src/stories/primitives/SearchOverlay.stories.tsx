@@ -60,7 +60,7 @@ const meta = {
         component: [
           "Calque de recherche qui recouvre toute la page : la marque de l'application en haut à gauche, un bouton de fermeture en haut à droite, un champ en très grand corps, et dessous les résultats groupés en **sections** sur deux colonnes, chacun avec sa pastille ronde, son libellé et une ligne de détail.",
           "",
-          "**L'application cherche, le calque affiche** — `query` est toujours contrôlée (`onQueryChange`), et c'est à l'appelant de calculer `sections` à partir d'elle. Une section vide n'est pas affichée ; si toutes le sont alors que la saisie ne l'est pas, `emptyText` prend leur place. Chaque résultat est un bouton, et `onSelect` est ce qu'il fait au clic — ouvrir la fiche, fermer le calque ; sans lui, le bouton ne fait rien.",
+          "**L'application cherche, le calque affiche** — `query` est toujours contrôlée (`onQueryChange`), et c'est à l'appelant de calculer `sections` à partir d'elle. Une section vide n'est pas affichée ; si toutes le sont alors que la saisie ne l'est pas, `emptyText` prend leur place. Un résultat avec `onSelect` est un bouton, et `onSelect` est ce qu'il fait au clic — ouvrir la fiche, fermer le calque ; sans lui, c'est une simple ligne d'information, ni focalisable ni annoncée comme activable.",
           "",
           "**Clavier** — le champ prend le focus à l'ouverture ; Entrée appelle `onSubmit(query)` (ouvrir le premier résultat, lancer une recherche complète), Échap appelle `onClose`. Avec `onTypeToOpen`, taper un caractère n'importe où dans la page — hors d'un champ de saisie, sans Ctrl, Alt ni Méta — l'appelle avec ce caractère : l'application ouvre le calque avec cette première lettre déjà saisie.",
           "",

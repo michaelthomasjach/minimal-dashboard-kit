@@ -149,6 +149,7 @@ const meta = {
           "### Les deux variantes (`variant`)",
           "",
           "- **`default`** — la barre (248 px) est **dans le flux** de la page, toujours dépliée : icône et libellé côte à côte. `details` et `abbr` n'y sont pas affichés.",
+          "- **Hauteur** — par défaut (`fullHeight`), la coquille occupe au moins toute la hauteur de la fenêtre, tiroir et rail sont fixés à la fenêtre et la bascule en tiroir suit la largeur de la fenêtre. Avec `fullHeight={false}`, elle remplit son conteneur (`min-height: 100%`), tiroir et rail se placent par rapport à elle, et la bascule suit **sa** largeur (stories « Dans un cadre »).",
           "- **`rail`** — la barre est **fixée à la fenêtre** (elle ne défile pas avec la page) et **réduite à une colonne d'icônes** de 70 px. Elle s'ouvre **par-dessus** le contenu (280 px) au survol ou quand le focus clavier y entre. Le bouton rond de son en-tête l'**épingle** ouverte : le contenu se décale alors pour lui faire place. Chaque entrée y montre son libellé à gauche et sa **vignette** dans la colonne de droite — l'`icon`, ou pour une entrée sans icône (les sous-entrées) `abbr`, à défaut la première lettre du libellé en minuscule. `details` ajoute une seconde ligne, plus petite et plus pâle, sous le libellé (« 3 alertes »).",
           "",
           "Sous **900 px** de large, les deux variantes deviennent le même **tiroir** : une barre avec un bouton menu et la marque, et la barre latérale qui glisse par-dessus la page, sur un voile ; un choix ou un clic sur le voile la referme.",
@@ -264,4 +265,47 @@ export const StickyHeader: Story = {
   name: "En-tête fixe",
   args: { stickyHeader: true, footer: <UserMenu name="Claire Lemoine" subtitle="Administratrice" items={ACCOUNT} placement="top" /> },
   parameters: { docs: { description: { story: "`stickyHeader` : faites défiler le cadre, le fil d'Ariane reste en haut, sur un fond opaque et une ombre légère." } } },
+};
+
+export const InFrame: Story = {
+  name: "Dans un cadre",
+  args: { fullHeight: false },
+  decorators: [
+    (Story) => (
+      <div style={{ padding: 30 }}>
+        <div style={{ width: 720, height: 460, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`fullHeight={false}` dans un cadre de 720 px : sous 900 px de **sa** largeur, la barre devient un tiroir ; le bouton menu l'ouvre dans le cadre, voile compris, et non sur toute la fenêtre.",
+      },
+    },
+  },
+};
+
+export const RailInFrame: Story = {
+  name: "Rail dans un cadre",
+  args: { fullHeight: false, variant: "rail", stickyHeader: true },
+  decorators: [
+    (Story) => (
+      <div style={{ padding: 30 }}>
+        <div style={{ width: 1000, height: 460, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story: "Le rail dans un cadre de 1 000 px : fixé à la coquille et non à la fenêtre, il s'ouvre au survol par-dessus le contenu du cadre.",
+      },
+    },
+  },
 };

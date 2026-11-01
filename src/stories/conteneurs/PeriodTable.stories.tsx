@@ -136,7 +136,7 @@ const meta = {
           "",
           "**Quand l'utiliser** — des montants par période, lus en ligne. Pour une liste d'enregistrements à trier, filtrer, paginer, `DataTable` ; pour une hiérarchie sans chiffres, `TreeView`.",
           "",
-          "**Sur une carte** — le tableau n'a pas de fond propre, mais sa colonne figée et son en-tête prennent celui des cartes (`--lq-color-panel`), pour masquer ce qui défile dessous. Posez-le dans une `Card` ou un `Panel` : à même le fond de page, la colonne d'intitulés ressortirait en blanc.",
+          "**Fond** — le tableau a son propre fond, `--lq-color-panel`, comme sa colonne figée et son en-tête (qui masquent ce qui défile dessous) : il se lit d'un seul ton, posé dans une `Card` comme à même le fond de page.",
           "",
           "Donnez toujours un `caption` : c'est le nom du tableau pour les lecteurs d'écran.",
           "",

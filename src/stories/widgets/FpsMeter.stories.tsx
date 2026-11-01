@@ -36,7 +36,7 @@ const meta = {
           "",
           "**La mesure** — par défaut, la cadence de la **page** : une boucle `requestAnimationFrame` note l'écart entre deux images. Pour mesurer **sa** scène, passez une `source` : `createFpsSource()` en crée une qu'on alimente avec `emit(ms)` à chaque image réellement dessinée. L'intérêt : une scène au repos ne redessine rien, et le compteur le dit (« au repos ») au lieu d'afficher 60 i/s qui ne mesureraient que le navigateur. Le crochet `useFps({ source })` donne les mêmes chiffres sans pastille, pour les afficher ailleurs.",
           "",
-          "**La lecture** — toutes les `sampleMs` (500 ms par défaut), le compteur résume la fenêtre écoulée. **Vert** au-dessus de 50 i/s, **ambre** au-dessus de 30, **rouge** en dessous. `showGraph` (vrai par défaut) garde les 60 derniers résumés ; `compact` n'affiche que la cadence ; `label` pose un mot devant (« Scène », « Page »). Rien n'est rendu par React entre deux résumés : la mesure ne coûte presque rien.",
+          "**La lecture** — toutes les `sampleMs` (500 ms par défaut), le compteur résume la fenêtre écoulée. **Vert** au-dessus de 50 i/s, **ambre** au-dessus de 30, **rouge** en dessous. `showGraph` (vrai par défaut) garde les 60 derniers résumés ; `compact` n'affiche que la cadence ; `label` pose un mot devant (« Scène », « Page ») ; `locale` (`\"fr-FR\"` par défaut) écrit la durée d'image (« 16,7 ms »). Rien n'est rendu par React entre deux résumés : la mesure ne coûte presque rien.",
           "",
           "**Placement** — `position` (`bottom-right` par défaut, ou l'un des trois autres coins) et `offset` (8 px et 8 px). **Le conteneur doit être positionné.** La pastille ne capte aucun geste (`pointer-events: none`) : on clique à travers.",
           "",
@@ -51,6 +51,7 @@ const meta = {
     sampleMs: { control: { type: "range", min: 100, max: 2000, step: 100 } },
     source: { control: false },
     offset: { control: "object" },
+    locale: { control: "text", table: { defaultValue: { summary: '"fr-FR"' } } },
   },
   render: (args) => (
     <Stage height={240}>
@@ -91,7 +92,7 @@ export const OwnSource: Story = {
           <FpsMeter {...args} source={scene} label="Scène" position="top-right" />
         </Stage>
         <Text size="sm" muted>
-          useFps sur la même source : {Math.round(reading.fps)} i/s, au plus lent {Math.round(reading.min)} i/s, {reading.ms.toFixed(1)} ms par image.
+          useFps sur la même source : {Math.round(reading.fps)} i/s, au plus lent {Math.round(reading.min)} i/s, {reading.ms.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} ms par image.
         </Text>
       </div>
     );

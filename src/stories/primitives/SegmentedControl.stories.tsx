@@ -35,7 +35,7 @@ const meta = {
           "",
           "**Deux dispositions** — `labelPosition=\"inline\"` (défaut) pose un petit intitulé en capitales à gauche, pour un réglage d'écran ; `labelPosition=\"top\"` le pose au-dessus, comme celui d'un champ, et donne aux options une hauteur de champ, pour une barre de filtres. `label` est facultatif.",
           "",
-          "**Accessibilité** — `role=\"radiogroup\"` nommé par `label`, chaque option en `role=\"radio\"` avec `aria-checked`. Chaque option est un bouton : Tab passe de l'une à l'autre, Espace ou Entrée la choisit ; les flèches ne déplacent pas la sélection.",
+          "**Accessibilité** — `role=\"radiogroup\"` nommé par `label`, chaque option en `role=\"radio\"` avec `aria-checked`. Un seul arrêt de tabulation, l'option choisie ; les quatre flèches choisissent l'option voisine (en bouclant), Début et Fin les extrémités — comme un groupe radio natif.",
           "",
           "**Thème** — `--lq-color-fill` et `--lq-color-accent-contrast` (option active), `--lq-color-panel`, `--lq-color-border`, `--lq-control-border-width`, `--lq-radius-md`, `--lq-space-2`, `--lq-space-4` ; l'intitulé en ligne suit `--lq-label-font`, `--lq-label-size`, `--lq-label-weight`, `--lq-label-tracking`.",
         ].join("\n"),
@@ -101,7 +101,7 @@ export const InFilterBar: Story = {
     docs: {
       description: {
         story:
-          "En `labelPosition=\"top\"`, l'intitulé passe au-dessus comme celui de l'`Input` voisin. Mais le kit fixe la hauteur de ces options à 40 px en dur, et le style de leur intitulé aussi : dans ce thème, où les champs font 32 px (`--lq-control-height`) et leurs libellés suivent `--lq-field-label-*`, les deux ne s'alignent pas — un défaut à corriger dans le kit, pas ici.",
+          "En `labelPosition=\"top\"`, l'intitulé passe au-dessus comme celui de l'`Input` voisin, avec ses variables (`--lq-field-label-size`, `--lq-field-label-weight`), et les options prennent la hauteur des champs (`--lq-control-height`) : les deux s'alignent.",
       },
     },
   },

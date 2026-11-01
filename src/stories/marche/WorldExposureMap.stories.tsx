@@ -51,9 +51,8 @@ const meta = {
           "",
           "**Interactions** — survoler une région (ou la toucher au doigt) la cerne et ouvre une bulle : son nom, sa valeur et sa part du total. Survoler une entrée de légende cerne la région correspondante sur la carte.",
           "",
-          "**Thème** — les régions mélangent `--lq-color-accent` à `--lq-color-panel` (de 15 à 85 %) ; une région sans valeur reste en `--lq-color-panel`. Frontières en `--lq-color-border-subtle`, région survolée cernée de `--lq-color-text` ; bulle sur `--lq-color-panel`, `--lq-color-border`, `--lq-radius-sm` ; ligne « Non localisable » en `--lq-color-text-muted`.",
-          "",
-          "**Défaut connu du kit** — la console signale des clés React en double (« Encountered two children with the same key ») : quelques pays de la topologie n'ont pas d'identifiant, et la carte les clé tous par `undefined`. Sans effet visible ; à corriger dans le kit.",
+          "**Thème** — les régions mélangent `--lq-color-accent` à `--lq-color-panel`, de 30 à 90 % sur une rampe en racine carrée — les petites parts restent nettement teintées, y compris sur la surface sombre ; une région sans valeur reste en `--lq-color-panel`. Frontières en `--lq-color-border-subtle`, région survolée cernée de `--lq-color-text` ; bulle sur `--lq-color-panel`, `--lq-color-border`, `--lq-radius-sm` ; ligne « Non localisable » en `--lq-color-text-muted`.",
+
         ].join("\n"),
       },
     },

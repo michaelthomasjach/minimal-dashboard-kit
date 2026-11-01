@@ -15,7 +15,7 @@ const meta = {
         component: [
           "Case à cocher avec son libellé. La coche se dessine d'un trait quand on coche ; `indeterminate` remplace la coche par un tiret, pour la case parente d'un groupe partiellement coché.",
           "",
-          "**Quand l'utiliser** — une option indépendante qu'on active ou non (« Inclure les archives »), ou plusieurs options cumulables posées en liste. Pour un réglage qui prend effet **immédiatement**, un `Toggle` se lit mieux ; pour un filtre à l'allure de bouton, `CheckboxButton` ; pour un choix exclusif, `SegmentedControl` ou `Select` — le kit n'a pas encore de groupe radio.",
+          "**Quand l'utiliser** — une option indépendante qu'on active ou non (« Inclure les archives »), ou plusieurs options cumulables posées en liste. Pour un réglage qui prend effet **immédiatement**, un `Toggle` se lit mieux ; pour un filtre à l'allure de bouton, `CheckboxButton` ; pour un choix exclusif, `RadioGroup`, `SegmentedControl` ou `Select`.",
           "",
           "**Valeur** — composant **contrôlé** : `checked` est obligatoire et `onChange` reçoit directement le booléen (pas d'événement). `indeterminate` est purement visuel et ne touche pas à `checked` : c'est l'appelant qui calcule l'état partiel d'un groupe et ce que fait un clic sur la case parente.",
           "",
@@ -101,6 +101,6 @@ export const Disabled: Story = {
 
 export const WithoutLabel: Story = {
   name: "Sans libellé",
-  args: { label: undefined, checked: true },
-  parameters: { docs: { description: { story: "La case seule, pour une colonne de sélection de tableau. Sans libellé visible, elle n'a pas de nom accessible : le kit n'expose pas d'`aria-label`, il faut donc une étiquette ailleurs (en-tête de colonne)." } } },
+  args: { label: undefined, checked: true, ariaLabel: "Sélectionner la facture F-2026-118" },
+  parameters: { docs: { description: { story: "La case seule, pour une colonne de sélection de tableau. Sans libellé visible, `ariaLabel` lui donne son nom accessible (« Sélectionner la facture F-2026-118 »)." } } },
 };

@@ -61,7 +61,7 @@ const meta = {
           "",
           "**Rendu dans un portail** (`document.body`), en reprenant le thème courant : aucun ancêtre en `overflow: hidden` ou contexte d'empilement isolé ne peut le recouvrir. `role=\"dialog\"`, `aria-modal`, nommé par `title` s'il est textuel.",
           "",
-          "**Focus** — le kit ne déplace pas le focus à l'ouverture, ne le retient pas dans la fenêtre et ne le rend pas à l'élément d'origine à la fermeture : au clavier, Tab peut sortir de la fenêtre. Placez au besoin le focus vous-même sur le premier champ.",
+          "**Focus** — à l'ouverture, il entre dans la fenêtre : sur un élément `autoFocus` ou `data-autofocus` s'il y en a un, sinon sur le premier contrôle hors de la croix d'en-tête (souvent le bouton de pied), sinon sur la fenêtre elle-même. Tab et Maj+Tab y bouclent tant qu'elle est ouverte, et à la fermeture le focus revient à l'élément qui l'avait — le bouton d'ouverture. La croix d'en-tête porte `closeLabel` comme nom accessible, comme le bouton de pied.",
           "",
           "**Quand l'utiliser** — une tâche courte qui interrompt volontairement la page. Pour une information non bloquante, `Notification` ; pour un contenu ancré à un bouton, `Popover` ; pour une recherche globale, `SearchOverlay`.",
           "",

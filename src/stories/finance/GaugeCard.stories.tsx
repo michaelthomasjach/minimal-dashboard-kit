@@ -34,7 +34,7 @@ const meta = {
           "",
           "**Échelle et seuils** — `min` et `max` bornent l'échelle (0 et 100 par défaut). `thresholds` découpe la piste en bandes `{ upTo, color }`, dans l'unité de `value` et dans l'ordre croissant. Passez des couleurs du thème (`var(--lq-color-up)`…) pour qu'elles suivent la surface claire ou sombre. Avec des seuils, ce sont les bandes qui forment la piste, et seule l'aiguille bouge ; sans `thresholds`, la piste est grise et un arc d'accent la remplit jusqu'à la valeur.",
           "",
-          "**À savoir** — le `label` d'un seuil n'est pas affiché : `GaugeChart` sait les dessiner (`showBandLabels`), mais `GaugeCard` ne transmet pas cette option.",
+          "**Libellés des bandes** — `showBandLabels` écrit le `label` de chaque seuil autour de l'arc (option transmise à `GaugeChart`) ; désactivé par défaut.",
           "",
           "**Thème** — `--lq-color-accent` et `--lq-color-fill-track` (jauge sans seuils), `--lq-color-text` (aiguille et valeur), `--lq-color-up`, `--lq-color-warning`, `--lq-color-down` (bandes de l'exemple), `--lq-color-text-muted` (description), et les variables de `Panel`.",
         ].join("\n"),
@@ -58,6 +58,7 @@ const meta = {
     min: { table: { defaultValue: { summary: "0" } } },
     max: { table: { defaultValue: { summary: "100" } } },
     thresholds: { control: false },
+    showBandLabels: { control: "boolean", table: { defaultValue: { summary: "false" } } },
     formatValue: { control: false },
   },
   render: (args) => (
@@ -109,4 +110,10 @@ export const Pair: Story = {
       <GaugeCard title="Score de risque" meta="Élevé" value={81} thresholds={RISK_BANDS} description="Deux lignes pèsent 60 % de l'encours." />
     </div>
   ),
+};
+
+export const BandLabels: Story = {
+  name: "Libellés des bandes",
+  args: { showBandLabels: true },
+  parameters: { docs: { description: { story: "`showBandLabels` : « Faible », « Modéré », « Élevé » s'écrivent au bord de leur bande." } } },
 };

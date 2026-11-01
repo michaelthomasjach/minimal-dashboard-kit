@@ -38,7 +38,7 @@ const meta = {
           "",
           "**Tons** — `default` : le fond d'une carte ; `accent` : le plein de l'accent du thème, texte en contraste, pour l'appel le plus important.",
           "",
-          "**Image de fond** — `backgroundImage` (une URL) couvre tout le bandeau, et un voile assombrit le côté du texte pour qu'il reste lisible. `imageFilter=\"grayscale\"` fait passer l'image de la couleur au noir et blanc sur cette même zone ; `blurOnScroll` la floute à mesure que la page défile — à réserver à un bandeau en haut d'une page qui défile, puisqu'il écoute le défilement de la fenêtre.",
+          "**Image de fond** — `backgroundImage` (une URL) couvre tout le bandeau, et un voile assombrit le côté du texte pour qu'il reste lisible. Sur l'image, sur-titre, titre et description passent tous en `--lq-color-accent-contrast`. `imageFilter=\"grayscale\"` fait passer l'image de la couleur au noir et blanc sur cette même zone ; `blurOnScroll` la floute à mesure que la page défile — à réserver à un bandeau en haut d'une page qui défile, puisqu'il écoute le défilement de la fenêtre.",
           "",
           "**Thème** — `--lq-color-panel`, `--lq-color-border-subtle`, `--lq-radius-lg`, `--lq-space-2` à `--lq-space-6` ; ton accent `--lq-color-fill` et `--lq-color-accent-contrast` ; voile `--lq-color-overlay` ; sur-titre `--lq-label-*`, titre `--lq-font-weight-bold`.",
         ].join("\n"),

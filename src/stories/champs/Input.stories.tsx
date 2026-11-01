@@ -17,13 +17,15 @@ const meta = {
           "",
           "**Deux dispositions** — `labelPosition=\"above\"` (défaut) pose le libellé au-dessus, comme le champ « traditionnel » du gabarit ; `labelPosition=\"inside\"` le pose **dans la boîte** : il rétrécit dès que le champ prend le focus ou une valeur, et `required` ajoute un astérisque dans le coin.",
           "",
+          "**États** — `error` (chaîne) passe le filet en `--lq-color-danger` et affiche le message sous le champ, relié par `aria-describedby` et `aria-invalid`. `success` en est le pendant en `--lq-color-up` : une chaîne affiche un message avec une coche cerclée, `true` ne colore que le filet. L'erreur l'emporte sur le succès, et l'un comme l'autre remplace `helperText` quand il porte un message.",
+          "",
           "**Thème** — `--lq-control-height` (32 px), `--lq-control-padding-x`, `--lq-control-font-size`, `--lq-control-color`, `--lq-field-label-size`, `--lq-field-label-weight`, `--lq-field-gap`, `--lq-field-helper-offset`.",
         ].join("\n"),
       },
     },
   },
   args: { label: "Raison sociale", placeholder: "Lemoine SAS" },
-  argTypes: { leadingIcon: { control: false }, trailingIcon: { control: false } },
+  argTypes: { leadingIcon: { control: false }, trailingIcon: { control: false }, error: { control: "text" }, success: { control: "text" } },
   // Un champ contrôlé : la story tient sa valeur, et les contrôles règlent tout le reste.
   render: function Render(args) {
     const [value, setValue] = useState("");
@@ -48,6 +50,19 @@ export const WithHelper: Story = {
 export const WithError: Story = {
   name: "En erreur",
   args: { label: "SIRET", error: "Le SIRET compte 14 chiffres." },
+};
+
+export const Success: Story = {
+  name: "Succès",
+  args: { label: "Identifiant", success: "Identifiant disponible" },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Le pendant exact de l'erreur : filet, anneau de focus, message et icône en `--lq-color-up` (le vert « succès » du gabarit). Avec `success` à `true`, seul le filet se colore et `helperText` reste affiché. Si `error` est aussi posé, l'erreur l'emporte.",
+      },
+    },
+  },
 };
 
 export const WithIcon: Story = {

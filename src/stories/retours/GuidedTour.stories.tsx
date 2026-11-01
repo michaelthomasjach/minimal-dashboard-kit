@@ -134,7 +134,7 @@ const meta = {
           "",
           "**Portail** — carte, anneau et voile sont rendus sous `document.body`, en position fixe. Dans cette documentation, chaque story est donc isolée dans son propre cadre.",
           "",
-          "**Thème** — carte en `--lq-color-panel` bordée de `--lq-color-border`, angles `--lq-radius-md`, ombre `--lq-shadow-modal`, marges `--lq-space-4` ; anneau et bouton principal en `--lq-color-accent` ; points d'étape sur `--lq-color-fill-track` ; le voile est un mélange léger de `--lq-color-text`.",
+          "**Thème** — carte en `--lq-color-panel` bordée de `--lq-color-border`, angles `--lq-radius-md`, ombre `--lq-shadow-modal`, marges `--lq-space-4` ; anneau et bouton principal en `--lq-color-accent` ; points d'étape sur `--lq-color-fill-track` ; le voile et le projecteur autour de la cible sont tirés de `--lq-color-overlay` (moitié et tiers de son opacité) : ils assombrissent l'écran en surface sombre comme en claire.",
         ].join("\n"),
       },
     },

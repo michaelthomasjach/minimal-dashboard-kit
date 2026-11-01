@@ -35,7 +35,7 @@ const meta = {
           "",
           "**Portail et placement** — la liste est un `Popover` rendu sous `document.body`. Elle s'ouvre sous le champ, ou au-dessus avec `placement=\"top\"`, et se retourne d'elle-même quand la place manque ; un clic au-dehors ou Échap la ferme.",
           "",
-          "**Clavier** — le déclencheur est un vrai bouton : Tab y mène, Entrée et Espace ouvrent la liste. Mais le focus n'entre pas dans la liste à l'ouverture, et ↑ / ↓ n'y circulent pas : la liste se pilote à la souris. Pour un formulaire qui doit se remplir au clavier, préférez `InputDropdown`.",
+          "**Clavier** — le déclencheur est un vrai bouton : Tab y mène ; Entrée, Espace, ↓ ou ↑ ouvrent la liste et y posent le focus, sur l'option choisie (la première sinon). Dans la liste, ↑ ↓ circulent en sautant les options désactivées, Début / Fin vont aux extrémités, une lettre tapée saute à l'option suivante qui commence ainsi (plusieurs lettres à la suite affinent), Entrée ou Espace choisissent, Échap et Tab referment, et le focus revient au déclencheur. Échap ne ferme que la liste : une `Modal` autour reste ouverte.",
           "",
           "**Thème** — le déclencheur lit les variables des champs (`--lq-control-height`, `--lq-control-padding-x`, `--lq-control-font-size`, `--lq-control-color`, `--lq-field-*`) ; la liste, `--lq-shadow-modal`, `--lq-radius-md`, `--lq-color-hover` et `--lq-color-accent` pour la coche.",
         ].join("\n"),

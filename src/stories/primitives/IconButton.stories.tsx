@@ -33,7 +33,7 @@ const meta = {
           "",
           "**États** — au survol, une légère transparence ; à l'appui, le bouton se tasse ; désactivé, 40 % d'opacité et curseur interdit.",
           "",
-          "**Thème** — `--lq-control-border-width`, `--lq-color-border`, `--lq-radius-md`, `--lq-color-panel`, `--lq-color-text`, `--lq-transition-fast`.",
+          "**Thème** — `--lq-control-border-width`, `--lq-color-border`, `--lq-radius-md`, `--lq-color-panel`, `--lq-color-text`, `--lq-transition-fast`. En `md`, le carré prend la hauteur des contrôles, `--lq-control-height` (40 px par défaut), pour s'aligner sur un `Button` ou un champ voisin ; `--lq-icon-button-size` (optionnelle) l'en détache. L'icône occupe 55 % du carré.",
         ].join("\n"),
       },
     },

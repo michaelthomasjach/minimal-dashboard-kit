@@ -23,13 +23,13 @@ const meta = {
           "",
           "**Quand l'utiliser** — une colonne latérale de tableau de bord, une liste courte (une dizaine de lignes au plus) qu'on parcourt d'un coup d'œil. Au-delà, ou pour trier et comparer, prenez un `DataTable` ; pour les plus fortes variations de la séance, `MarketMoversWidget`.",
           "",
-          "**Anatomie** — une `Panel` avec `title` et, à droite, un `meta` **calculé** par le widget (« 5 actifs », « 1 actif ») ; puis les lignes. Chaque élément de `items` a la forme d'une `HoldingCard` plus un `id` : `symbol`, `name`, `price`, `change`, et au choix `quantity`, `sparklineData`, `formatPrice`.",
+          "**Anatomie** — une `Panel` avec `title` et, à droite, un `meta` **calculé** par le widget (« 5 actifs », « 1 actif ») ; puis les lignes. Chaque élément de `items` a la forme d'une `HoldingCard` plus un `id` : `symbol`, `name`, `price`, `change`, et au choix `quantity`, `sparklineData`, `locale`, `formatPrice`, `formatChange`, `formatQuantity`.",
           "",
-          "**Sélection** — avec `onSelect`, chaque ligne devient cliquable et le widget renvoie l'`id` de la ligne choisie ; sans lui, les lignes sont inertes. Comme pour `HoldingCard`, les lignes cliquables se focalisent à Tab mais ne réagissent pas à Entrée.",
+          "**Sélection** — avec `onSelect`, chaque ligne devient cliquable et le widget renvoie l'`id` de la ligne choisie ; sans lui, les lignes sont inertes. Comme pour `HoldingCard`, les lignes cliquables se focalisent à Tab et se déclenchent au clic, à Entrée ou à Espace.",
           "",
           "**Liste vide** — sans élément, la carte affiche `emptyMessage` (« Aucun actif suivi » par défaut).",
           "",
-          "**Libellés du kit** — le titre par défaut est « Watchlist », en anglais, et le décompte dit « actifs » : passez toujours un `title`. L'écart de chaque ligne sort au format du kit (`+1.84 %`) ; seul le cours a un format réglable (`formatPrice`, ligne par ligne).",
+          "**Libellés du kit** — le titre par défaut est « Liste de surveillance » et le décompte dit « actifs ». Chaque ligne sort en français (`642,30 €`, `+1,84 %`) ; les formats se règlent ligne par ligne (`formatPrice`, `formatChange`, `formatQuantity`, ou `locale`).",
           "",
           "**Thème** — les variables de `Panel` et de `HoldingCard` : `--lq-color-panel`, `--lq-shadow-panel`, `--lq-color-hover`, `--lq-color-up` / `--lq-color-down`, `--lq-space-2`, `--lq-space-4`.",
         ].join("\n"),
@@ -43,7 +43,7 @@ const meta = {
     emptyMessage: "Aucune valeur suivie pour l'instant.",
   },
   argTypes: {
-    title: { control: "text", table: { defaultValue: { summary: '"Watchlist"' } } },
+    title: { control: "text", table: { defaultValue: { summary: '"Liste de surveillance"' } } },
     items: { control: false },
     emptyMessage: { control: "text", table: { defaultValue: { summary: '"Aucun actif suivi"' } } },
   },
@@ -90,7 +90,7 @@ export const KitDefaults: Story = {
   args: { title: undefined, items: ITEMS.slice(0, 2).map((item) => ({ ...item, formatPrice: undefined })), emptyMessage: undefined },
   parameters: {
     docs: {
-      description: { story: "Sans `title` ni `formatPrice` : le titre « Watchlist » et les cours au format `642.30 €`. À éviter dans une interface française." },
+      description: { story: "Sans `title` ni `formatPrice` : le titre « Liste de surveillance » et les cours au format du kit, en français (`642,30 €`)." },
     },
   },
 };

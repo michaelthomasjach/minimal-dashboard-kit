@@ -22,9 +22,9 @@ const LOGO = (
   <span style={{ fontSize: "1.375rem", fontWeight: 700, lineHeight: 1, letterSpacing: "-0.04em", color: "var(--lq-color-text)" }}>minimal</span>
 );
 
-/** Le formulaire est l'affaire de l'appelant : un vrai `<form>`, pour qu'Entrée l'envoie. Le kit
- *  espace les enfants directs de sa zone de formulaire ; un `<form>` en est un, il reprend donc
- *  lui-même l'espacement. */
+/** Le formulaire est l'affaire de l'appelant : un vrai `<form>` (ici avec `noValidate`, d'où le
+ *  sien plutôt que `onSubmit`). Le kit lui donne l'espacement de sa zone de formulaire ; le style
+ *  ci-dessous le redit pour les versions antérieures du kit. */
 const FORM_STYLE = { display: "flex", flexDirection: "column", gap: "var(--lq-space-4)" } as const;
 
 /** Une connexion de démonstration : les champs vides sont signalés, sinon on « connecte ». */
@@ -95,9 +95,9 @@ const meta = {
           "",
           "**Anatomie** — `imageSrc` (obligatoire) et `imageAlt` (vide par défaut : l'image est décorative), `logo`, `title` (un vrai `<h1>`), `subtitle`, `children` (le formulaire), `footer` (lien d'inscription, mention légale). Le panneau fait 360 px de large au plus, 320 px au moins.",
           "",
-          "**Le formulaire vous appartient** — le kit ne fournit que la mise en page : les champs, la validation et l'envoi sont à vous. Mettez-les dans un vrai `<form>` (Entrée envoie, `autoComplete` aide les gestionnaires de mots de passe) avec un bouton `type=\"submit\"`. Le kit espace les **enfants directs** de sa zone de formulaire (`--lq-space-4`) : un `<form>` étant un seul enfant, donnez-lui le même espacement (`display: flex; flex-direction: column; gap: var(--lq-space-4)`). Le kit n'a pas de prop `onSubmit`.",
+          "**Le formulaire** — le kit fournit la mise en page, les champs et leur validation sont à vous. Avec `onSubmit`, la zone de formulaire devient un vrai `<form>` : Entrée dans un champ l'envoie, un bouton `type=\"submit\"` aussi, et l'envoi natif (rechargement) est annulé avant l'appel. Sans `onSubmit`, passez votre propre `<form>` en enfant (pour `noValidate`, par exemple, comme ici) : il reçoit le même espacement (`--lq-space-4`) que les enfants directs. Dans tous les cas, `autoComplete` aide les gestionnaires de mots de passe.",
           "",
-          "**Écran étroit** — sous **900 px**, l'image disparaît et le panneau prend toute la page.",
+          "**Hauteur et écran étroit** — par défaut (`fullHeight`), la page occupe au moins toute la hauteur de la fenêtre, et sous **900 px** de fenêtre l'image disparaît et le panneau prend toute la page. Avec `fullHeight={false}`, elle remplit son conteneur (`min-height: 100%`) et le seuil se mesure sur **sa** largeur : elle tient dans un cadre, un aperçu, une modale (story « Dans un cadre »).",
           "",
           "**Thème** — `--lq-color-bg` (fond du panneau), `--lq-color-text` (titre), `--lq-color-text-muted` (sous-titre, pied), `--lq-font-weight-bold`, `--lq-space-4` à `--lq-space-6`. L'image ne lit pas les variables : choisissez-la dans les teintes du thème.",
         ].join("\n"),
@@ -141,4 +141,33 @@ export const Minimal: Story = {
   name: "Sans logo ni pied",
   args: { logo: undefined, footer: undefined, subtitle: undefined, title: "Connexion" },
   parameters: { docs: { description: { story: "Le minimum : l'image, un titre et le formulaire." } } },
+};
+
+export const InFrame: Story = {
+  name: "Dans un cadre",
+  args: { fullHeight: false },
+  render: function Render(args) {
+    const [sent, setSent] = useState(false);
+    return (
+      <div style={{ padding: 30 }}>
+        <div style={{ width: 760, height: 540, border: "1px solid var(--lq-color-border)", overflow: "auto" }}>
+          <LoginPage {...args} subtitle={sent ? "Formulaire envoyé (démonstration)." : args.subtitle} onSubmit={() => setSent(true)}>
+            <Input label="Adresse e-mail" type="email" autoComplete="email" placeholder="vous@entreprise.fr" leadingIcon={<UserIcon size={16} />} />
+            <InputPassword label="Mot de passe" autoComplete="current-password" />
+            <Button type="submit" block selected>
+              Se connecter
+            </Button>
+          </LoginPage>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`fullHeight={false}` dans un cadre de 760 × 540 : la page prend la hauteur du cadre, et comme le cadre fait moins de 900 px de large, l'image disparaît — quelle que soit la largeur de la fenêtre. `onSubmit` fait de la zone un vrai `<form>` : Entrée dans un champ l'envoie.",
+      },
+    },
+  },
 };

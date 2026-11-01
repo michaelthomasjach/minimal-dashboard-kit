@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 import { Heatmap, Text, type HeatmapGroup, type HeatmapTile } from "@michaelthomasjach/liseuse-dashboard-kit";
@@ -53,7 +53,7 @@ const meta = {
           "",
           "**Quand l'utiliser** — deux mesures sur beaucoup d'éléments hiérarchisés : un portefeuille, un indice, des magasins par région. Pour une mesure par élément, un `BarChart` horizontal trié se lit plus juste ; pour une grille ligne × colonne (corrélations, scores), `MatrixChart`.",
           "",
-          "**Anatomie** — un en-tête par groupe (son libellé, précédé d'un trait de `color` si le groupe en porte une, pour le relier à la même série dans un graphique voisin), puis ses tuiles. `colorDomain` ([−3, 3] par défaut, une échelle de variation en %) fixe la valeur qui atteint la couleur pleine — au-delà, la teinte plafonne. `colorValue: null` peint la tuile d'un gris neutre : « pas encore de mesure » ne doit pas se lire « légèrement positif ». `logoUrl` (ou `logoColor`) pose un disque au-dessus du libellé. `width` et `height` sont **fixes** (900 × 560 par défaut) : pour remplir un conteneur, mesurez-le (voir « Pleine largeur »).",
+          "**Anatomie** — un en-tête par groupe (son libellé, précédé d'un trait de `color` si le groupe en porte une, pour le relier à la même série dans un graphique voisin), puis ses tuiles. `colorDomain` ([−3, 3] par défaut, une échelle de variation en %) fixe la valeur qui atteint la couleur pleine — au-delà, la teinte plafonne. `colorValue: null` peint la tuile d'un gris neutre : « pas encore de mesure » ne doit pas se lire « légèrement positif ». `logoUrl` (ou `logoColor`) pose un disque au-dessus du libellé. Sans `width`, la carte **remplit la largeur de son conteneur** et la suit quand il change ; `width` la fixe en pixels. `height` est fixe (560 par défaut).",
           "",
           "**Interactions** — cliquer l'en-tête d'un groupe zoome sur lui seul, avec un fil d'Ariane pour revenir à « Tout » ; la molette zoome vers le pointeur, glisser déplace la vue. Survoler une tuile ouvre sa bulle (`tooltip`, un ReactNode libre, ou à défaut libellé et valeur). Cliquer une tuile ne zoome pas — elle n'a rien en dessous — mais la signale par `onTileClick` : à l'application de décider ce qu'« ouvrir une valeur » veut dire.",
           "",
@@ -67,7 +67,7 @@ const meta = {
     groups: { control: false },
     colorDomain: { control: false },
     onTileClick: { control: false },
-    width: { control: { type: "range", min: 360, max: 1200, step: 10 } },
+    width: { control: { type: "range", min: 360, max: 1200, step: 10 }, table: { defaultValue: { summary: "largeur du conteneur" } } },
     height: { control: { type: "range", min: 240, max: 800, step: 10 } },
   },
 } satisfies Meta<typeof Heatmap>;
@@ -88,23 +88,11 @@ export const Default: Story = {
 
 export const FullWidth: Story = {
   name: "Pleine largeur",
-  // `Heatmap` ne mesure pas son conteneur : on le mesure pour lui.
-  render: function Render(args) {
-    const conteneur = useRef<HTMLDivElement | null>(null);
-    const [largeur, setLargeur] = useState(0);
-    useLayoutEffect(() => {
-      const el = conteneur.current;
-      if (!el) return;
-      const observateur = new ResizeObserver(([e]) => setLargeur(Math.floor(e.contentRect.width)));
-      observateur.observe(el);
-      return () => observateur.disconnect();
-    }, []);
-    return <div ref={conteneur}>{largeur > 0 ? <Heatmap {...args} width={largeur} /> : null}</div>;
-  },
+  args: { width: undefined },
   parameters: {
     docs: {
       description: {
-        story: "`Heatmap` dessine à la largeur qu'on lui donne : pour occuper son conteneur, on le mesure (un `ResizeObserver`) et on lui passe sa largeur.",
+        story: "Sans `width`, `Heatmap` mesure son conteneur et en prend toute la largeur — redimensionnez la fenêtre : les tuiles se recomposent.",
       },
     },
   },
