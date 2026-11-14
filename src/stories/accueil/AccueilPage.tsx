@@ -456,7 +456,7 @@ export function AccueilPage({ kitVersion, componentCount }: AccueilPageProps) {
         <SectionHead
           eyebrow="Le catalogue"
           title="Le même menu que le kit."
-          lead="Ce Storybook et celui du kit ont exactement les mêmes entrées : chaque page existe des deux côtés, l'une en e-ink, l'autre dans ce thème. Les comptes ci-dessous sont lus dans le menu lui-même."
+          lead="Ce Storybook affiche les stories du kit elles-mêmes, chargées depuis son code source : mêmes pages, mêmes exemples, mêmes Docs, l'une en e-ink, l'autre dans ce thème. Une story ajoutée au kit apparaît ici d'elle-même. Les comptes ci-dessous sont lus dans le menu lui-même."
         />
         <div className="mdk-home__families">
           {FAMILIES.map((f) => (
@@ -519,8 +519,8 @@ export function AccueilPage({ kitVersion, componentCount }: AccueilPageProps) {
             <h3>La logique reste au kit</h3>
             <p>
               Un correctif, une prop, un composant manquant se font dans le kit ; la couleur, la taille et
-              l'espace se font ici. Les tables de props sont extraites des types du kit
-              (<code>npm run docgen</code>) : elles décrivent ce qui est rendu.
+              l'espace se font ici. Les stories et leurs tables de props sont celles du kit : elles
+              décrivent ce qui est rendu.
             </p>
           </article>
         </div>

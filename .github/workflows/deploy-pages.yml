@@ -2,10 +2,19 @@ name: Déployer le Storybook et la vitrine sur GitHub Pages
 
 # Même principe que le dépôt du kit : un seul site, reconstruit à chaque push sur master.
 # Le Storybook est à la racine (sa page d'accueil présente la couche), la vitrine sous /vitrine/.
+#
+# Le Storybook affiche les stories du kit, lues dans son dépôt cloné à jour (voir plus bas) : il doit
+# donc aussi être reconstruit quand le kit change, pas seulement quand ce dépôt-ci bouge. D'où la
+# reconstruction quotidienne, et `repository_dispatch` (type `kit-updated`) pour que le dépôt du kit
+# puisse la déclencher aussitôt après sa propre publication.
 
 on:
   push:
     branches: [master]
+  schedule:
+    - cron: "17 4 * * *"
+  repository_dispatch:
+    types: [kit-updated]
   workflow_dispatch: {}
 
 permissions:

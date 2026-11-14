@@ -1,21 +1,18 @@
 import type { Preview } from "@storybook/react-vite";
-import * as Kit from "@michaelthomasjach/liseuse-dashboard-kit";
 import { MinimalTheme } from "../src/theme";
-import docgen from "../src/stories/docgen.json";
+// Les pastilles « Primitives utilisées » des pages Docs du kit : le même composant que dans son
+// Storybook, pour que les deux pages Docs d'un même composant soient les mêmes.
+import { PrimitiveLinks } from "../../Dashboard liseuse/.storybook/PrimitiveLinks";
 
 /**
- * Rattache à chaque composant exporté par le kit la documentation extraite de ses types (voir
- * scripts/docgen.mjs) : c'est ce que lit l'onglet Docs pour la description et la table des props.
- * Elle remplace celle que react-docgen tire du source du kit ; les composants que le kit n'exporte
- * pas (pages du kit incluses telles quelles, voir main.ts) gardent cette dernière.
+ * La preview du kit (`../Dashboard liseuse/.storybook/preview.tsx`), à une différence près : le
+ * décorateur pose `MinimalTheme` là où le kit pose `LqThemeProvider`. Les stories étant celles du
+ * kit (voir main.ts), tout le reste — marges, tri du menu, réglages des contrôles — en est recopié
+ * pour qu'une story s'affiche ici exactement comme là-bas, au dessin près.
+ *
+ * Seule la surface est réglable dans la barre d'outils : la palette (e-ink ou couleur) et la police
+ * du kit sont justement ce que ce thème remplace (voir src/theme/index.tsx).
  */
-for (const [name, info] of Object.entries(docgen.components)) {
-  const component = (Kit as Record<string, unknown>)[name];
-  if (component && (typeof component === "function" || typeof component === "object")) {
-    (component as { __docgenInfo?: unknown }).__docgenInfo = { displayName: name, ...info };
-  }
-}
-
 const preview: Preview = {
   tags: ["autodocs"],
   globalTypes: {
@@ -34,69 +31,58 @@ const preview: Preview = {
   },
   initialGlobals: { surface: "light" },
   parameters: {
-    layout: "fullscreen",
-    controls: { expanded: true, sort: "requiredFirst" },
-    docs: { source: { type: "dynamic", language: "tsx" }, toc: true },
     options: {
-      // Le même ordre que le Storybook du kit (../Dashboard liseuse/.storybook/preview.tsx) : la
-      // page d'accueil, puis des plus petites briques aux plus grands assemblages. Ce qui n'est pas
-      // listé garde sa place alphabétique après.
+      // Le même ordre que le kit, écrit en dur parce que Storybook lit `storySort` sans exécuter ce
+      // fichier (un import n'y serait pas résolu). Sous chaque famille, l'ordre est celui où les
+      // fichiers sont trouvés — le même motif de recherche que le kit, donc le même menu.
       storySort: {
-        // L'ordre exact du menu du kit e-ink, groupe par groupe : sans les sous-listes, Storybook
-        // rangerait chaque groupe dans l'ordre de découverte des fichiers, qui n'est pas le même ici
-        // (fichiers de la couche mêlés à ceux empruntés au kit). À régénérer depuis l'index.json du kit.
         order: [
           "Accueil",
           "Foundations",
-          ["Variables du thème", "Animated Icons", "Icons", "Typography", "LqThemeProvider"],
           "Primitives",
-          ["Avatar", "Badge", "Button", "Card", "Carousel", "CodeBlock", "ColorSwatchButton", "ContextMenu", "DropdownPanel", "ExpandableCard", "FieldGroup", "Heading", "Highlight", "IconButton", "Jumbotron", "LegendRow", "LevelGauge", "Modal", "Panel", "PanelCollapse", "PanelRow", "PeriodTable", "QuoteMark", "SearchOverlay", "SegmentedControl", "TabbedCard", "Tabs", "Testimonial", "Text", "Toggle", "Tooltip", "TreeView", "ButtonGroup", "Toolbar", "FloatingActionButton"],
           "Forms",
-          ["Checkbox", "CheckboxButton", "Chip", "ChipGroup", "Input", ["CreditCardInput", "Input", "InputDropdown", "InputNumber", "InputPassword", "MaskedInput", "Masked inputs", "PhoneInput", "Select", "TagInput", "Textarea"], "DateInput", "DatePicker", "DateRangePicker", "DateTimePicker", "Dropzone", "Popover", "RangeSlider", "Tag", "WysiwygEditor", "Slider", "RadioGroup"],
           "Feedback",
-          ["AlertList", "GuidedTour", "Loaders", "ProgressBar", "Skeleton", "Spinner", "Stepper", "Notification", "NotificationMenu", "NotificationProvider", "ProgressCircle"],
           "Charts",
-          ["AlertsPanel", "BarChart", "CandlestickChart", ["État du marché", "Captures de diagrammes", "Captures de props"], "ChartAxis", "ChartEventTooltip", "ChartTooltip", "ChartWorkspace", "DeltaChart", "DonutChart", "EarningsDotChart", "GaugeChart", "Heatmap", "LineAreaChart", "MatrixChart", "SankeyChart", "SeasonalityView", "Sparkline", "Courtier", "Scripting (dev)", ["EngineDebugHarness", "ScriptingStateDebugHarness"], "Stratégie", ["Graphiques"], "Vertical Distribution"],
           "Map",
-          ["World Exposure Map", "Interactive Globe", "Dot Map", "Tile Map"],
           "Finance",
-          ["ComparisonCard", "DataTable", "GaugeCard", "HighlightStatCard", "HoldingCard", "PriceChangeTag", "StatCard"],
           "Finance Widgets",
-          ["MarketMoversWidget", "PortfolioSummaryWidget", "WatchlistWidget"],
           "Widgets",
-          ["AlertMarker", "AlertMarkerStack", "AllocationSlider", "AnalogClock", "ClockWidget", "DashboardGrid", "DashboardGridItem", "DayTimelineWidget", "DemandMeters", "EnergyWidget", "FpsMeter", "IconDock", "KanbanBoard", "KnowledgeBase", "LightDetailModal", "LightsWidget", "LiveTile", "MetricListWidget", "MusicPlayerWidget", "ObjectiveTracker", "ShuttersWidget", "SkillTree", "WeatherWidget", "Timeline", "Gallery", "Lightbox", "ChatPanel", "NotesPanel", "Quickview", "MailPanel", "ActivityFeed"],
           "Dashboard",
-          ["Maison — tableau de bord"],
           "Layouts",
-          ["Breadcrumbs", "UserMenu", "HeaderLayout", "SidebarLayout", "BottomNav"],
           "Pages",
-          ["LoginPage", "NotFoundPage", "SignUpPage", "ProfilePage", "InvoicePage", "LockScreenPage", "ServerErrorPage"],
-          "Audio",
-          ["Balance, Niveaux, Égaliseur", "BalanceControl", "Equalizer", "LevelMeter"],
-          "Scheduler",
-          ["Planning de ressources", "SchedulerTaskModal", "MonthCalendar"],
         ],
       },
     },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+    layout: "fullscreen",
   },
   decorators: [
-    // Le fond du thème couvre toute la zone d'affichage (sinon il s'arrête au contenu et laisse du
-    // blanc dessous, criant en surface sombre). Les composants pleine page — mises en page, pages,
-    // notifications fixes — déclarent `mdkPadding: 0` pour ne pas recevoir la marge de 30 px.
-    (Story, context) => (
-      <MinimalTheme surface={context.globals.surface === "dark" ? "dark" : "light"}>
-        <div
-          style={{
-            padding: context.parameters.mdkPadding ?? (context.viewMode === "story" ? 30 : 20),
-            minHeight: context.viewMode === "story" ? "100vh" : undefined,
-            boxSizing: "border-box",
-            background: "var(--lq-color-bg)",
-          }}
-        >
-          <Story />
-        </div>
-      </MinimalTheme>
-    ),
+    (Story, context) => {
+      // Comme dans le kit : 32 px autour de chaque story (les stories plein écran les annulent par
+      // `margin: -32`), et la hauteur d'écran remplie sauf sur une page Docs, où chaque bloc prend
+      // celle de son contenu. L'accueil de ce dépôt, qui porte ses propres marges, déclare
+      // `mdkPadding: 0`.
+      const fillsViewport = context.viewMode !== "docs";
+      return (
+        <MinimalTheme surface={context.globals.surface === "dark" ? "dark" : "light"}>
+          <div
+            style={{
+              minHeight: fillsViewport ? "100vh" : undefined,
+              padding: context.parameters.mdkPadding ?? "32px",
+              backgroundColor: "var(--lq-color-bg)",
+            }}
+          >
+            <PrimitiveLinks title={context.title} viewMode={context.viewMode} />
+            <Story />
+          </div>
+        </MinimalTheme>
+      );
+    },
   ],
 };
 

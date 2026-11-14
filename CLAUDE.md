@@ -122,11 +122,15 @@ les badges du kit sont en pilule là où le gabarit met des étiquettes à 3 px.
   sélection, lignes dépliables, recherche, pagination, export CSV, choix des colonnes. Ses variables
   `--lq-table-*` sont réglées dans `minimal.css` aux mesures du gabarit.
 - Storybook (`npm run storybook`, port 6007 ; celui du kit tourne d'habitude sur 6006 ou 6013) :
-  même version (10.5.6) et **même menu, nœud pour nœud**, que celui du kit e-ink. L'ordre est
-  écrit en dur dans `storySort` (`.storybook/preview.tsx`) — à régénérer depuis l'`index.json` du
-  Storybook du kit quand il gagne une page. Les stories de la couche sont un jeu à part, aligné à la
-  main sur celui du kit ; Storybook lit le kit **en source** (alias vers `../Dashboard liseuse/src`),
-  et `npm run docgen` régénère `src/stories/docgen.json` (tables de props).
+  **les stories du kit elles-mêmes** (décision du 2026-11-14 : « exactement les mêmes choses dans
+  les deux menus, seul le design change »). `.storybook/main.ts` charge tous les
+  `../Dashboard liseuse/src/**/*.stories.tsx` sauf la page d'accueil du kit, et le décorateur de
+  `.storybook/preview.tsx` (copie de celui du kit) les enveloppe dans `MinimalTheme`. Aucune story
+  n'est recopiée ici : une story ajoutée au kit apparaît au prochain lancement, et la publication
+  clone le kit à jour. Ce dépôt n'ajoute que l'« Accueil » (même titre et même place que celui du
+  kit, présentant la couche) et « Foundations/Variables du thème ». Storybook lit le kit **en
+  source** (alias vers `../Dashboard liseuse/src`) ; `npm run docgen` ne sert plus qu'aux chiffres
+  de l'accueil (`src/stories/docgen.json`).
 
 Vérifié : les 16 écrans rendus dans Chrome headless, en clair et en sombre, sans erreur
 d'exécution — la seule exception connue est un avertissement React de `WorldExposureMap` (trois
