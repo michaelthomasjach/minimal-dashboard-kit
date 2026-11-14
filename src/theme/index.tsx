@@ -11,6 +11,8 @@ import "@fontsource/inter/700.css";
 import "@fontsource/montserrat/500.css";
 import "@fontsource/montserrat/600.css";
 import "./minimal.css";
+// L'éditeur de script en sombre, façon éditeur de code (voir l'en-tête du fichier).
+import "./scriptEditor.css";
 
 /**
  * Le thème « minimal », posé sur un sous-arbre.

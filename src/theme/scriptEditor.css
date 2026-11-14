@@ -1,0 +1,848 @@
+/* L'éditeur de script du thème « minimal » : une fenêtre sombre, façon éditeur de code.
+ *
+ * ## Ce que ce fichier fait, et pourquoi il vise des classes du kit
+ *
+ * `minimal.css` ne fait que redéfinir des variables. Ici, il faut un peu plus : l'éditeur passe en
+ * sombre quelle que soit la surface de la page (un éditeur de code se lit en sombre, comme la barre
+ * latérale reste ardoise sur une page claire), son bouton « Exécuter » devient le seul bouton plein, et
+ * sa barre d'outils change d'ordre. La couleur passe encore par les variables — la fenêtre redéfinit
+ * la palette `--lq-*` pour tout ce qu'elle contient, exactement comme `[data-lq-region="sidebar"]`
+ * dans `minimal.css`, si bien que les champs du panneau Paramètres, le mode No-code, la recherche et
+ * les bulles de CodeMirror suivent sans être nommés. Le reste (ordre, hauteurs, bouton plein) vise les
+ * classes `lq-script-editor-panel__*`, que le kit réserve à cet éditeur.
+ *
+ * ## La portée
+ *
+ * `ScriptEditorWindow` sert aussi à l'assistant et à l'aide du plan de travail : la palette sombre
+ * n'est posée que sur la fenêtre qui contient la barre d'onglets de scripts
+ * (`:has(> .lq-script-editor-panel__tabs)`), donc sur l'éditeur seul. Le menu « Exécuter sur… » et
+ * l'éditeur d'un bloc du mode No-code, portés hors de la fenêtre par `Popover` et `Modal`, sont
+ * rattrapés de la même façon. Les petites boîtes de dialogue (Enregistrer sous, Nouveau fichier,
+ * Script non enregistré) restent celles du thème : ce sont des dialogues ordinaires.
+ *
+ * ## La ligne du thème
+ *
+ * Aucun arrondi : les rayons sont remis à zéro dans la fenêtre, pastilles comprises (carrées). Le
+ * violet est le primaire du thème (`#7252d3`), Inter reste la police de l'interface et Montserrat
+ * celle des petits titres en capitales (PARAMÈTRES). La palette de code, elle, est propre à
+ * l'éditeur : mots-clés bleus, chaînes ambre, nombres orange, fonctions cyan, directives
+ * (`@indicator`, `@description`, `@block`) violettes.
+ *
+ * Trois choses demandent le kit ≥ celui qui expose `--lq-code-directive`, `--lq-code-color-swatch`
+ * et `--lq-script-statusbar-display` (voir la fin de son `tokens.css`) : la couleur des directives,
+ * la pastille devant les couleurs `"#rrggbb"` et la barre d'état en bas. Avec un kit plus ancien,
+ * elles manquent simplement ; rien ne casse.
+ */
+
+/* ---- la palette de la fenêtre (et du menu « Exécuter sur… ») ---- */
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs),
+.mdk.lq-root .lq-popover:has(.lq-script-editor-panel__target-menu),
+.mdk.lq-root .lq-modal:has(.lq-script-graph__inspector-editor) {
+  /* Bleu nuit : la fenêtre et le code (bg), les champs et la colonne Paramètres (deep), l'onglet actif,
+     le segment actif et les boutons au survol (raised). */
+  --mdk-editor-bg: #1e2030;
+  --mdk-editor-deep: #181a27;
+  --mdk-editor-raised: #2a2d43;
+  --mdk-editor-line: rgba(255, 255, 255, 0.07);
+  --mdk-editor-edge: rgba(255, 255, 255, 0.14);
+  --mdk-editor-faint: #545a78;
+  --mdk-editor-primary: #7252d3;
+  --mdk-editor-primary-hover: #8164e0;
+
+  --lq-color-bg: var(--mdk-editor-deep);
+  --lq-color-panel: var(--mdk-editor-bg);
+  --lq-color-text: #e4e6f0;
+  --lq-color-text-muted: #8b90a9;
+  --mdk-color-text-strong: #f5f6fb;
+  --lq-control-color: #e4e6f0;
+  --lq-color-border: var(--mdk-editor-edge);
+  --lq-color-border-subtle: var(--mdk-editor-line);
+  --lq-color-panel-border: var(--mdk-editor-line);
+
+  /* Le primaire du thème pour les pleins ; éclairci d'un cran pour ce qui est du trait ou du texte
+     sur le fond sombre (onglet de fichier actif, curseur, lien « Réinitialiser »). */
+  --lq-color-accent: #a08cf0;
+  --lq-color-accent-contrast: #ffffff;
+  --lq-color-fill: var(--mdk-editor-primary);
+  --lq-color-fill-track: rgba(255, 255, 255, 0.12);
+  --lq-color-focus-ring: rgba(160, 140, 240, 0.55);
+  --lq-color-hover: rgba(255, 255, 255, 0.05);
+  --lq-color-overlay: rgba(8, 9, 14, 0.6);
+
+  --lq-color-danger: #ef6b62;
+  --lq-color-warning: #f2c94c;
+  --lq-color-info: #5ea8f5;
+  --lq-color-up: #3ccf91;
+  --lq-color-down: #ef6b62;
+  --lq-color-amber: #f5b562;
+  --lq-color-sky: #5ea8f5;
+  --lq-color-green: #3ccf91;
+  --lq-color-rose: #ef6b62;
+  --lq-color-violet: #a08cf0;
+
+  --lq-shadow-panel: none;
+  --lq-shadow-modal: 0 0 0 1px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(6, 7, 12, 0.5);
+
+  --lq-radius-sm: 0;
+  --lq-radius-md: 0;
+  --lq-radius-lg: 0;
+  --lq-radius-pill: 0;
+
+  /* Une fonte de code si le poste en a une (Cascadia Mono est livrée avec Windows 11), sinon la
+     pile du kit. Rien n'est téléchargé pour elle. */
+  --lq-font-mono: "JetBrains Mono", "Cascadia Mono", "Fira Code", ui-monospace, "SFMono-Regular", Menlo, Consolas,
+    monospace;
+
+  /* La coloration syntaxique (lue par CodeMirror et par le kit, voir `--lq-code-*` dans son tokens.css). */
+  --lq-code-keyword: #82aaff;
+  --lq-code-string: #f5b562;
+  --lq-code-number: #f78c6c;
+  --lq-code-comment: #676e95;
+  --lq-code-function: #7fd6f5;
+  --lq-code-property: #c3c8e2;
+  --lq-code-operator: #89ddff;
+  --lq-code-directive: #c792ea;
+  --lq-code-color-swatch: "";
+  --lq-script-statusbar-display: flex;
+
+  /* Contrôles natifs (sélecteur de couleur, cases, barres de défilement) en sombre. */
+  color-scheme: dark;
+  color: var(--lq-color-text);
+}
+
+/* ---- la fenêtre ---- */
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) {
+  background-color: var(--mdk-editor-bg);
+  border-color: #0e0f17;
+  box-shadow: var(--lq-shadow-modal);
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) > .lq-script-window__header {
+  min-height: 46px;
+  padding: 0 10px 0 16px;
+  border-bottom-color: var(--mdk-editor-line);
+}
+
+/* Le titre en blanc, précédé du chevron « </> » violet. Dessiné en masque : la couleur reste une
+   variable, et il n'y a pas de fichier d'icône à livrer. */
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__title {
+  color: var(--mdk-color-text-strong);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__title::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  vertical-align: -3px;
+  background-color: var(--lq-color-accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M8 6 2 12l6 6M16 6l6 6-6 6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M8 6 2 12l6 6M16 6l6 6-6 6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__header-actions {
+  align-items: center;
+  gap: 2px;
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__header-button {
+  height: 30px;
+  font-family: inherit;
+  min-width: 30px;
+  padding: 0 7px;
+  color: var(--lq-color-text-muted);
+  border-radius: 0;
+  transition: color var(--lq-transition-fast), background-color var(--lq-transition-fast);
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__header-button:hover {
+  color: var(--mdk-color-text-strong);
+  background-color: var(--lq-color-hover);
+}
+
+/* La documentation se nomme, comme un lien discret ; les autres boutons de la barre restent des
+   icônes. Le libellé vient du bouton lui-même (son `aria-label`), il n'est pas réécrit ici. */
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__header-button[aria-label="Documentation"] {
+  gap: 6px;
+  margin-right: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__header-button[aria-label="Documentation"]::after {
+  content: attr(aria-label);
+}
+
+.mdk.lq-root .lq-script-window:has(> .lq-script-editor-panel__tabs) .lq-script-window__header-button:focus-visible,
+.mdk.lq-root .lq-script-editor-panel__toolbar-button:focus-visible,
+.mdk.lq-root .lq-script-editor-panel__view-option:focus-visible,
+.mdk.lq-root .lq-script-editor-panel__tab-action:focus-visible,
+.mdk.lq-root .lq-script-editor-panel__add-tab:focus-visible,
+.mdk.lq-root .lq-script-editor-panel__file:focus-visible {
+  outline: 2px solid var(--lq-color-focus-ring);
+  outline-offset: 1px;
+}
+
+/* ---- les onglets de scripts ---- */
+
+.mdk.lq-root .lq-script-editor-panel__tabs {
+  gap: 6px;
+  padding: 10px 16px 0;
+}
+
+/* Un onglet de fichier : nom en fonte de code, pastille carrée devant — verte quand le script est
+   enregistré, ambre quand il a des modifications en attente. */
+.mdk.lq-root .lq-script-editor-panel__tab {
+  gap: 8px;
+  height: 30px;
+  padding: 0 6px 0 10px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: var(--lq-color-text-muted);
+  font-family: var(--lq-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  transition: color var(--lq-transition-fast), background-color var(--lq-transition-fast);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab:hover {
+  color: var(--lq-color-text);
+  background-color: var(--lq-color-hover);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab--active,
+.mdk.lq-root .lq-script-editor-panel__tab--active:hover {
+  color: var(--mdk-color-text-strong);
+  background-color: var(--mdk-editor-raised);
+  border-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  background-color: var(--lq-color-up);
+}
+
+/* Non enregistré : la pastille du kit (qui porte l'infobulle et le texte lu par les lecteurs d'écran)
+   passe devant le nom et prend la place de la verte. */
+.mdk.lq-root .lq-script-editor-panel__tab--dirty::before {
+  display: none;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-dirty {
+  order: -1;
+  width: 7px;
+  height: 7px;
+  border-radius: 0;
+  background-color: var(--lq-color-amber);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-name {
+  max-width: 24ch;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-action {
+  padding: 3px;
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-action:hover {
+  color: var(--mdk-color-text-strong);
+}
+
+.mdk.lq-root .lq-script-editor-panel__add-tab {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--mdk-editor-line);
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root .lq-script-editor-panel__add-tab:hover {
+  color: var(--mdk-color-text-strong);
+  border-color: var(--mdk-editor-edge);
+  background-color: var(--lq-color-hover);
+}
+
+/* La recherche de scripts : la loupe dans le champ. */
+.mdk.lq-root .lq-script-editor-panel__tab-search {
+  padding: 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search > svg {
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search input {
+  width: 200px;
+  height: 30px;
+  padding: 0 10px 0 28px;
+  color: var(--lq-color-text);
+  background-color: var(--mdk-editor-deep);
+  border: 1px solid var(--mdk-editor-line);
+  border-radius: 0;
+  font-size: 0.75rem;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search input::placeholder {
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search input:focus {
+  border-color: var(--lq-color-accent);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search-results,
+.mdk.lq-root .lq-script-editor-panel__tab-search-empty {
+  right: 0;
+  min-width: 240px;
+  margin-top: 4px;
+  padding: 4px 0;
+  background-color: var(--mdk-editor-raised);
+  border: 1px solid var(--mdk-editor-edge);
+  border-radius: 0;
+  box-shadow: 0 12px 28px rgba(6, 7, 12, 0.55);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search-empty {
+  padding: 8px 12px;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search-results button {
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search-results button:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.mdk.lq-root .lq-script-editor-panel__tab-search-hint {
+  color: var(--lq-color-up);
+  font-size: 0.6875rem;
+}
+
+/* ---- la barre d'outils ---- */
+
+/* Code | No-code à gauche, les outils ensuite, puis le bouton plein « Exécuter » et « Enregistrer »
+   poussés à droite. L'ordre est visuel seulement : le DOM du kit, et donc l'ordre de tabulation, ne
+   change pas. */
+.mdk.lq-root .lq-script-editor-panel__toolbar {
+  gap: 5px;
+  padding: 10px 12px 10px 16px;
+  border-bottom-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar > * {
+  order: 2;
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar > .lq-script-editor-panel__view-switch {
+  order: 0;
+  margin-right: 6px;
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar > .lq-script-editor-panel__status {
+  order: 3;
+  margin-left: auto;
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar > .lq-script-editor-panel__toolbar-button--run {
+  order: 4;
+  margin-left: auto;
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar:has(> .lq-script-editor-panel__status) > .lq-script-editor-panel__toolbar-button--run {
+  margin-left: 6px;
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar > .lq-script-editor-panel__toolbar-button--save {
+  order: 5;
+}
+
+/* Les boutons secondaires : sombres, bordés d'un filet clair. */
+.mdk.lq-root .lq-script-editor-panel__toolbar-button,
+.mdk.lq-root .lq-script-editor-panel__target-indicator {
+  gap: 6px;
+  height: 30px;
+  padding: 0 9px;
+  color: var(--lq-color-text);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--mdk-editor-edge);
+  border-radius: 0;
+  /* Un <button> ne prend pas la police de la page de lui-même : sans cela, Arial. */
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+  transition: background-color var(--lq-transition-fast), border-color var(--lq-transition-fast), color var(--lq-transition-fast);
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar-button:hover:not(:disabled),
+.mdk.lq-root .lq-script-editor-panel__target-indicator:hover {
+  color: var(--mdk-color-text-strong);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar-button:disabled {
+  opacity: 0.38;
+}
+
+/* Les outils parlent par leur libellé seul, comme le bouton secondaire de la maquette : seuls
+   « Exécuter » (▷) et « Enregistrer » (dont l'icône devient une coche une fois le script
+   enregistré) gardent la leur. C'est aussi ce qui fait tenir la barre sur une ligne dans la
+   fenêtre à sa largeur d'ouverture (960 px). */
+.mdk.lq-root .lq-script-editor-panel__toolbar-button--run-cell > svg,
+.mdk.lq-root .lq-script-editor-panel__toolbar-button--search > svg,
+.mdk.lq-root .lq-script-editor-panel__toolbar-button--stop > svg,
+.mdk.lq-root .lq-script-editor-panel__toolbar-button--reset > svg,
+.mdk.lq-root .lq-script-editor-panel__view-option > svg {
+  display: none;
+}
+
+/* « Exécuter » : le seul plein, dans le violet du thème. */
+.mdk.lq-root .lq-script-editor-panel__toolbar-button--run {
+  padding: 0 13px;
+  color: #ffffff;
+  background-color: var(--mdk-editor-primary);
+  border-color: var(--mdk-editor-primary);
+  font-weight: 600;
+}
+
+.mdk.lq-root .lq-script-editor-panel__toolbar-button--run:hover:not(:disabled) {
+  color: #ffffff;
+  background-color: var(--mdk-editor-primary-hover);
+  border-color: var(--mdk-editor-primary-hover);
+}
+
+.mdk.lq-root .lq-script-editor-panel__status {
+  color: var(--lq-color-accent);
+  font-size: 0.75rem;
+}
+
+/* Code | No-code : un sélecteur segmenté, le segment actif plus clair que son rail. */
+.mdk.lq-root .lq-script-editor-panel__view-switch {
+  gap: 2px;
+  height: 30px;
+  padding: 2px;
+  background-color: var(--mdk-editor-deep);
+  border: 1px solid var(--mdk-editor-line);
+  border-radius: 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__view-option {
+  gap: 6px;
+  padding: 0 10px;
+  color: var(--lq-color-text-muted);
+  background-color: transparent;
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.mdk.lq-root .lq-script-editor-panel__view-option + .lq-script-editor-panel__view-option {
+  border-left: 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__view-option:hover {
+  color: var(--lq-color-text);
+  background-color: var(--lq-color-hover);
+}
+
+.mdk.lq-root .lq-script-editor-panel__view-option--active,
+.mdk.lq-root .lq-script-editor-panel__view-option--active:hover {
+  color: var(--mdk-color-text-strong);
+  background-color: var(--mdk-editor-raised);
+}
+
+/* Le menu « Exécuter sur… » (plusieurs graphiques ouverts). */
+.mdk.lq-root .lq-popover:has(.lq-script-editor-panel__target-menu) {
+  background-color: var(--mdk-editor-raised);
+  border-color: var(--mdk-editor-edge);
+  border-radius: 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__target-menu {
+  padding: 4px 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__target-option {
+  padding: 6px 12px;
+}
+
+.mdk.lq-root .lq-script-editor-panel__target-option:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- le corps : le code à gauche, les paramètres à droite ---- */
+
+/* Le code va jusqu'aux bords de la fenêtre, sans cadre, sur le fond de la fenêtre. */
+.mdk.lq-root .lq-script-editor-panel__body {
+  gap: 0;
+  padding: 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__main {
+  gap: 0;
+}
+
+/* Les fichiers du script (« Principal », modules, « + ») : des onglets de code soulignés de violet. */
+.mdk.lq-root .lq-script-editor-panel__files {
+  padding: 0 8px 0 10px;
+  border-bottom-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-editor-panel__file {
+  height: 34px;
+  padding: 0 10px;
+  color: var(--lq-color-text-muted);
+  border-bottom-width: 2px;
+  font-size: 0.71875rem;
+}
+
+.mdk.lq-root .lq-script-editor-panel__file:hover {
+  color: var(--lq-color-text);
+}
+
+.mdk.lq-root .lq-script-editor-panel__file--active,
+.mdk.lq-root .lq-script-editor-panel__file--active:hover {
+  color: var(--mdk-color-text-strong);
+  border-bottom-color: var(--mdk-editor-primary);
+}
+
+.mdk.lq-root .lq-script-editor-panel__file-add {
+  width: 30px;
+  font-size: 1rem;
+}
+
+.mdk.lq-root .lq-script-editor-panel__files-more--left {
+  background: linear-gradient(to right, var(--mdk-editor-bg) 55%, transparent);
+}
+
+.mdk.lq-root .lq-script-editor-panel__files-more--right {
+  background: linear-gradient(to left, var(--mdk-editor-bg) 55%, transparent);
+}
+
+.mdk.lq-root .lq-script-editor-panel__loading,
+.mdk.lq-root .lq-script-editor-panel__empty {
+  color: var(--lq-color-text-muted);
+}
+
+/* L'erreur et la console, sous le code, détachées des bords. */
+.mdk.lq-root .lq-script-editor-panel__main > .lq-script-error-panel,
+.mdk.lq-root .lq-script-editor-panel__main > .lq-script-editor-panel__console {
+  margin: 10px 12px;
+}
+
+.mdk.lq-root .lq-script-editor-panel__console {
+  background-color: var(--mdk-editor-deep);
+  border-color: var(--mdk-editor-line);
+}
+
+/* La colonne Paramètres : un cran plus sombre que le code, ses champs un cran plus clairs qu'elle. */
+.mdk.lq-root .lq-script-editor-panel__side {
+  width: 280px;
+  padding: 14px 16px;
+  background-color: var(--mdk-editor-deep);
+  border-left-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-editor-panel__params {
+  border-bottom-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-editor-panel__params-header {
+  margin-bottom: 12px;
+}
+
+.mdk.lq-root .lq-script-editor-panel__params-reset {
+  color: var(--lq-color-accent);
+  font-size: 0.75rem;
+}
+
+.mdk.lq-root .lq-script-editor-panel__params-reset:hover {
+  color: var(--mdk-color-text-strong);
+}
+
+.mdk.lq-root .lq-script-editor-panel__side .lq-field__control {
+  background-color: var(--mdk-editor-bg);
+  border-color: var(--mdk-editor-line);
+  border-radius: 0;
+}
+
+.mdk.lq-root .lq-script-editor-panel__side .lq-field__control:hover {
+  border-color: var(--mdk-editor-edge);
+}
+
+.mdk.lq-root .lq-script-editor-panel__side .lq-field__control:focus-within {
+  border-color: var(--lq-color-accent);
+}
+
+.mdk.lq-root .lq-script-editor-panel__side .lq-field__inset-label {
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root .lq-script-editor-panel__side .lq-field__helper,
+.mdk.lq-root .lq-script-editor-panel__side .lq-script-params__empty {
+  color: var(--lq-color-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.mdk.lq-root .lq-script-editor-panel__side .lq-script-params__empty code {
+  color: var(--lq-code-string);
+  font-family: var(--lq-font-mono);
+}
+
+/* ---- le code (CodeMirror) ---- */
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .lq-script-editor-codemirror {
+  border: 0;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-editor {
+  background-color: var(--mdk-editor-bg);
+  font-size: 0.8125rem;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-scroller {
+  font-family: var(--lq-font-mono);
+  line-height: 1.65;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-content {
+  padding: 10px 0;
+  color: #d5d8e8;
+}
+
+/* Une ligne `@block` est le titre d'une cellule : le mot-clé en violet, le titre en clair et en
+   graisse moyenne, sans la coloration qu'y met la grammaire JavaScript (une apostrophe y ouvrait une
+   « chaîne » jusqu'au bout de la ligne). */
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-line.cm-cell-marker {
+  color: var(--mdk-color-text-strong);
+  font-weight: 500;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-line.cm-cell-marker span:not(.cm-lq-directive) {
+  color: inherit;
+  font-style: normal;
+}
+
+/* Numéros de ligne atténués, sans filet ; celui de la ligne courante s'allume. */
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-gutters {
+  color: var(--mdk-editor-faint);
+  background-color: var(--mdk-editor-bg);
+  border-right: 0;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-lineNumbers .cm-gutterElement {
+  padding: 0 12px 0 18px;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-gutters .cm-activeLineGutter {
+  color: var(--lq-code-property);
+  background-color: transparent;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-activeLine {
+  background-color: rgba(255, 255, 255, 0.035);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-line.cm-cell-active {
+  background-color: rgba(160, 140, 240, 0.05);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-line.cm-cell-marker {
+  border-top-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-editor .cm-cursor {
+  border-left: 2px solid #c9bcff;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-editor .cm-selectionBackground,
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-editor.cm-focused .cm-selectionBackground {
+  background-color: rgba(114, 82, 211, 0.38);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-editor .cm-matchingBracket {
+  color: var(--mdk-color-text-strong);
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-cell-run-button {
+  color: var(--lq-color-accent);
+  background-color: rgba(160, 140, 240, 0.14);
+  border-radius: 0;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-cell-run-button:hover {
+  color: #ffffff;
+  background-color: var(--mdk-editor-primary);
+}
+
+/* La recherche dans le code (Ctrl+F) : CodeMirror dessine ses boutons en dégradé clair, à reprendre
+   sur le fond sombre. */
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panels {
+  background-color: var(--mdk-editor-deep);
+  border-bottom-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search {
+  padding: 8px 12px;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search input[type="text"],
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search .cm-textfield {
+  height: 26px;
+  color: var(--lq-color-text);
+  background-color: var(--mdk-editor-bg);
+  border: 1px solid var(--mdk-editor-edge);
+  border-radius: 0;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search input[type="text"]:focus {
+  outline: none;
+  border-color: var(--lq-color-accent);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search .cm-button {
+  height: 26px;
+  padding: 0 10px;
+  color: var(--lq-color-text);
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--mdk-editor-edge);
+  border-radius: 0;
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search .cm-button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search label {
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-panel.cm-search input[type="checkbox"] {
+  accent-color: var(--mdk-editor-primary);
+}
+
+/* Les bulles (complétion, diagnostics) : en relief sur le code. */
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-tooltip {
+  background-color: var(--mdk-editor-raised);
+  border-color: var(--mdk-editor-edge);
+  border-radius: 0;
+  box-shadow: 0 12px 28px rgba(6, 7, 12, 0.55);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-tooltip-autocomplete ul li[aria-selected] {
+  color: #ffffff;
+  background-color: var(--mdk-editor-primary);
+}
+
+.mdk.lq-root :is(.lq-script-editor-panel__main, .lq-script-graph__inspector-editor) .cm-completionDetail {
+  color: var(--lq-color-text-muted);
+}
+
+/* ---- le mode No-code ---- */
+
+/* Le plan de travail sur le fond profond, ses blocs sur celui de la fenêtre : les variables suivent
+   d'elles-mêmes ; seuls la trame et le liseré du bloc choisi sont repris. */
+.mdk.lq-root .lq-script-editor-panel__main .lq-script-graph__surface {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+}
+
+.mdk.lq-root .lq-script-editor-panel__main .lq-script-graph__node {
+  border-color: var(--mdk-editor-edge);
+}
+
+.mdk.lq-root .lq-script-editor-panel__main .lq-script-graph__node--selected {
+  border-color: var(--lq-color-accent);
+}
+
+.mdk.lq-root .lq-script-editor-panel__main .lq-script-graph__palette-item {
+  border-color: var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-editor-panel__main .lq-script-graph__palette-item:hover {
+  border-color: var(--mdk-editor-edge);
+}
+
+/* L'éditeur d'un bloc (double-clic ou clic sur son titre) : une modale du kit, passée elle aussi en
+   sombre ; « Exécuter jusqu'ici » y est l'action principale, donc pleine. */
+.mdk.lq-root .lq-modal:has(.lq-script-graph__inspector-editor) {
+  background-color: var(--mdk-editor-bg);
+  border-color: #0e0f17;
+}
+
+.mdk.lq-root .lq-modal:has(.lq-script-graph__inspector-editor) .lq-script-editor-codemirror {
+  border: 1px solid var(--mdk-editor-line);
+}
+
+.mdk.lq-root .lq-script-graph__inspector-name {
+  height: 30px;
+  padding: 0 10px;
+  color: var(--mdk-color-text-strong);
+  background-color: var(--mdk-editor-deep);
+  border-color: var(--mdk-editor-edge);
+  border-radius: 0;
+}
+
+.mdk.lq-root .lq-script-graph__inspector-run {
+  height: 30px;
+  padding: 0 13px;
+  color: #ffffff;
+  background-color: var(--mdk-editor-primary);
+  border-color: var(--mdk-editor-primary);
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mdk.lq-root .lq-script-graph__inspector-run:hover:not(:disabled) {
+  background-color: var(--mdk-editor-primary-hover);
+  border-color: var(--mdk-editor-primary-hover);
+}
+
+/* Les boutons du plan de travail (zoom, Recadrer, Groupe, aide) en Inter, comme le reste. */
+.mdk.lq-root .lq-script-editor-panel__main .lq-script-graph__toolbar button {
+  font-family: inherit;
+  border-radius: 0;
+}
+
+/* ---- la barre d'état ---- */
+
+.mdk.lq-root .lq-script-editor-panel__statusbar {
+  min-height: 30px;
+  padding: 0 16px;
+  background-color: var(--mdk-editor-bg);
+  border-top-color: var(--mdk-editor-line);
+  font-size: 0.71875rem;
+}
+
+.mdk.lq-root .lq-script-editor-panel__statusbar-kind {
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root .lq-script-editor-panel__statusbar-run--idle {
+  color: var(--lq-color-text-muted);
+}
+
+.mdk.lq-root .lq-script-editor-panel__statusbar-run--running {
+  color: var(--lq-color-accent);
+}
